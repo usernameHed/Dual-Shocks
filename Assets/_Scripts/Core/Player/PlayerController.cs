@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour, IKillable
         InitPlayer();
 	}
 
+    private void Start()
+    {
+        InitRope();
+    }
+
     /// <summary>
     /// initialise les players: créé les balls et les ajoutes dans la liste si la liste est vide
     /// </summary>
@@ -56,6 +61,14 @@ public class PlayerController : MonoBehaviour, IKillable
             GameObject ballsObject = Instantiate(balls, followersList[1].position, followersList[1].rotation, parentBalls);
             ballsList[1] = ballsObject.GetComponent<Balls>();
         }
+    }
+
+    /// <summary>
+    /// initialisation de la rope
+    /// </summary>
+    private void InitRope()
+    {
+        //list: ballsList
     }
 
     #endregion
@@ -77,20 +90,6 @@ public class PlayerController : MonoBehaviour, IKillable
                 ballsList[i].HasMoved = false;
         }
     }
-
-    private void MovePlayer()
-    {
-        /*if (hasMoved)
-        {
-            playerBody.velocity = new Vector3(horizMove * moveSpeed, playerBody.velocity.y, 0.0F);
-        }*/
-
-        /*if (isJumping)
-        {
-            SoundManager.GetSingleton.playSound("Jump");
-            isJumping = false;
-        }*/
-    }
     
     /////////////////////////////////////////////////////
 
@@ -101,7 +100,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
 	private void FixedUpdate()
 	{
-        MovePlayer();
+
 	}
 
     #endregion

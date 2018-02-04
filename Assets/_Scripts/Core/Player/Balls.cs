@@ -29,6 +29,7 @@ public class Balls : MonoBehaviour
     private void Awake()
     {
         InitBall();
+        Debug.Log("awake ball");
     }
 
     /// <summary>
@@ -48,7 +49,8 @@ public class Balls : MonoBehaviour
     {
         if (HasMoved)
         {
-            ballBody.velocity = new Vector3(HorizMove * moveSpeed * Time.deltaTime, 0.0f, VertiMove * moveSpeed * Time.deltaTime);
+            //ballBody.velocity = new Vector3(HorizMove * moveSpeed * Time.deltaTime, 0.0f, VertiMove * moveSpeed * Time.deltaTime);
+            ballBody.AddForce(HorizMove * moveSpeed * Time.deltaTime, 0.0f, VertiMove * moveSpeed * Time.deltaTime, ForceMode.Impulse);
         }
 
         /*if (isJumping)
