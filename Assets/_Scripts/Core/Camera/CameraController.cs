@@ -149,7 +149,8 @@ public class CameraController : MonoBehaviour
         if (activeTargetAmount > 0)
         {
             averagePos.x = (minX + maxX) / 2.0F;
-            averagePos.y = (minY + maxY) / 2.0F;
+            //averagePos.y = (minY + maxY) / 2.0F;
+            averagePos.z = (minY + maxY) / 2.0F;
         }
 
         // If no targets, select fallback focus
@@ -163,7 +164,8 @@ public class CameraController : MonoBehaviour
 
         // Calculate zoom
         float dist = Mathf.Max(Mathf.Abs(maxX - minX), Mathf.Abs(maxY - minY));
-        averagePos.z = (targetList.Count > 1) ? -Mathf.Min(Mathf.Max(minZoom, dist + borderMargin), maxZoom) : -defaultZoom;
+        //averagePos.z = (targetList.Count > 1) ? -Mathf.Min(Mathf.Max(minZoom, dist + borderMargin), maxZoom) : -defaultZoom;
+        averagePos.y = (targetList.Count > 1) ? Mathf.Min(Mathf.Max(minZoom, dist + borderMargin), maxZoom) : defaultZoom;
 
         // Change camera target
         averageTargetPosition = averagePos;

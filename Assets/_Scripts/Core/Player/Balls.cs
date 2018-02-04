@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
 
 /// <summary>
-/// LevelManager Description
+/// Balls Description
 /// </summary>
-public class LevelManager : MonoBehaviour
+public class Balls : MonoBehaviour
 {
     #region Attributes
 
-    [Tooltip("opti fps"), SerializeField]
+	[FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
     #endregion
@@ -30,11 +29,11 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-      //optimisation des fps
-      if (updateTimer.Ready())
-      {
+        //optimisation des fps
+        if (updateTimer.Ready())
+        {
 
-      }
+        }
     }
 
 	#endregion
