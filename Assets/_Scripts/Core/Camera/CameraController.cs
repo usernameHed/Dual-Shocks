@@ -138,10 +138,12 @@ public class CameraController : MonoBehaviour
 				// Extends min max bounds
                 minX = (target.transform.position.x < minX) ? target.transform.position.x : minX;
                 maxX = (target.transform.position.x > maxX) ? target.transform.position.x : maxX;
-                minY = (target.transform.position.y < minY) ? target.transform.position.y : minY;
-                maxY = (target.transform.position.y > maxY) ? target.transform.position.y : maxY;
+                //minY = (target.transform.position.y < minY) ? target.transform.position.y : minY;
+                //maxY = (target.transform.position.y > maxY) ? target.transform.position.y : maxY;
+                minY = (target.transform.position.z < minY) ? target.transform.position.z : minY;
+                maxY = (target.transform.position.z > maxY) ? target.transform.position.z : maxY;
             }
-				
+
             activeTargetAmount++;
         }
 

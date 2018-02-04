@@ -29,10 +29,6 @@ public class PlayerController : MonoBehaviour, IKillable
 
     // Components
     private FrequencyTimer updateTimer;
-	private float horizMove;
-    private float vertiMove;
-    private bool hasMoved = false;
-    private bool isJumping = false;
 
     #endregion
 
@@ -44,7 +40,7 @@ public class PlayerController : MonoBehaviour, IKillable
 	}
 
     /// <summary>
-    /// initialise les players
+    /// initialise les players: créé les balls et les ajoutes dans la liste si la liste est vide
     /// </summary>
     private void InitPlayer()
     {
@@ -67,14 +63,19 @@ public class PlayerController : MonoBehaviour, IKillable
     #region Core
     private void InputPlayer()
     {
-        horizMove = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis("Move Horizontal");
-        vertiMove = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis("Move Vertical");
-        isJumping = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetButtonDown("FireA");
+        for (int i = 0; i < ballsList.Count; i++)
+        {
+            ballsList[i].HorizMove = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis("Move Horizontal" + ((i == 0) ? "" : " Right") );
+            ballsList[i].VertiMove = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis("Move Vertical" + ((i == 0) ? "" : " Right"));
 
-        if (horizMove != 0 || vertiMove != 0)
-            hasMoved = true;
-        else
-            hasMoved = false;
+            ballsList[i].Power1 = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetButtonDown("LeftTrigger" + (i + 1));
+            ballsList[i].Power2 = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetButtonDown("RightTrigger" + (i + 2));
+
+            if (ballsList[i].HorizMove != 0 || ballsList[i].VertiMove != 0)
+                ballsList[i].HasMoved = true;
+            else
+                ballsList[i].HasMoved = false;
+        }
     }
 
     private void MovePlayer()

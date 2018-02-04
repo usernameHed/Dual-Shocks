@@ -7,22 +7,56 @@ using Sirenix.OdinInspector;
 public class Balls : MonoBehaviour
 {
     #region Attributes
+    [FoldoutGroup("GamePlay"), Tooltip("speed of balls"), SerializeField]
+    private float moveSpeed = 200f;
 
-	[FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
+
+    [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
+
+    private Rigidbody ballBody;
+
+    public float HorizMove { set; get; }
+    public float VertiMove { set; get; }
+    public bool HasMoved { set; get; }
+    public bool Power1 { set; get; }
+    public bool Power2 { set; get; }
 
     #endregion
 
     #region Initialization
 
-    private void Start()
+    private void Awake()
     {
-		// Start function
+        InitBall();
+    }
+
+    /// <summary>
+    /// initialise la ball
+    /// </summary>
+    private void InitBall()
+    {
+        HasMoved = false;
+        Power1 = false;
+        Power2 = false;
+        ballBody = gameObject.GetComponent<Rigidbody>();
     }
     #endregion
 
     #region Core
+    private void MovePlayer()
+    {
+        if (HasMoved)
+        {
+            ballBody.velocity = new Vector3(HorizMove * moveSpeed * Time.deltaTime, 0.0f, VertiMove * moveSpeed * Time.deltaTime);
+        }
 
+        /*if (isJumping)
+        {
+            SoundManager.GetSingleton.playSound("Jump");
+            isJumping = false;
+        }*/
+    }
     #endregion
 
     #region Unity ending functions
@@ -36,5 +70,10 @@ public class Balls : MonoBehaviour
         }
     }
 
-	#endregion
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    #endregion
 }
