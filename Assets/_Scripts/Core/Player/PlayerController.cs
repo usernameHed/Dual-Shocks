@@ -1,6 +1,22 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System;
+
+[Serializable]
+public struct PlayerBall
+{
+    public int idBallType;             //le type de ball (bleu, red...)
+    public int[] powerJoystickLeft;    //pouvoirs de la balle gauche
+    public int[] powerJoystickRight;   //pouvoirs de la balle droite
+
+    PlayerBall(int idBall, int[] powerLeft, int[] powerRight)
+    {
+        idBallType = idBall;
+        powerJoystickLeft = powerLeft;
+        powerJoystickRight = powerRight;
+    }
+}
 
 /// <summary>
 /// PlayerController handle player movement
@@ -11,6 +27,9 @@ public class PlayerController : MonoBehaviour, IKillable
 
     [FoldoutGroup("GamePlay"), Tooltip("vitesse de rotation des followers"), SerializeField]
     private float turnRateFollowers = 400f;
+
+    [FoldoutGroup("GamePlay"), Tooltip("l'id du type de ball à créé (gauche et droite)"), SerializeField]
+    private PlayerBall[] ballInfo = new PlayerBall[SizeArrayId];
 
 
     [FoldoutGroup("Objects"), Tooltip("List des followers qui suivent les balls"), SerializeField]
@@ -24,15 +43,14 @@ public class PlayerController : MonoBehaviour, IKillable
     [FoldoutGroup("Objects"), Tooltip("rope reliant les 2 followers"), SerializeField]
     private GameObject rope;
 
-    [FoldoutGroup("Objects"), Tooltip("balls prefabs"), SerializeField]
-    private GameObject balls;
+    
 
     [FoldoutGroup("Debug"), Tooltip("id unique du joueur correspondant à sa manette"), SerializeField]
     private int idPlayer = 0;
     public int IdPlayer { get { return idPlayer; } }
 
-    // Components
     private FrequencyTimer updateTimer;
+    private const int SizeArrayId = 2;  //nombre de ball du joueur
 
     #endregion
 
@@ -54,17 +72,46 @@ public class PlayerController : MonoBehaviour, IKillable
     /// </summary>
     private void InitPlayer()
     {
-        if (ballsList.Count < 2)
+        //ici reset la liste si il n'y en a pas 2
+        if (ballsList.Count != 2)
+        {
+            Debug.Log("erreur !!");
+            ballsList.Clear();
             ballsList.Add(null);
+            ballsList.Add(null);
+        }
+        ChangeBall();
+
+        /*
+        //setup la ball 1 (si il n'y en a pas déjà une !)
         if (!ballsList[0])
         {
-            GameObject ballsObject = Instantiate(balls, followersList[0].position, followersList[0].rotation, parentBalls);
+            GameObject ballsObject = Instantiate(prefabsBallsList[0], followersList[0].position, followersList[0].rotation, parentBalls);
             ballsList[0] = ballsObject.GetComponent<Balls>();
         }
+        //setup la ball 2 (si il n'y en a pas déjà une !)
         if (!ballsList[1])
         {
-            GameObject ballsObject = Instantiate(balls, followersList[1].position, followersList[1].rotation, parentBalls);
+            GameObject ballsObject = Instantiate(prefabsBallsList[0], followersList[1].position, followersList[1].rotation, parentBalls);
             ballsList[1] = ballsObject.GetComponent<Balls>();
+        }
+        */
+    }
+
+    /// <summary>
+    /// Change la ball du joueur:
+    /// idBall: 0 ou 1 (gauche ou droite ?)
+    /// idTypeBall: type de ball
+    /// </summary>
+    /// <param name="idBall"></param>
+    /// <param name="idTypeBall"></param>
+    [Button("ChangeBall")]
+    private void ChangeBall()
+    {
+        for (int i = 0; i < ballsList.Count; i++)
+        {
+            GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[i].idBallType), followersList[i].position, followersList[i].rotation, parentBalls);
+            ballsList[i] = ballsObject.GetComponent<Balls>();
         }
     }
 
@@ -154,6 +201,18 @@ public class PlayerController : MonoBehaviour, IKillable
     }
 
     #endregion
+
+    /// <summary>
+    /// fonction de debug pour éviter de resizer le tableau d'id
+    /// </summary>
+    void OnValidate()
+    {
+        if (ballInfo.Length != SizeArrayId)
+        {
+            Debug.LogWarning("Don't change the 'ints' field's array size!");
+            Array.Resize(ref ballInfo, SizeArrayId);
+        }
+    }
 
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()

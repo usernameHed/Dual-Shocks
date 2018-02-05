@@ -65,6 +65,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8d205dcc9e5f443ac03c9d0d5e5d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabsBallsList:
+  - {fileID: 1696340403240580, guid: 964499ac770bb1347b59b6c9d43e1897, type: 2}
+  - {fileID: 1696340403240580, guid: 03ce34dcf5af6d9419e380d659f19ab3, type: 2}
+  - {fileID: 1696340403240580, guid: 8bf45a00ac9fd7f4db1f2bf61b88d419, type: 2}
+  prefabsPowersList:
+  - {fileID: 0}
+  - {fileID: 0}
   updateTimer:
     updateFrequency: 0
 --- !u!114 &114948016746452702

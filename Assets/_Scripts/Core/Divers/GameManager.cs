@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 
 /// <summary>
 /// GameManager Description
@@ -8,7 +9,13 @@ public class GameManager : MonoBehaviour
 {
     #region Attributes
 
-	[Tooltip("opti fps"), SerializeField]
+    [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
+    private List<GameObject> prefabsBallsList;
+
+    [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
+    private List<GameObject> prefabsPowersList;
+
+    [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
     private static GameManager instance;
@@ -38,7 +45,35 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Core
+    /// <summary>
+    /// selon l'id, renvoi le bon prefabs de ball à créé
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GiveMeBall(int id)
+    {
+        if (id < 0 || id >= prefabsBallsList.Count)
+        {
+            Debug.Log("error id ball");
+            Debug.Break();
+            return (null);
+        }
+        return (prefabsBallsList[id]);
+    }
 
+    /// <summary>
+    /// selon l'id, renvoi le bon prefabs du pouvoir
+    /// </summary>
+    /// <returns></returns>
+    public GameObject GiveMePower(int id)
+    {
+        if (id < 0 || id >= prefabsPowersList.Count)
+        {
+            Debug.Log("error id power");
+            Debug.Break();
+            return (null);
+        }
+        return (prefabsPowersList[id]);
+    }
     #endregion
 
     #region Unity ending functions

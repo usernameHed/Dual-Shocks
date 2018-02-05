@@ -296,6 +296,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnRateFollowers: 400
+  ballInfo:
+  - idBallType: 2
+    powerJoystickLeft: 0000000000000000
+    powerJoystickRight: 0000000000000000
+  - idBallType: 1
+    powerJoystickLeft: 0000000000000000
+    powerJoystickRight: 0000000000000000
   followersList:
   - {fileID: 4879311319426532}
   - {fileID: 4395033982282366}
@@ -304,7 +311,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   rope: {fileID: 1037961934568134}
-  balls: {fileID: 1696340403240580, guid: 964499ac770bb1347b59b6c9d43e1897, type: 2}
   idPlayer: 0
 --- !u!114 &114334752039801838
 MonoBehaviour:

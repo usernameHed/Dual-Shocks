@@ -9,7 +9,8 @@ public class Balls : MonoBehaviour
     #region Attributes
     [FoldoutGroup("GamePlay"), Tooltip("speed of balls"), SerializeField]
     private float moveSpeed = 200f;
-
+    [FoldoutGroup("GamePlay"), Tooltip("l'id qui défini le type de ball"), SerializeField]
+    private int idBall = 0;
 
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
@@ -22,8 +23,8 @@ public class Balls : MonoBehaviour
     public bool Power1 { set; get; }
     public float Power2 { set; get; }
 
-    private int idBall = -1;
-    public int IdBall { get { return idBall; } }   //l'id (0 ou 1) de la balle par rapport au joueur
+    private int idBallPlayer = -1;
+    public int IdBallPlayer { get { return idBallPlayer; } }   //l'id (0 ou 1) de la balle par rapport au joueur (balle de gauche ou droite ?)
     private bool activated = false; //la ball est-elle activé ?
     private PlayerController playerRef;
 
@@ -48,7 +49,7 @@ public class Balls : MonoBehaviour
         ballBody = gameObject.GetComponent<Rigidbody>();
 
         playerRef = player;
-        idBall = id;
+        idBallPlayer = id;
 
         activated = true;
     }
@@ -63,9 +64,9 @@ public class Balls : MonoBehaviour
         }
 
         if (Power1)
-            Debug.Log("power 1 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBall + "] activated");
+            Debug.Log("power 1 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBallPlayer + "] activated");
         if (Power2 > 0)
-            Debug.Log("power 2 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBall + "] activated with " + Power2);
+            Debug.Log("power 2 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBallPlayer + "] activated with " + Power2);
         /*if (isJumping)
         {
             SoundManager.GetSingleton.playSound("Jump");
