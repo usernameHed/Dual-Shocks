@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private void Awake()
 	{
         InitPlayer();
-        InitBall();
+        
 	}
 
     private void Start()
@@ -110,12 +110,34 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         for (int i = 0; i < ballsList.Count; i++)
         {
-            GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[i].idBallType), followersList[i].position, followersList[i].rotation, parentBalls);
-            ballsList[i] = ballsObject.GetComponent<Balls>();
+            //SI il y a déja une ball... et que le type voulu est le même, ne pas changer de ball...
+            if (ballsList[i] && ballsList[i].IdBall == ballInfo[i].idBallType)
+            {
+                //ici ne pas recréé la ball, on veut peut etre changer les pouvoirs par contre ??
+                ballsList[i].InitBall(this, i); //ici init la ball avec les pouvoirs
+            }
+            //ici il y a déjà une ball, MAIS le contenue voulu est différent...
+            else if (ballsList[i] && ballsList[i].IdBall != ballInfo[i].idBallType)
+            {
+                ballsList[i].Kill();
+
+                GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[i].idBallType), followersList[i].position, followersList[i].rotation, parentBalls);
+                ballsList[i] = ballsObject.GetComponent<Balls>();
+                ballsList[i].InitBall(this, i); //ici init la ball avec les pouvoirs
+            }
+            //sinon, si il y a rien dans la liste, créé la ball voulu tout simplement !
+            else if (!ballsList[i])
+            {
+                GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[i].idBallType), followersList[i].position, followersList[i].rotation, parentBalls);
+                ballsList[i] = ballsObject.GetComponent<Balls>();
+                ballsList[i].InitBall(this, i); //ici init la ball avec les pouvoirs
+            }
         }
+        //InitBall();
     }
 
-    /// <summary>
+    /*
+     * /// <summary>
     /// initialise les balls (les id)
     /// </summary>
     private void InitBall()
@@ -124,7 +146,7 @@ public class PlayerController : MonoBehaviour, IKillable
         {
             ballsList[i].InitBall(this, i);
         }
-    }
+    }*/
 
     /// <summary>
     /// initialisation de la rope

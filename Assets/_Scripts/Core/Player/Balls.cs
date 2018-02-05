@@ -4,13 +4,14 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// Balls Description
 /// </summary>
-public class Balls : MonoBehaviour
+public class Balls : MonoBehaviour, IKillable
 {
     #region Attributes
     [FoldoutGroup("GamePlay"), Tooltip("speed of balls"), SerializeField]
     private float moveSpeed = 200f;
     [FoldoutGroup("GamePlay"), Tooltip("l'id qui défini le type de ball"), SerializeField]
     private int idBall = 0;
+    public int IdBall { get { return idBall; } }
 
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
@@ -97,4 +98,11 @@ public class Balls : MonoBehaviour
     }
 
     #endregion
+
+    [FoldoutGroup("Debug"), Button("Kill")]
+    public void Kill()
+    {
+        Debug.Log("Dead");
+        Destroy(gameObject);
+    }
 }
