@@ -10,7 +10,7 @@ public static class QuaternionExt
 
 		Quaternion _targetRotation = Quaternion.identity;
 
-		_targetRotation = Quaternion.Euler(0f, 0f, -heading * Mathf.Rad2Deg);
+		_targetRotation = Quaternion.Euler(0f, -heading * Mathf.Rad2Deg, 0f);
 		rotation = Quaternion.RotateTowards(rotation, _targetRotation, turnRate * Time.deltaTime);
 		return (rotation);
 	}

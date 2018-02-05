@@ -39,7 +39,7 @@ public class DataSaver
 			T currentData = (T)bf.Deserialize (file);
 			file.Close ();
 
-			Debug.Log (path + " loaded!");
+			//Debug.Log (path + " loaded!");
 			return currentData;
 		}
 

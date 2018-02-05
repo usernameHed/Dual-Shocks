@@ -20,7 +20,12 @@ public class Balls : MonoBehaviour
     public float VertiMove { set; get; }
     public bool HasMoved { set; get; }
     public bool Power1 { set; get; }
-    public bool Power2 { set; get; }
+    public float Power2 { set; get; }
+
+    private int idBall = -1;
+    public int IdBall { get { return idBall; } }   //l'id (0 ou 1) de la balle par rapport au joueur
+    private bool activated = false; //la ball est-elle activé ?
+    private PlayerController playerRef;
 
     #endregion
 
@@ -28,19 +33,24 @@ public class Balls : MonoBehaviour
 
     private void Awake()
     {
-        InitBall();
-        Debug.Log("awake ball");
+        //InitBall();
     }
 
     /// <summary>
     /// initialise la ball
     /// </summary>
-    private void InitBall()
+    public void InitBall(PlayerController player, int id)
     {
         HasMoved = false;
         Power1 = false;
-        Power2 = false;
+        Power2 = 0f;
+        
         ballBody = gameObject.GetComponent<Rigidbody>();
+
+        playerRef = player;
+        idBall = id;
+
+        activated = true;
     }
     #endregion
 
@@ -49,10 +59,13 @@ public class Balls : MonoBehaviour
     {
         if (HasMoved)
         {
-            //ballBody.velocity = new Vector3(HorizMove * moveSpeed * Time.deltaTime, 0.0f, VertiMove * moveSpeed * Time.deltaTime);
             ballBody.AddForce(HorizMove * moveSpeed * Time.deltaTime, 0.0f, VertiMove * moveSpeed * Time.deltaTime, ForceMode.Impulse);
         }
 
+        if (Power1)
+            Debug.Log("power 1 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBall + "] activated");
+        if (Power2 > 0)
+            Debug.Log("power 2 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBall + "] activated with " + Power2);
         /*if (isJumping)
         {
             SoundManager.GetSingleton.playSound("Jump");
@@ -65,6 +78,9 @@ public class Balls : MonoBehaviour
 
     private void Update()
     {
+        if (!activated) //si la ball n'est pas activé, ne rien faire
+            return;
+
         //optimisation des fps
         if (updateTimer.Ready())
         {
@@ -74,6 +90,8 @@ public class Balls : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!activated) //si la ball n'est pas activé, ne rien faire
+            return;
         MovePlayer();
     }
 
