@@ -17,6 +17,7 @@ public class Balls : MonoBehaviour, IKillable
 	private FrequencyTimer updateTimer;
 
     private Rigidbody ballBody;
+    public Rigidbody BallBody { get { return ballBody; } }
 
     public float HorizMove { set; get; }
     public float VertiMove { set; get; }
@@ -52,11 +53,23 @@ public class Balls : MonoBehaviour, IKillable
         playerRef = player;
         idBallPlayer = id;
 
-        activated = true;
+        CreateWeapon();
+
+        
     }
     #endregion
 
     #region Core
+    /// <summary>
+    /// cree les 2 weapons du player
+    /// </summary>
+    private void CreateWeapon()
+    {
+        Debug.Log("ici créé les 2 weapons !!");
+
+        activated = true;   //active la ball
+    }
+
     private void MovePlayer()
     {
         if (HasMoved)

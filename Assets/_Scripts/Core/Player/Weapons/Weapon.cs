@@ -5,9 +5,19 @@ using Sirenix.OdinInspector;
 
 public abstract class Weapon : MonoBehaviour
 {
-    [FoldoutGroup("Debug")] [Tooltip("ref sur playerController")] public PlayerController PC;
-	[FoldoutGroup("Gameplay")] [Tooltip("ref sur playerController")] public float cooldown;
-	private float nextShoot;
+    [FoldoutGroup("Gameplay"), Tooltip("cooldown de l'arme"), SerializeField]
+    private float cooldown;
+
+    [FoldoutGroup("Object"), Tooltip("ref sur l'animator"), SerializeField]
+    protected Animator animator;
+
+    [FoldoutGroup("Debug"), Tooltip("ref sur playerController"), SerializeField]
+    protected PlayerController playerRef;
+    [FoldoutGroup("Debug"), Tooltip("ref sur la ball"), SerializeField]
+    protected Balls ballRef;
+
+
+    private float nextShoot;
 
 	void LateUpdate()
 	{
@@ -27,8 +37,6 @@ public abstract class Weapon : MonoBehaviour
 	}
 
 	abstract protected void Shoot (float rotation);
-
-    abstract public void Dir(float horizMove, float vertiMove);
 
 	public virtual void OnShootRelease(){}
 
