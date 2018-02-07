@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System;
@@ -43,6 +43,15 @@ public class PlayerController : MonoBehaviour, IKillable
     [FoldoutGroup("Objects"), Tooltip("rope reliant les 2 followers"), SerializeField]
     private GameObject rope;
 
+
+    [FoldoutGroup("Rope"), Tooltip("Position de l'anchor pour les 2 balles"), SerializeField]
+    private Vector3 ropeAnchors = Vector3.zero;
+
+    [FoldoutGroup("Rope"), Tooltip("Force de l'élastique"), SerializeField]
+    private float spring = 10;
+
+    [FoldoutGroup("Rope"), Tooltip("Force de l'amortissement"), SerializeField]
+    private float damper = 0.2f;
     
 
     [FoldoutGroup("Debug"), Tooltip("id unique du joueur correspondant à sa manette"), SerializeField]
@@ -153,7 +162,15 @@ public class PlayerController : MonoBehaviour, IKillable
     /// </summary>
     private void InitRope()
     {
-        //list: ballsList
+        //Add Spring joint component and initialise its values
+        SpringJoint joint = ballsList[0].gameObject.AddComponent<SpringJoint>();
+        joint.connectedBody = ballsList[1].gameObject.GetComponent<Rigidbody>();
+        joint.anchor = ropeAnchors;
+        joint.autoConfigureConnectedAnchor = false;
+        joint.connectedAnchor = ropeAnchors;
+        joint.spring = spring;
+        joint.damper = damper;
+        joint.enableCollision = true;
     }
 
     #endregion
@@ -206,7 +223,6 @@ public class PlayerController : MonoBehaviour, IKillable
     private void Update()
 	{
         InputPlayer();
-
     }
 
 	private void FixedUpdate()
