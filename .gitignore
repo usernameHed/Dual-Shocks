@@ -44,3 +44,5 @@ fmod_editor.log
 fmod.log
 fmod.log
 fmod_editor.log
+*.log
+fmod.log
