@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: Assets\StreamingAssets\ReadyToGo\ReadyToGo.fspro
-  SourceProjectPathUnformatted: Assets\StreamingAssets\ReadyToGo\ReadyToGo.fspro
-  SourceBankPathUnformatted: Assets\StreamingAssets\ReadyToGo\Build
+  sourceProjectPath: Assets/StreamingAssets/ReadyToGo/ReadyToGo.fspro
+  SourceProjectPathUnformatted: Assets/StreamingAssets/ReadyToGo/ReadyToGo.fspro
+  SourceBankPathUnformatted: Assets/StreamingAssets/ReadyToGo/Build
   AutomaticEventLoading: 1
   AutomaticSampleLoading: 0
   ImportType: 0
