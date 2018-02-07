@@ -142,6 +142,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4012611394004534}
+  - component: {fileID: 114159107089432142}
   m_Layer: 0
   m_Name: 1 - Weapon Jump
   m_TagString: Untagged
@@ -578,3 +579,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114159107089432142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995181605325364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3017f1262dfdd49925b8e25e0a3080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PC: {fileID: 0}
+  cooldown: 1
+  turnRate: 2000
+  forceImpulse: 10
+  forwardPoint: 1
+  timeOpti: 0.1
+  prefabsRocket: {fileID: 0}

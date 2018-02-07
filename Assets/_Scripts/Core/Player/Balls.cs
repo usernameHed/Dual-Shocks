@@ -4,18 +4,20 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// Balls Description
 /// </summary>
-public class Balls : MonoBehaviour
+public class Balls : MonoBehaviour, IKillable
 {
     #region Attributes
     [FoldoutGroup("GamePlay"), Tooltip("speed of balls"), SerializeField]
     private float moveSpeed = 200f;
     [FoldoutGroup("GamePlay"), Tooltip("l'id qui défini le type de ball"), SerializeField]
     private int idBall = 0;
+    public int IdBall { get { return idBall; } }
 
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
     private Rigidbody ballBody;
+    public Rigidbody BallBody { get { return ballBody; } }
 
     public float HorizMove { set; get; }
     public float VertiMove { set; get; }
@@ -51,11 +53,23 @@ public class Balls : MonoBehaviour
         playerRef = player;
         idBallPlayer = id;
 
-        activated = true;
+        CreateWeapon();
+
+        
     }
     #endregion
 
     #region Core
+    /// <summary>
+    /// cree les 2 weapons du player
+    /// </summary>
+    private void CreateWeapon()
+    {
+        Debug.Log("ici créé les 2 weapons !!");
+
+        activated = true;   //active la ball
+    }
+
     private void MovePlayer()
     {
         if (HasMoved)
@@ -97,4 +111,11 @@ public class Balls : MonoBehaviour
     }
 
     #endregion
+
+    [FoldoutGroup("Debug"), Button("Kill")]
+    public void Kill()
+    {
+        Debug.Log("Dead");
+        Destroy(gameObject);
+    }
 }
