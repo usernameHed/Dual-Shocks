@@ -13,14 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 114213270439083154}
-  - {fileID: 114433424054630964}
+  - {fileID: 114558008497625450}
   EditorEvents:
   - {fileID: 114319511154578158}
   - {fileID: 114022968047004624}
   - {fileID: 114551788857803516}
-  MasterBankRef: {fileID: 114433424054630964}
+  MasterBankRef: {fileID: 114558008497625450}
   StringsBankRef: {fileID: 114213270439083154}
-  stringsBankWriteTime: 636533615270000000
+  stringsBankWriteTime: 636533632842019289
   cacheVersion: 2
 --- !u!114 &114021801374814878
 MonoBehaviour:
@@ -55,7 +55,7 @@ MonoBehaviour:
   Path: event:/SFX/Fire
   guid: d1cfbac4abf08e47bc95f090ee924070
   Banks:
-  - {fileID: 114433424054630964}
+  - {fileID: 114558008497625450}
   IsStream: 1
   Is3D: 1
   IsOneShot: 0
@@ -113,8 +113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: Assets/StreamingAssets/ReadyToGo/Build/Desktop/Master Bank.strings.bank
-  lastModified: 636533615270000000
+  Path: Assets/StreamingAssets/ReadyToGo\Build\Desktop\Master Bank.strings.bank
+  lastModified: 636533632842019289
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -156,7 +156,7 @@ MonoBehaviour:
   Path: event:/SFX/Jump
   guid: 8fcb095d85f7374ab61919903f43719b
   Banks:
-  - {fileID: 114433424054630964}
+  - {fileID: 114558008497625450}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -204,7 +204,7 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 1413408
-  Exists: 1
+  Exists: 0
 --- !u!114 &114441061016285904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +260,7 @@ MonoBehaviour:
   Path: event:/Music/BackgroundMusic
   guid: f0ddf0f136ac5048847a7e2e373f0eb1
   Banks:
-  - {fileID: 114433424054630964}
+  - {fileID: 114558008497625450}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -268,6 +268,25 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 139546
+--- !u!114 &114558008497625450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: D:\Cloud\WORK\GIT\meteor\Assets\StreamingAssets\ReadyToGo\Build\Desktop\Master
+    Bank.bank
+  lastModified: 636533632841994285
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 1413408
+  Exists: 1
 --- !u!114 &114707109033083702
 MonoBehaviour:
   m_ObjectHideFlags: 0
