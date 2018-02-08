@@ -14,7 +14,7 @@ public class Line : MonoBehaviour {
     /// update la position des extrémités de la corde
     /// </summary>
 	void Update () {
-		lineRenderer.SetPosition (0, this.gameObject.transform.GetChild(0).position);
-        lineRenderer.SetPosition (1, this.gameObject.transform.GetChild(1).position);
+		lineRenderer.SetPosition (0, transform.GetChild(0).position);
+        lineRenderer.SetPosition (1, transform.GetChild(1).position);
 	}
 }

@@ -52,6 +52,15 @@ public class PlayerController : MonoBehaviour, IKillable
 
     [FoldoutGroup("Rope"), Tooltip("Force de l'amortissement"), SerializeField]
     private float damper = 0.2f;
+
+    [FoldoutGroup("Rope"), Tooltip("Maillon"), SerializeField]
+    private GameObject link;
+
+    [FoldoutGroup("Rope"), Tooltip("Parent des balles + maillons"), SerializeField]
+    private GameObject linkParent;
+
+    [FoldoutGroup("Rope"), Tooltip("Nombre de maillons"), SerializeField]
+    private int linkCount;
     
 
     [FoldoutGroup("Debug"), Tooltip("id unique du joueur correspondant à sa manette"), SerializeField]
@@ -73,7 +82,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     private void Start()
     {
-        InitRope();
+        InitPhysicRope();
     }
 
     /// <summary>
@@ -173,6 +182,27 @@ public class PlayerController : MonoBehaviour, IKillable
         joint.enableCollision = true;
     }
 
+    private void InitPhysicRope()
+    {
+        for (int i = 0; i < linkCount; i++){
+            Instantiate(link, linkParent.transform.position, Quaternion.identity, linkParent.transform);
+            
+        }
+        linkParent.transform.GetChild(1).SetAsLastSibling();
+
+        for (int i = 0; i < linkCount + 1; i++){
+            SpringJoint joint = linkParent.transform.GetChild(i).gameObject.AddComponent<SpringJoint>();
+            joint.connectedBody = linkParent.transform.GetChild(i+1).gameObject.GetComponent<Rigidbody>();
+            joint.anchor = ropeAnchors;
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = ropeAnchors;
+            joint.spring = spring;
+            joint.damper = damper;
+            joint.enableCollision = false;
+            
+        }
+        
+    }
     #endregion
 
     #region Core
