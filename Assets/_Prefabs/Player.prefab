@@ -19,8 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4277121818412696}
+  - component: {fileID: 114689764750891554}
+  - component: {fileID: 120605678903995888}
   m_Layer: 0
-  m_Name: Rope
+  m_Name: Rope (line)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,8 +36,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4930493971786334}
-  - component: {fileID: 120944179565393666}
-  - component: {fileID: 114841105561842228}
   m_Layer: 0
   m_Name: Flollowers
   m_TagString: Untagged
@@ -52,6 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4018321864997768}
   - component: {fileID: 114064721508296888}
+  - component: {fileID: 114915105363196370}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -299,27 +300,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnRateFollowers: 400
   ballInfo:
-  - idBallType: 0
+  - idBallType: 1
     powerJoystickLeft: 0000000000000000
     powerJoystickRight: 0000000000000000
-  - idBallType: 0
+  - idBallType: 2
     powerJoystickLeft: 0000000000000000
     powerJoystickRight: 0000000000000000
   followersList:
   - {fileID: 4879311319426532}
   - {fileID: 4395033982282366}
   parentBalls: {fileID: 4588222303078446}
+  rope: {fileID: 1037961934568134}
+  idPlayer: 0
   ballsList:
   - {fileID: 0}
   - {fileID: 0}
-  rope: {fileID: 1037961934568134}
-  ropeAnchors: {x: 0, y: 0, z: 0}
-  spring: 5.5
-  damper: 0.2
-  link: {fileID: 1608521408533352, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
-  linkParent: {fileID: 1424030750076752}
-  linkCount: 3
-  idPlayer: 0
+  ropeScript: {fileID: 114915105363196370}
 --- !u!114 &114334752039801838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -384,6 +380,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114689764750891554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1037961934568134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1401daf8a54c4c81912821be3322a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 114064721508296888}
 --- !u!114 &114791408307275322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -421,23 +429,34 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114841105561842228
+--- !u!114 &114915105363196370
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1106619454656060}
+  m_GameObject: {fileID: 1136879732025386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1401daf8a54c4c81912821be3322a80, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ee24af1d756eee4f9b479c1b17c33d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!120 &120944179565393666
+  ropeAnchors: {x: 0, y: 0, z: 0}
+  spring: 1000
+  damper: 50
+  min: 0
+  max: 0
+  linkCount: 20
+  prefabLink: {fileID: 1608521408533352, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
+  updateTimer:
+    updateFrequency: 0
+  linkList: []
+  playerController: {fileID: 114064721508296888}
+--- !u!120 &120605678903995888
 LineRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1106619454656060}
+  m_GameObject: {fileID: 1037961934568134}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -446,7 +465,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 1a089e33ae05b824abd3e3bfd014e1a7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

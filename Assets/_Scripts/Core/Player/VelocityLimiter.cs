@@ -8,11 +8,11 @@ using Sirenix.OdinInspector;
 public class VelocityLimiter : MonoBehaviour
 {
     #region Attributes
-    [FoldoutGroup("GamePlay"), Tooltip("The velocity at which drag should begin being applied."), SerializeField]
-    private float dragStartVelocity;
+    //[FoldoutGroup("GamePlay"), Tooltip("The velocity at which drag should begin being applied."), SerializeField]
+    //private float dragStartVelocity;
 
-    [FoldoutGroup("GamePlay"), Tooltip("The velocity at which drag should equal maxDrag."), SerializeField]
-    private float dragMaxVelocity;
+    //[FoldoutGroup("GamePlay"), Tooltip("The velocity at which drag should equal maxDrag."), SerializeField]
+    //private float dragMaxVelocity;
 
     // The maximum allowed velocity. The velocity will be clamped to keep
     // it from exceeding this value. (Note: this value should be greater than
@@ -25,18 +25,18 @@ public class VelocityLimiter : MonoBehaviour
     // than dragMaxVelocity. Between the start and max velocities,
     // the drag applied will go from 0 to maxDrag, increasing
     // the closer the velocity gets to dragMaxVelocity.
-    [FoldoutGroup("GamePlay"), Tooltip("The maximum drag to apply"), SerializeField]
-    private float maxDrag = 1.0f;
+    //[FoldoutGroup("GamePlay"), Tooltip("The maximum drag to apply"), SerializeField]
+    //private float maxDrag = 1.0f;
 
     // The original drag of the object, which we use if the velocity
     // is below dragStartVelocity.
-    private float originalDrag;
+    //private float originalDrag;
     // Cache the rigidbody to avoid GetComponent calls behind the scenes.
     private Rigidbody rb;
     // Cached values used in FixedUpdate
-    private float sqrDragStartVelocity;
-    private float sqrDragVelocityRange;
-    private float sqrMaxVelocity;
+    //private float sqrDragStartVelocity;
+    //private float sqrDragVelocityRange;
+    //private float sqrMaxVelocity;
     #endregion
 
     #region Initialization
@@ -44,10 +44,11 @@ public class VelocityLimiter : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        originalDrag = rb.drag;
-        Initialize(dragStartVelocity, dragMaxVelocity, maxVelocity, maxDrag);
+        //originalDrag = rb.drag;
+        //Initialize(dragStartVelocity, dragMaxVelocity, maxVelocity, maxDrag);
     }
 
+    /*
     // Sets the threshold values and calculates cached variables used in FixedUpdate.
     // Outside callers who wish to modify the thresholds should use this function. Otherwise,
     // the cached values will not be recalculated.
@@ -63,9 +64,11 @@ public class VelocityLimiter : MonoBehaviour
         sqrDragVelocityRange = (dragMaxVelocity * dragMaxVelocity) - sqrDragStartVelocity;
         sqrMaxVelocity = maxVelocity * maxVelocity;
     }
+    */
     #endregion
 
     #region Core
+    /*
     private void LimitVelocity()
     {
         Vector3 v = rb.velocity;
@@ -90,13 +93,24 @@ public class VelocityLimiter : MonoBehaviour
             rb.drag = originalDrag;
         }
     }
+    */
+
+    private void otherLimit()
+    {
+        float speed = Vector3.Magnitude(rb.velocity);  // test current object speed
+        if (speed > maxVelocity)
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxVelocity);
+        }
+    }
     #endregion
 
     #region Unity ending functions
 
     private void FixedUpdate()
     {
-        LimitVelocity();
+        //LimitVelocity();
+        otherLimit();
     }
 
 	#endregion

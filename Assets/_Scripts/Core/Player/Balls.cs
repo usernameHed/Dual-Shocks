@@ -12,6 +12,9 @@ public class Balls : MonoBehaviour, IKillable
     [FoldoutGroup("GamePlay"), Tooltip("l'id qui défini le type de ball"), SerializeField]
     private int idBall = 0;
     public int IdBall { get { return idBall; } }
+    [FoldoutGroup("GamePlay"), Tooltip("Ratio du turnRate de la visée"), SerializeField]
+    private float ratioTurnRateFocus = 1;
+    public float RatioTurnRateFocus { get { return ratioTurnRateFocus; } }
 
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;

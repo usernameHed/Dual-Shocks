@@ -6,8 +6,11 @@ using System;
 [Serializable]
 public struct PlayerBall
 {
+    [Tooltip("le type de ball (bleu, red...), selon la liste de prefabs du gameManager")]
     public int idBallType;             //le type de ball (bleu, red...)
+    [Tooltip("le type de pouvoirs de la balle gauche (x2 pouvoir), selon la liste de prefabs du gameManager")]
     public int[] powerJoystickLeft;    //pouvoirs de la balle gauche
+    [Tooltip("le type de pouvoirs de la balle droite (x2 pouvoir), selon la liste de prefabs du gameManager")]
     public int[] powerJoystickRight;   //pouvoirs de la balle droite
 
     PlayerBall(int idBall, int[] powerLeft, int[] powerRight)
@@ -25,47 +28,37 @@ public class PlayerController : MonoBehaviour, IKillable
 {
     #region Attributes
 
-    [FoldoutGroup("GamePlay"), Tooltip("vitesse de rotation des followers"), SerializeField]
+    [FoldoutGroup("GamePlay"), Tooltip("vitesse de rotation des followers (de base, à multiplier par le ratio des balls"), SerializeField]
     private float turnRateFollowers = 400f;
 
-    [FoldoutGroup("GamePlay"), Tooltip("l'id du type de ball à créé (gauche et droite)"), SerializeField]
+    [FoldoutGroup("GamePlay"), Tooltip("les infos des 2 balls à créé sur le player + ses weapons"), SerializeField]
     private PlayerBall[] ballInfo = new PlayerBall[SizeArrayId];
 
 
     [FoldoutGroup("Objects"), Tooltip("List des followers qui suivent les balls"), SerializeField]
     private List<Transform> followersList;
+    public List<Transform> FollowersList { get { return followersList; } }
 
     [FoldoutGroup("Objects"), Tooltip("objet vide contenant les balls"), SerializeField]
     private Transform parentBalls;
-    [FoldoutGroup("Objects"), Tooltip("List des balls qui suivent les balls"), SerializeField]
-    private List<Balls> ballsList;
+    public Transform ParentBalls { get { return parentBalls; } }
+
 
     [FoldoutGroup("Objects"), Tooltip("rope reliant les 2 followers"), SerializeField]
     private GameObject rope;
 
 
-    [FoldoutGroup("Rope"), Tooltip("Position de l'anchor pour les 2 balles"), SerializeField]
-    private Vector3 ropeAnchors = Vector3.zero;
-
-    [FoldoutGroup("Rope"), Tooltip("Force de l'élastique"), SerializeField]
-    private float spring = 10;
-
-    [FoldoutGroup("Rope"), Tooltip("Force de l'amortissement"), SerializeField]
-    private float damper = 0.2f;
-
-    [FoldoutGroup("Rope"), Tooltip("Maillon"), SerializeField]
-    private GameObject link;
-
-    [FoldoutGroup("Rope"), Tooltip("Parent des balles + maillons"), SerializeField]
-    private GameObject linkParent;
-
-    [FoldoutGroup("Rope"), Tooltip("Nombre de maillons"), SerializeField]
-    private int linkCount;
-    
-
     [FoldoutGroup("Debug"), Tooltip("id unique du joueur correspondant à sa manette"), SerializeField]
     private int idPlayer = 0;
     public int IdPlayer { get { return idPlayer; } }
+
+
+    [FoldoutGroup("Debug"), Tooltip("List des balls créé"), SerializeField]
+    private List<Balls> ballsList;
+    public List<Balls> BallsList { get { return ballsList; } }
+
+    [FoldoutGroup("Debug"), Tooltip("playerController"), SerializeField]
+    private Rope ropeScript;
 
     private FrequencyTimer updateTimer;
     private const int SizeArrayId = 2;  //nombre de ball du joueur
@@ -77,13 +70,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private void Awake()
 	{
         InitPlayer();
-        
 	}
-
-    private void Start()
-    {
-        InitPhysicRope();
-    }
 
     /// <summary>
     /// initialise les players: créé les balls et les ajoutes dans la liste si la liste est vide
@@ -99,21 +86,13 @@ public class PlayerController : MonoBehaviour, IKillable
             ballsList.Add(null);
         }
         ChangeBall();
+        //Invoke("initRope", 1.0f);
+        initRope();
+    }
 
-        /*
-        //setup la ball 1 (si il n'y en a pas déjà une !)
-        if (!ballsList[0])
-        {
-            GameObject ballsObject = Instantiate(prefabsBallsList[0], followersList[0].position, followersList[0].rotation, parentBalls);
-            ballsList[0] = ballsObject.GetComponent<Balls>();
-        }
-        //setup la ball 2 (si il n'y en a pas déjà une !)
-        if (!ballsList[1])
-        {
-            GameObject ballsObject = Instantiate(prefabsBallsList[0], followersList[1].position, followersList[1].rotation, parentBalls);
-            ballsList[1] = ballsObject.GetComponent<Balls>();
-        }
-        */
+    private void initRope()
+    {
+        ropeScript.InitPhysicRope();
     }
 
     /// <summary>
@@ -151,58 +130,8 @@ public class PlayerController : MonoBehaviour, IKillable
                 ballsList[i].InitBall(this, i); //ici init la ball avec les pouvoirs
             }
         }
-        //InitBall();
     }
 
-    /*
-     * /// <summary>
-    /// initialise les balls (les id)
-    /// </summary>
-    private void InitBall()
-    {
-        for (int i = 0; i < ballsList.Count; i++)
-        {
-            ballsList[i].InitBall(this, i);
-        }
-    }*/
-
-    /// <summary>
-    /// initialisation de la rope
-    /// </summary>
-    private void InitRope()
-    {
-        //Add Spring joint component and initialise its values
-        SpringJoint joint = ballsList[0].gameObject.AddComponent<SpringJoint>();
-        joint.connectedBody = ballsList[1].gameObject.GetComponent<Rigidbody>();
-        joint.anchor = ropeAnchors;
-        joint.autoConfigureConnectedAnchor = false;
-        joint.connectedAnchor = ropeAnchors;
-        joint.spring = spring;
-        joint.damper = damper;
-        joint.enableCollision = true;
-    }
-
-    private void InitPhysicRope()
-    {
-        for (int i = 0; i < linkCount; i++){
-            Instantiate(link, linkParent.transform.position, Quaternion.identity, linkParent.transform);
-            
-        }
-        linkParent.transform.GetChild(1).SetAsLastSibling();
-
-        for (int i = 0; i < linkCount + 1; i++){
-            SpringJoint joint = linkParent.transform.GetChild(i).gameObject.AddComponent<SpringJoint>();
-            joint.connectedBody = linkParent.transform.GetChild(i+1).gameObject.GetComponent<Rigidbody>();
-            joint.anchor = ropeAnchors;
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = ropeAnchors;
-            joint.spring = spring;
-            joint.damper = damper;
-            joint.enableCollision = false;
-            
-        }
-        
-    }
     #endregion
 
     #region Core
@@ -236,11 +165,17 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         for (int i = 0; i < followersList.Count; i++)
         {
+            if (!ballsList[i])
+            {
+                Debug.Log("la balle n'existe pas....");
+                continue;
+            }
+
             Vector3 pos = ballsList[i].gameObject.transform.position;
             followersList[i].position = pos;    //set position of balls
 
             if (ballsList[i].HasMoved)  //set rotation
-                followersList[i].rotation = QuaternionExt.DirObject(followersList[i].rotation, ballsList[i].HorizMove, -ballsList[i].VertiMove, turnRateFollowers);
+                followersList[i].rotation = QuaternionExt.DirObject(followersList[i].rotation, ballsList[i].HorizMove, -ballsList[i].VertiMove, turnRateFollowers * ballsList[i].RatioTurnRateFocus);
         }
     }
 

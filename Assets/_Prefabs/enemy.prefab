@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 54966931066097826}
   - component: {fileID: 114588804504731022}
   - component: {fileID: 114482737029558584}
+  - component: {fileID: 114170763260750704}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
@@ -39,8 +40,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1221095074222132}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.98, y: 1.09, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.83, y: 1, z: -0.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,8 +101,24 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 56
+  m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114170763260750704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1221095074222132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808de9dae972df8438a9ee6600d0f45c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateTimer:
+    updateFrequency: 1
+  xMargin: 0
+  yMargin: 0
+  isOnScreen: 0
 --- !u!114 &114482737029558584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -113,7 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02507aa4c9fda784b9ee08ef23dd77c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killByTag: []
+  killOnEnter: 1
+  killOnExit: 0
 --- !u!114 &114588804504731022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,7 +196,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1221095074222132}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.6

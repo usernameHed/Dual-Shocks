@@ -40,10 +40,11 @@ GameObject:
   - component: {fileID: 23272596771757678}
   - component: {fileID: 54510478010571616}
   - component: {fileID: 114860671979244486}
+  - component: {fileID: 114195111743477434}
   - component: {fileID: 114934967086933620}
   - component: {fileID: 114416877674035530}
-  - component: {fileID: 114195111743477434}
-  m_Layer: 0
+  - component: {fileID: 145107696209315526}
+  m_Layer: 10
   m_Name: 3 - Ball Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -606,10 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49104d353479d224a8db497a8b7c0ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragStartVelocity: 10
-  dragMaxVelocity: 20
-  maxVelocity: 80
-  maxDrag: 1
+  maxVelocity: 5
 --- !u!114 &114416877674035530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -633,8 +631,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635677dab55867e488628b820eb36ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
+  moveSpeed: 250
   idBall: 2
+  ratioTurnRateFocus: 2
   updateTimer:
     updateFrequency: 0
 --- !u!114 &114934967086933620
@@ -662,3 +661,25 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!145 &145107696209315526
+SpringJoint:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1696340403240580}
+  m_ConnectedBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 0
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Spring: 50
+  m_Damper: 50
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
