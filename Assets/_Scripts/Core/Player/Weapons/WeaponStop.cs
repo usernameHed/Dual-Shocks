@@ -6,16 +6,25 @@ using Sirenix.OdinInspector;
 /// <summary>
 
 //[RequireComponent(typeof(CircleCollider2D))]
-public class WeaponThrowerBoost : Weapon
+public class WeaponStop : Weapon
 {
     #region public variable
     /// <summary>
     /// variable public
     /// </summary>
-	[FoldoutGroup("Gameplay"), Tooltip("Max Fuel (sec)"), SerializeField]
+    [FoldoutGroup("Gameplay"), Tooltip("drag à mettre à la ball quand on stop"), SerializeField]
+    private float dragWhenStop = 3f;
+
+    [FoldoutGroup("Gameplay"), Tooltip("Max Fuel (sec)"), SerializeField]
     private float maxFuel = 3f;
+
 	[FoldoutGroup("Gameplay"), Tooltip("Fuel gain multiplier"), SerializeField]
     private float fuelIncreaseMultiplier = 1.0f;
+
+    [FoldoutGroup("Object"), Tooltip("l'objet à mettre actif lors du pouvoir"), SerializeField]
+    private GameObject Spiks;
+
+    private float saveDrag = 0;
 
     #endregion
 
@@ -47,6 +56,9 @@ public class WeaponThrowerBoost : Weapon
         //playerBody = PC.GetComponent<Rigidbody>();
         //particle.GetComponent<TriggerFlame>().setActive(PC.gameObject);
 		fuel = maxFuel;
+        //saveCoolDown = cooldown;
+        //cooldown = 0;
+        saveDrag = ballRef.BallBody.drag;
     }
 
     /// <summary>
@@ -69,32 +81,38 @@ public class WeaponThrowerBoost : Weapon
 			//PC.jetpack = false;
 			return;
 		}
-
         if (!fireHeld)
         {
             Debug.Log("here first Throwing");
-
+            Spiks.SetActive(true);
+            //cooldown = 0;
         }
         else
         {
             Debug.Log("Throwing...");
-
+            ballRef.BallBody.drag = dragWhenStop;
+            //cooldown = 0;
         }
-        //PC.jetpack = true;
-        fireHeld = true;
+		//PC.jetpack = true;
+		fireHeld = true;
         
-
 		isShooting = true;
         timeToGo = Time.fixedTime + timeOpti;                               //setup le temps
+
     }
 
     public override void OnShootRelease()
     {
-        //PC.jetpack = false;
         fireHeld = false;
+        Spiks.SetActive(false);
+        ballRef.BallBody.drag = saveDrag;
 
+        Debug.Log("no more throw...");
+        //cooldown = saveCoolDown;
+        //timeToGo = Time.fixedTime + timeOpti;
         //SoundManager.Instance.PlaySound (SoundManager.Instance.EmptyFlameThrowerSound);
     }
+
 
     private void RpcAddForceToPlayer(Rigidbody Rbplayer, Vector3 impulsion)
     {
@@ -116,7 +134,8 @@ public class WeaponThrowerBoost : Weapon
         {
             isShooting = false;
             //particle.SetActive(false);
-            Debug.Log("no more throw...");
+            
+            OnShootRelease();
 
             //particle.GetComponent<ParticleSystem>().Stop();
             //ici action optimisé
@@ -138,8 +157,6 @@ public class WeaponThrowerBoost : Weapon
 			malus = fuel == maxFuel;
 		}
     }
-
-	
 
 	public override float WeaponPercent()
 	{

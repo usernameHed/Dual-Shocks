@@ -43,7 +43,7 @@ public class WeaponJump : Weapon
 
 		Debug.Log("Jumpi !");
         //animator.SetBool(0, true);
-        ballRef.BallBody.AddForce(Vector3.up * forceImpulse, ForceMode.Impulse);
+        ballRef.BallBody.AddForce(Vector3.up * forceImpulse, ForceMode.VelocityChange);
         SoundManager.GetSingleton.playSound("Jump" + transform.GetInstanceID().ToString());
     }
     #endregion

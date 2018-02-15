@@ -67,7 +67,7 @@ public abstract class Weapon : MonoBehaviour, IKillable
 
 	public virtual float WeaponPercent()
 	{
-		return Mathf.Clamp((cooldown - nextShoot) / cooldown, 0.0F, 1.0F);
+		return Mathf.Clamp((cooldown - nextShoot) / cooldown, 0.0F, 1.0f);
 	}
 
     [FoldoutGroup("Debug")]
