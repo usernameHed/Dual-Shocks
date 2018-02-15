@@ -301,11 +301,9 @@ MonoBehaviour:
   turnRateFollowers: 400
   ballInfo:
   - idBallType: 1
-    powerJoystickLeft: 0000000000000000
-    powerJoystickRight: 0000000000000000
+    powers: 00000000ffffffff
   - idBallType: 2
-    powerJoystickLeft: 0000000000000000
-    powerJoystickRight: 0000000000000000
+    powers: 01000000ffffffff
   followersList:
   - {fileID: 4879311319426532}
   - {fileID: 4395033982282366}

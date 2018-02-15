@@ -19,36 +19,37 @@ public class WeaponJump : Weapon
     /// <summary>
     /// variable privé
     /// </summary>
-	//private Rigidbody playerBody;
+    //private Rigidbody playerBody;
 
     #endregion
-    
-    #region  initialisation
 
+    #region  initialisation
+    /// <summary>
+    /// appelé lors de l'initialisation de ce weapon
+    /// </summary>
+    protected override void InitParticularWeapon()
+    {
+        Debug.Log("init this weapon id: " + IdWeapon);
+    }
     #endregion
 
     #region core script
     /// <summary>
     /// functionTest
     /// </summary>
-	protected override void Shoot(float rotation)
+	protected override void Shoot()
     {
         //SoundManager.Instance.PlaySound (SoundManager.Instance.RocketLaunchSound);
 
 		Debug.Log("Jumpi !");
-        animator.SetBool(0, true);
-        ballRef.BallBody.AddForce(transform.up * -forceImpulse, ForceMode.Impulse);
+        //animator.SetBool(0, true);
+        ballRef.BallBody.AddForce(Vector3.up * forceImpulse, ForceMode.Impulse);
+        SoundManager.GetSingleton.playSound("Jump" + transform.GetInstanceID().ToString());
     }
     #endregion
 
     #region unity fonction and ending
 
-    [FoldoutGroup("Debug")]
-    [Button("destroyThis")]
-    public void destroyThis()
-    {
-		//SoundManager.Instance.PlaySound (SoundManager.Instance.RocketSound);
-        Destroy(gameObject);
-    }
+    
     #endregion
 }

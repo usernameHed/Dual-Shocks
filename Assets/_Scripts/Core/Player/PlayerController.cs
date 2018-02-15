@@ -8,16 +8,13 @@ public struct PlayerBall
 {
     [Tooltip("le type de ball (bleu, red...), selon la liste de prefabs du gameManager")]
     public int idBallType;             //le type de ball (bleu, red...)
-    [Tooltip("le type de pouvoirs de la balle gauche (x2 pouvoir), selon la liste de prefabs du gameManager")]
-    public int[] powerJoystickLeft;    //pouvoirs de la balle gauche
-    [Tooltip("le type de pouvoirs de la balle droite (x2 pouvoir), selon la liste de prefabs du gameManager")]
-    public int[] powerJoystickRight;   //pouvoirs de la balle droite
+    [Tooltip("les types de pouvoirs de la balle (x2 pouvoir), selon la liste de prefabs du gameManager")]
+    public int[] powers;    //pouvoirs de la balle gauche
 
-    PlayerBall(int idBall, int[] powerLeft, int[] powerRight)
+    PlayerBall(int idBall, int[] powersBall)
     {
         idBallType = idBall;
-        powerJoystickLeft = powerLeft;
-        powerJoystickRight = powerRight;
+        powers = powersBall;
     }
 }
 
@@ -33,7 +30,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     [FoldoutGroup("GamePlay"), Tooltip("les infos des 2 balls à créé sur le player + ses weapons"), SerializeField]
     private PlayerBall[] ballInfo = new PlayerBall[SizeArrayId];
-
+    public PlayerBall[] BallInfo { get { return ballInfo; } }
 
     [FoldoutGroup("Objects"), Tooltip("List des followers qui suivent les balls"), SerializeField]
     private List<Transform> followersList;
@@ -79,15 +76,23 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         //ici reset la liste si il n'y en a pas 2
         if (ballsList.Count != 2)
-        {
-            Debug.Log("erreur !!");
-            ballsList.Clear();
-            ballsList.Add(null);
-            ballsList.Add(null);
-        }
-        ChangeBall();
+            ClearListBall();    //debug si il n'y a pas 2 emplacements vide pour les balls
+        ChangeBalls();
         //Invoke("initRope", 1.0f);
         initRope();
+    }
+
+    private void ClearListBall()
+    {
+        Debug.Log("Clear la liste des balls");
+        for (int i = 0; i < ballsList.Count; i++)
+        {
+            if (ballsList[i])
+                ballsList[i].Kill();
+        }
+        ballsList.Clear();
+        ballsList.Add(null);
+        ballsList.Add(null);
     }
 
     private void initRope()
@@ -102,8 +107,8 @@ public class PlayerController : MonoBehaviour, IKillable
     /// </summary>
     /// <param name="idBall"></param>
     /// <param name="idTypeBall"></param>
-    [Button("ChangeBall")]
-    private void ChangeBall()
+    [Button("ChangeBalls")]
+    private void ChangeBalls()
     {
         for (int i = 0; i < ballsList.Count; i++)
         {
@@ -113,23 +118,26 @@ public class PlayerController : MonoBehaviour, IKillable
                 //ici ne pas recréé la ball, on veut peut etre changer les pouvoirs par contre ??
                 ballsList[i].InitBall(this, i); //ici init la ball avec les pouvoirs
             }
-            //ici il y a déjà une ball, MAIS le contenue voulu est différent...
+            //ici il y a déjà une ball, MAIS on veut une ball différente...
             else if (ballsList[i] && ballsList[i].IdBall != ballInfo[i].idBallType)
             {
+                //on supprime l'existante pour créé la nouvelle
                 ballsList[i].Kill();
 
-                GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[i].idBallType), followersList[i].position, followersList[i].rotation, parentBalls);
-                ballsList[i] = ballsObject.GetComponent<Balls>();
-                ballsList[i].InitBall(this, i); //ici init la ball avec les pouvoirs
+                CreateBall(i);
             }
             //sinon, si il y a rien dans la liste, créé la ball voulu tout simplement !
             else if (!ballsList[i])
             {
-                GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[i].idBallType), followersList[i].position, followersList[i].rotation, parentBalls);
-                ballsList[i] = ballsObject.GetComponent<Balls>();
-                ballsList[i].InitBall(this, i); //ici init la ball avec les pouvoirs
+                CreateBall(i);
             }
         }
+    }
+    private void CreateBall(int index)
+    {
+        GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[index].idBallType), followersList[index].position, followersList[index].rotation, parentBalls);
+        ballsList[index] = ballsObject.GetComponent<Balls>();
+        ballsList[index].InitBall(this, index); //ici init la ball avec les pouvoirs
     }
 
     #endregion

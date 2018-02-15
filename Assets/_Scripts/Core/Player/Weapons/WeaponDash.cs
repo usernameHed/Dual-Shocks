@@ -41,14 +41,6 @@ public class WeaponDash : Weapon
     
     #region  initialisation
     /// <summary>
-    /// Initialisation
-    /// </summary>
-    private void Awake()                                                    //initialisation referencce
-    {
-
-    }
-
-    /// <summary>
     /// Initialisation à l'activation
     /// </summary>
     private void Start()
@@ -56,23 +48,29 @@ public class WeaponDash : Weapon
         timeToGo = Time.fixedTime + timeOpti;                               //setup le temps
 		//playerBody = PC.GetComponent<Rigidbody>();
     }
+
+    /// <summary>
+    /// appelé lors de l'initialisation de ce weapon
+    /// </summary>
+    protected override void InitParticularWeapon()
+    {
+        Debug.Log("init this weapon id: " + IdWeapon);
+    }
     #endregion
 
     #region core script
+
+
     /// <summary>
     /// functionTest
     /// </summary>
-	protected override void Shoot(float rotation)
+    protected override void Shoot()
     {
         //SoundManager.Instance.PlaySound (SoundManager.Instance.RocketLaunchSound);
 
-		Debug.Log("RocketLauncher");
-		transform.rotation = Quaternion.Euler (new Vector3(0.0F, 0.0F, rotation));
-        GameObject rocket = Instantiate(prefabsRocket, transform.position + (transform.up * forwardPoint), transform.rotation);
-        //Rocket rockScript = rocket.GetComponent<Rocket>();
-        //rockScript.activeRocket(PC.gameObject); //active la rocket
-      
-		playerBody.AddForce(transform.up * -forceImpulse, ForceMode.Impulse);
+		Debug.Log("Dash");
+		
+		//playerBody.AddForce(transform.up * -forceImpulse, ForceMode.Impulse);
     }
     #endregion
 
@@ -92,12 +90,6 @@ public class WeaponDash : Weapon
         }
     }
 
-    [FoldoutGroup("Debug")]
-    [Button("destroyThis")]
-    public void destroyThis()
-    {
-		//SoundManager.Instance.PlaySound (SoundManager.Instance.RocketSound);
-        Destroy(gameObject);
-    }
+   
     #endregion
 }

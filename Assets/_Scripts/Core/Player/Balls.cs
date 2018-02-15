@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 
 /// <summary>
 /// Balls Description
@@ -16,6 +17,10 @@ public class Balls : MonoBehaviour, IKillable
     private float ratioTurnRateFocus = 1;
     public float RatioTurnRateFocus { get { return ratioTurnRateFocus; } }
 
+    [FoldoutGroup("Debug"), Tooltip("List des weapons de la ball créé"), SerializeField]
+    private List<Weapon> weaponsList;
+    public List<Weapon> WeaponsList { get { return weaponsList; } }
+
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
@@ -25,8 +30,38 @@ public class Balls : MonoBehaviour, IKillable
     public float HorizMove { set; get; }
     public float VertiMove { set; get; }
     public bool HasMoved { set; get; }
-    public bool Power1 { set; get; }
-    public float Power2 { set; get; }
+    private bool power1;
+    public bool Power1
+    {
+        set
+        {
+            if (value != power1 && value == false && weaponsList[0])
+            {
+                weaponsList[0].OnShootRelease();
+            }
+            power1 = value;
+        }
+        get
+        {
+            return power1;
+        }
+    }
+    private float power2;
+    public float Power2
+    {
+        set
+        {
+            if (value != power2 && value == 0 && weaponsList[1])
+            {
+                weaponsList[1].OnShootRelease();
+            }
+            power2 = value;
+        }
+        get
+        {
+            return power2;
+        }
+    }
 
     private int idBallPlayer = -1;
     public int IdBallPlayer { get { return idBallPlayer; } }   //l'id (0 ou 1) de la balle par rapport au joueur (balle de gauche ou droite ?)
@@ -56,21 +91,93 @@ public class Balls : MonoBehaviour, IKillable
         playerRef = player;
         idBallPlayer = id;
 
-        CreateWeapon();
+        InitWeapon();
+    }
+
+    /// <summary>
+    /// cree les 2 weapons du player
+    /// </summary>
+    private void InitWeapon()
+    {
+        
+        if (weaponsList.Count != 2)
+            ClearListWeapons();    //debug si il n'y a pas 2 emplacements vide pour les balls
+        ChangeWeapons();
 
         
     }
     #endregion
 
     #region Core
-    /// <summary>
-    /// cree les 2 weapons du player
-    /// </summary>
-    private void CreateWeapon()
+    [Button("ChangeWeapons")]
+    private void ChangeWeapons()
     {
         Debug.Log("ici créé les 2 weapons !!");
+        for (int i = 0; i < weaponsList.Count; i++)
+        {
+            //SI il y a déja une weapon... et que le type voulu est le même, ne pas changer de weapon...
+            if (weaponsList[i] && weaponsList[i].IdWeapon == playerRef.BallInfo[idBallPlayer].powers[i])
+            {
+                //peut etre ré-init le pouvoir ??
+                weaponsList[i].InitWeapon(playerRef, this, idBallPlayer); //ici init le pouvoir
+            }
+            //ici il y a déjà une weapon, MAIS on veut une weapon différente...
+            else if (weaponsList[i] && weaponsList[i].IdWeapon != playerRef.BallInfo[idBallPlayer].powers[i])
+            {
+                weaponsList[i].Kill();
+                CreateWeapon(i);
+            }
+            //sinon, si il y a rien dans la liste, créé la ball voulu tout simplement !
+            else if (!weaponsList[i])
+            {
+                CreateWeapon(i);
+            }
+        }
+
 
         activated = true;   //active la ball
+    }
+    private void CreateWeapon(int index)
+    {
+        int idWeapon = playerRef.BallInfo[idBallPlayer].powers[index];
+        if (!isAllowedToCreateWeapon(idWeapon, index))
+        {
+            Debug.Log("ici pas de weapon n°" + (index + 1));
+            return;
+        }
+
+        GameObject weaponObject = Instantiate(GameManager.GetSingleton.GiveMePower(idWeapon), transform.position, playerRef.FollowersList[idBallPlayer].rotation, transform);
+
+        weaponsList[index] = weaponObject.GetComponent<Weapon>();
+        weaponsList[index].InitWeapon(playerRef, this, idBallPlayer); //ici init la ball avec les pouvoirs
+    }
+
+    /// <summary>
+    /// défini si le weapon peut être créé à partir de son id (idWeaponTOCreate)
+    /// </summary>
+    private bool isAllowedToCreateWeapon(int idWeaponToCreate, int indexWeapon)
+    {
+        //l'id est incorrect
+        if (idWeaponToCreate < 0 || idWeaponToCreate >= GameManager.GetSingleton.PrefabsPowerCount())
+            return (false);
+
+        //l'id du 2eme weapon est le même que le premier... ne rien faire !
+        if (indexWeapon == 1 && idWeaponToCreate == weaponsList[0].IdWeapon)
+            return (false);
+        return (true);
+    }
+
+    private void ClearListWeapons()
+    {
+        Debug.Log("Clear la liste des balls");
+        for (int i = 0; i < weaponsList.Count; i++)
+        {
+            if (weaponsList[i])
+                weaponsList[i].Kill();
+        }
+        weaponsList.Clear();
+        weaponsList.Add(null);
+        weaponsList.Add(null);
     }
 
     private void MovePlayer()
@@ -80,10 +187,16 @@ public class Balls : MonoBehaviour, IKillable
             ballBody.AddForce(HorizMove * moveSpeed * Time.deltaTime, 0.0f, VertiMove * moveSpeed * Time.deltaTime, ForceMode.Impulse);
         }
 
-        if (Power1)
-            Debug.Log("power 1 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBallPlayer + "] activated");
-        if (Power2 > 0)
-            Debug.Log("power 2 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBallPlayer + "] activated with " + Power2);
+        if (Power1 && weaponsList[0])
+        {
+            weaponsList[0].TryShoot();
+            //Debug.Log("power 1 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBallPlayer + "] activated");
+        }            
+        if (Power2 > 0 && weaponsList[1])
+        {
+            weaponsList[1].TryShoot();
+            //Debug.Log("power 2 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBallPlayer + "] activated with " + Power2);
+        }            
         /*if (isJumping)
         {
             SoundManager.GetSingleton.playSound("Jump");
@@ -118,7 +231,10 @@ public class Balls : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
     {
-        Debug.Log("Dead");
+        if (weaponsList[0])
+            weaponsList[0].Kill();
+        if (weaponsList[1])
+            weaponsList[1].Kill();
         Destroy(gameObject);
     }
 }

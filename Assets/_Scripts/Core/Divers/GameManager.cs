@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
     private List<GameObject> prefabsPowersList;
+    public int PrefabsPowerCount() { return (prefabsPowersList.Count); }
 
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;

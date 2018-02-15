@@ -70,8 +70,9 @@ MonoBehaviour:
   - {fileID: 1696340403240580, guid: 03ce34dcf5af6d9419e380d659f19ab3, type: 2}
   - {fileID: 1696340403240580, guid: 8bf45a00ac9fd7f4db1f2bf61b88d419, type: 2}
   prefabsPowersList:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1995181605325364, guid: 0a91f27065bc3bd4895794196fd60f77, type: 2}
+  - {fileID: 1995181605325364, guid: f5b58a9e978ca134db08eb29b9490842, type: 2}
+  - {fileID: 1995181605325364, guid: 12328685f22970e479309138b7711eca, type: 2}
   updateTimer:
     updateFrequency: 0
 --- !u!114 &114948016746452702

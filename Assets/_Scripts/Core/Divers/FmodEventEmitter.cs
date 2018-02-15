@@ -4,6 +4,7 @@ using System.Collections;
 public class FmodEventEmitter : MonoBehaviour
 {
     public string additionnalName = "";
+    public bool addParentId = false;
 
     private FMODUnity.StudioEventEmitter emitter;   //l'emitter attaché à l'objet
 
@@ -11,8 +12,9 @@ public class FmodEventEmitter : MonoBehaviour
     void Start()
     {
         emitter = gameObject.GetComponent<FMODUnity.StudioEventEmitter>();  //init l'emitter
+        string addParent = (addParentId) ? transform.parent.GetInstanceID().ToString() : "";
         if (emitter && emitter.Event != "")
-            SoundManager.GetSingleton.AddKey(emitter.Event + additionnalName, this);
+            SoundManager.GetSingleton.AddKey(emitter.Event + additionnalName + addParent, this);
     }
 
     /// <summary>

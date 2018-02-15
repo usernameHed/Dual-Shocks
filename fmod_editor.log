@@ -14,132 +14,26 @@
 [LOG] SystemI::init                            : create the stream thread
 [LOG] Thread::initThread                       : Init FMOD stream thread. Priority: 2, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Priority: 3, Stack Size: 49152, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 00000000520593F8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000000004ED480D8 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Priority: 0, Stack Size: 65536, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Priority: 0, Stack Size: 65536, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000000051AACE88
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000000051AACE88
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000000051AACE88
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000000051AACE88
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000000051AAD038
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000000051AAD038
-[LOG] SystemI::createSound                     : filename = Assets\StreamingAssets\ReadyToGo\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 0000000051AAB898 : node = 0000000042B8E7B0
-[LOG] SystemI::createSound                     : add node to async list : head = 0000000042CDB2D8.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000000051AAB898
-[LOG] SystemI::createSound                     : filename = Assets\StreamingAssets\ReadyToGo\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     filename = Assets\StreamingAssets\ReadyToGo\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSound                     :     setdata soundi = 0000000051AAC978 : node = 0000000042B8DA90
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 1397440
-[LOG] SystemI::createSound                     :     add node to async list : head = 0000000042CDB2D8.  list count = 0
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 15968
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000000042B8E8C8
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
-[LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
-[LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 361760
-[LOG] SystemI::createSample                    :     channels = 2
-[LOG] SystemI::createSample                    :     output = 0000000051F1A468
-[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 361760, channels 2, format 2, freq 48000, mode 0201008a
-[LOG] System::createSoundInternal              :     1 subsounds detected.
-[LOG] System::createSoundInternal              :     Seek stream to start
-[LOG] System::createSoundInternal              :     flush stream buffer
-[LOG] System::createSoundInternal              :     flush successful.
-[LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
-[LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
-
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000000051AAB898
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 0000000051AAC978
-[LOG] SystemI::createSoundInternal             :     filename = Assets\StreamingAssets\ReadyToGo\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 1397440
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 15968
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000000042B8DBA8
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
-[LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
-[LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 361760
-[LOG] SystemI::createSample                    :     channels = 2
-[LOG] SystemI::createSample                    :     output = 0000000051F1A468
-[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 361760, channels 2, format 2, freq 48000, mode 0201008a
-[LOG] System::createSoundInternal              :     1 subsounds detected.
-[LOG] System::createSoundInternal              :     Seek stream to start
-[LOG] System::createSoundInternal              :     flush stream buffer
-[LOG] System::createSoundInternal              :     flush successful.
-[LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
-[LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
-
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 0000000051AAC978
-[LOG] SoundI::getSubSound                      : sound 0000000051AAB898.  Subsound index 0 / 1
-[LOG] SoundI::getSubSound                      : sound 0000000051AAC978.  Subsound index 0 / 1
-[LOG] SoundI::release                          : FIRE loop sound effect (0000000051AACCD8)
-[LOG] SoundI::release                          : remove stream samples. (0000000051AACCD8)
-[LOG] SoundI::release                          :     FIRE loop sound effect (0000000042CDB4C8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (0000000051AACCD8)
-[LOG] SoundI::release                          :     FIRE loop sound effect (0000000051AAD038)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (0000000051AACCD8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : FIRE loop sound effect (0000000051AAD398)
-[LOG] SoundI::release                          : remove stream samples. (0000000051AAD398)
-[LOG] SoundI::release                          :     FIRE loop sound effect (0000000042CD9788)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (0000000051AAD398)
-[LOG] SoundI::release                          :     FIRE loop sound effect (0000000051AACE88)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (0000000051AAD398)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : It Follows Soundtrack - 07 Detroit (0000000051AAC2B8)
-[LOG] SoundI::release                          : remove stream samples. (0000000051AAC2B8)
-[LOG] SoundI::release                          :     It Follows Soundtrack - 07 Detroit (0000000042CDB328)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (0000000051AAC2B8)
-[LOG] SoundI::release                          :     It Follows Soundtrack - 07 Detroit (0000000051AAC468)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (0000000051AAC2B8)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : FIRE loop sound effect (0000000051AAB898)
-[LOG] SoundI::release                          : remove stream samples. (0000000051AAB898)
-[LOG] SoundI::release                          :     FIRE loop sound effect (0000000042CD9C68)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (0000000051AAB898)
-[LOG] SoundI::release                          :     FIRE loop sound effect (0000000051AACB28)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (0000000051AAB898)
-[LOG] SoundI::release                          : done
-[LOG] SoundI::release                          : FIRE loop sound effect (0000000051AAC978)
-[LOG] SoundI::release                          : remove stream samples. (0000000051AAC978)
-[LOG] SoundI::release                          :     FIRE loop sound effect (0000000063FD64B8)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release subsounds. (0000000051AAC978)
-[LOG] SoundI::release                          :     FIRE loop sound effect (0000000051AAC108)
-[LOG] SoundI::release                          :     done
-[LOG] SoundI::release                          : release codec. (0000000051AAC978)
-[LOG] SoundI::release                          : done
-[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[ERR] RuntimeBankModel::openFile               : Failed to open file 'D:\Cloud\WORK\GIT\meteor\Assets\StreamingAssets\ReadyToGo\Build\Desktop\Master Bank.bank'
+[WRN] ObjectLookup::get                        : Lookup failed for EventModel: {5d09cb8f-f785-4a37-b619-19903f43719b}
+[ERR] RuntimeBankModel::openFile               : Failed to open file 'D:\Cloud\WORK\GIT\meteor\Assets\StreamingAssets\ReadyToGo\Build\Desktop\Master Bank.bank'
+[WRN] ObjectLookup::get                        : Lookup failed for EventModel: {5d09cb8f-f785-4a37-b619-19903f43719b}
+[ERR] RuntimeBankModel::openFile               : Failed to open file 'D:\Cloud\WORK\GIT\meteor\Assets\StreamingAssets\ReadyToGo\Build\Desktop\Master Bank.bank'
+[WRN] ObjectLookup::get                        : Lookup failed for EventModel: {5d09cb8f-f785-4a37-b619-19903f43719b}
+[ERR] RuntimeBankModel::openFile               : Failed to open file 'D:\Cloud\WORK\GIT\meteor\Assets\StreamingAssets\ReadyToGo\Build\Desktop\Master Bank.bank'
+[WRN] ObjectLookup::get                        : Lookup failed for EventModel: {5d09cb8f-f785-4a37-b619-19903f43719b}
+[ERR] RuntimeBankModel::openFile               : Failed to open file 'D:\Cloud\WORK\GIT\meteor\Assets\StreamingAssets\ReadyToGo\Build\Desktop\Master Bank.bank'
+[WRN] ObjectLookup::get                        : Lookup failed for EventModel: {5d09cb8f-f785-4a37-b619-19903f43719b}
+[ERR] RuntimeBankModel::openFile               : Failed to open file 'D:\Cloud\WORK\GIT\meteor\Assets\StreamingAssets\ReadyToGo\Build\Desktop\Master Bank.bank'
+[WRN] ObjectLookup::get                        : Lookup failed for EventModel: {f1f0ddf0-ac36-4850-847a-7e2e373f0eb1}
 [LOG] Thread::callback                         : FMOD Studio bank load thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] Thread::callback                         : FMOD Studio sample load thread finished.
 [LOG] LiveUpdate::release                      : 
 [LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
@@ -148,7 +42,6 @@
 [LOG] Thread::callback                         : FMOD stream thread finished.
 [LOG] SystemI::close                           : Stream thread destroyed
 [LOG] Thread::callback                         : FMOD mixer thread finished.
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] SystemI::close                           : Free master channel group.
 [LOG] SystemI::close                           : Remove 'master' sound group.
 [LOG] SystemI::close                           : Free software output.
@@ -156,10 +49,3 @@
 [LOG] SystemI::close                           : Free channel pool.
 [LOG] SystemI::close                           : done.
 
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] Manager::readBank                        : fileversion = 99, compatVersion = 99 (oldest = 44, newest = 99)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6

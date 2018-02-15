@@ -45,15 +45,6 @@ public class WeaponThrowerBoost : Weapon
 
     #region  initialisation
     /// <summary>
-    /// Initialisation
-    /// </summary>
-    private void Awake()                                                    //initialisation referencce
-    {
-        //particle.GetComponent<ParticleSystem>().Stop();
-        
-    }
-
-    /// <summary>
     /// Initialisation à l'activation
     /// </summary>
     private void Start()
@@ -63,13 +54,21 @@ public class WeaponThrowerBoost : Weapon
         //particle.GetComponent<TriggerFlame>().setActive(PC.gameObject);
 		fuel = maxFuel;
     }
+
+    /// <summary>
+    /// appelé lors de l'initialisation de ce weapon
+    /// </summary>
+    protected override void InitParticularWeapon()
+    {
+        Debug.Log("init this weapon id: " + IdWeapon);
+    }
     #endregion
 
     #region core script
     /// <summary>
     /// functionTest
     /// </summary>
-	protected override void Shoot(float rotation)
+	protected override void Shoot()
     {
 		if ((malus && fuel < maxFuel) || fuel <= 0.0F)
 		{
@@ -78,17 +77,18 @@ public class WeaponThrowerBoost : Weapon
 		}
 		//PC.jetpack = true;
 		fireHeld = true;
+        Debug.Log("Throwing...");
 
-        if (!particle.activeSelf)
+        /*if (!particle.activeSelf)
         {
             particle.SetActive(true);
-        }
+        }*/
 
         //particle.GetComponent<ParticleSystem>().Play();
 
 		isShooting = true;
         timeToGo = Time.fixedTime + timeOpti;                               //setup le temps
-        RpcAddForceToPlayer(playerBody, transform.up * -forceImpulse);
+        //RpcAddForceToPlayer(playerBody, transform.up * -forceImpulse);
     }
 
     private void RpcAddForceToPlayer(Rigidbody Rbplayer, Vector3 impulsion)
@@ -110,7 +110,9 @@ public class WeaponThrowerBoost : Weapon
         if (isShooting && Time.fixedTime >= timeToGo)
         {
             isShooting = false;
-            particle.SetActive(false);
+            //particle.SetActive(false);
+            Debug.Log("no more throw...");
+
             //particle.GetComponent<ParticleSystem>().Stop();
             //ici action optimisé
 
@@ -144,11 +146,6 @@ public class WeaponThrowerBoost : Weapon
 		return Mathf.Clamp(fuel / maxFuel, 0.0F, 1.0F);
 	}
 
-    [FoldoutGroup("Debug")]
-    [Button("destroyThis")]
-    public void destroyThis()
-    {
-        Destroy(gameObject);
-    }
+    
     #endregion
 }

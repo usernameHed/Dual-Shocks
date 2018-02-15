@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4166561485961154}
   - component: {fileID: 33023555961402134}
-  - component: {fileID: 65106167213329812}
   - component: {fileID: 23918782388346230}
   m_Layer: 0
   m_Name: Cube (1)
@@ -38,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4699433122156208}
   - component: {fileID: 33824964627801144}
-  - component: {fileID: 65238009490793660}
   - component: {fileID: 23235163246035536}
   m_Layer: 0
   m_Name: Cube
@@ -55,6 +53,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4643168902308824}
+  - component: {fileID: 95107563838824108}
   m_Layer: 0
   m_Name: Display
   m_TagString: Untagged
@@ -111,7 +110,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1499879419650180}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -119,7 +118,7 @@ Transform:
   - {fileID: 4166561485961154}
   m_Father: {fileID: 4012611394004534}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4699433122156208
 Transform:
   m_ObjectHideFlags: 1
@@ -215,30 +214,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1094592422812262}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65106167213329812
-BoxCollider:
+--- !u!95 &95107563838824108
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1063408126154444}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_GameObject: {fileID: 1499879419650180}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65238009490793660
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1094592422812262}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 944438d1561e0634b9374a1ae07c73c6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114351669511375902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,8 +242,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f0dcb4adb25ef4e919b7c74c91024f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PC: {fileID: 0}
   cooldown: 1
+  idWeapon: 1
+  display: {fileID: 1499879419650180}
+  animator: {fileID: 95107563838824108}
+  playerRef: {fileID: 0}
+  ballRef: {fileID: 0}
+  orderWeapon: 0
   turnRate: 2000
   forceImpulse: 10
   forwardPoint: 1
