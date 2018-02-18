@@ -550,7 +550,9 @@ MonoBehaviour:
   ballRef: {fileID: 0}
   idWeapon: 0
   orderWeapon: 0
-  forceImpulse: 100
+  forceImpulse: 70
+  forceLinkImpulse: 20
+  linkToPush: 50
 --- !u!114 &114327064706699884
 MonoBehaviour:
   m_ObjectHideFlags: 1

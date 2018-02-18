@@ -14,12 +14,15 @@ public class WeaponStop : Weapon
     /// </summary>
     [FoldoutGroup("Gameplay"), Tooltip("drag à mettre à la ball quand on stop"), SerializeField]
     private float dragWhenStop = 3f;
+    [FoldoutGroup("Gameplay"), Tooltip("Mass à ajouter"), SerializeField]
+    private float additionalMass = 10f;
 
     [FoldoutGroup("Object"), Tooltip("l'objet à mettre actif lors du pouvoir"), SerializeField]
     private GameObject Spikes;
 
     private float saveDrag = 0;
-
+    private float saveAngularDrag = 0;
+    private float saveMass = 0;
     #endregion
 
     #region  initialisation
@@ -29,6 +32,8 @@ public class WeaponStop : Weapon
     private void Start()
     {
         saveDrag = ballRef.BallBody.drag;
+        saveAngularDrag = ballRef.BallBody.angularDrag;
+        saveMass = ballRef.BallBody.mass;
     }
 
     /// <summary>
@@ -49,6 +54,8 @@ public class WeaponStop : Weapon
         Spikes.SetActive(true);
         SoundManager.GetSingleton.playSound("SpiksOn" + transform.GetInstanceID().ToString());
         ballRef.BallBody.drag = dragWhenStop;
+        ballRef.BallBody.angularDrag = dragWhenStop;
+        ballRef.BallBody.mass += additionalMass;
     }
 
     /// <summary>
@@ -66,7 +73,8 @@ public class WeaponStop : Weapon
     {
         Spikes.SetActive(false);
         ballRef.BallBody.drag = saveDrag;
-
+        ballRef.BallBody.angularDrag = saveAngularDrag;
+        ballRef.BallBody.mass = saveMass;
         SoundManager.GetSingleton.playSound("SpiksOff" + transform.GetInstanceID().ToString());
     }
 

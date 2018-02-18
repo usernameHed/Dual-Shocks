@@ -424,7 +424,7 @@ MonoBehaviour:
   radius: 6
   pushLink: 1
   pushFriendLink: 0
-  forceImpulseLink: 30
+  forceImpulseLink: 20
   pushFriendBall: 0
   layerToPush:
   - Player

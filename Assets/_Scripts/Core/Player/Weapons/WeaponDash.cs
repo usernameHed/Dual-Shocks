@@ -15,7 +15,9 @@ public class WeaponDash : Weapon
     /// </summary>
     [FoldoutGroup("Gameplay"), Tooltip("Impulsion du joueur lors du dash"), SerializeField]
     private float forceImpulse = 10f;
-    [FoldoutGroup("Gameplay"), Tooltip("Nombre de link à pousser aussi"), SerializeField]
+    [FoldoutGroup("Gameplay"), Tooltip("Impulsion du joueur lors du tir"), SerializeField]
+    private float forceLinkImpulse = 10f;
+    [FoldoutGroup("Gameplay"), Range(0, 100), Tooltip("Nombre de link à pousser aussi"), SerializeField]
     private int linkToPush = 0;
 
     [FoldoutGroup("Gameplay"), Tooltip("Téléporte le joueur ?"), SerializeField]
@@ -76,24 +78,25 @@ public class WeaponDash : Weapon
 
         int startLoop = 0;
         int stopLoop = 0;
+        int numberLink = (linkToPush * rope.LinkList.Count) / 100;
 
         //si la ball de référence est au début de la chaine, partir du bas vers le haut de la list !
-        if (rope.LinkList[0].GetInstanceID() == playerRef.gameObject.GetInstanceID())
+        if (rope.LinkList[0].GetInstanceID() == ballRef.gameObject.GetInstanceID())
         {
-            stopLoop = Mathf.Min(linkToPush, rope.LinkList.Count - 1);
+            stopLoop = Mathf.Min(numberLink, rope.LinkList.Count - 1);
             for (int i = 1; i < stopLoop; i++)
             {
-                ApplyForce(rope.LinkList[i].GetComponent<Rigidbody>(), forceImpulse);
+                ApplyForce(rope.LinkList[i].GetComponent<Rigidbody>(), forceLinkImpulse);
             }
         }
         //si la ball de référence est à la fin, partir du haut vers le bas
-        else if (rope.LinkList[rope.LinkList.Count - 1].GetInstanceID() == playerRef.gameObject.GetInstanceID())
+        else if (rope.LinkList[rope.LinkList.Count - 1].GetInstanceID() == ballRef.gameObject.GetInstanceID())
         {
             startLoop = rope.LinkList.Count - 2;
-            stopLoop = Mathf.Max(0, (rope.LinkList.Count - 1) - linkToPush);
+            stopLoop = Mathf.Max(0, (rope.LinkList.Count - 1) - numberLink);
             for (int i = startLoop; i > stopLoop; i--)
             {
-                ApplyForce(ballRef.BallBody, forceImpulse);
+                ApplyForce(ballRef.BallBody, forceLinkImpulse);
             }
         }
 

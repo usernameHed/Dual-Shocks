@@ -256,16 +256,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hold: 0
-  cooldown: 1
+  cooldown: 1.5
   display: {fileID: 1499879419650180}
   playerRef: {fileID: 0}
   ballRef: {fileID: 0}
   idWeapon: 1
   orderWeapon: 0
   forceImpulse: 100
-  linkToPush: 0
+  forceLinkImpulse: 40
+  linkToPush: 38
   teleport: 1
-  forwardDist: 10
+  forwardDist: 3
   timeToCallTeleport: 0.1
 --- !u!114 &114519891297572570
 MonoBehaviour:

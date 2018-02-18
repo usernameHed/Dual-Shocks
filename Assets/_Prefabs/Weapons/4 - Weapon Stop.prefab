@@ -832,7 +832,7 @@ MonoBehaviour:
   ballRef: {fileID: 0}
   idWeapon: 3
   orderWeapon: 0
-  dragWhenStop: 8
+  dragWhenStop: 10
   Spikes: {fileID: 1642116018543144}
 --- !u!114 &114624794338726350
 MonoBehaviour:

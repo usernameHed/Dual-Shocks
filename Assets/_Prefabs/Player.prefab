@@ -303,7 +303,7 @@ MonoBehaviour:
   - idBallType: 1
     powers: 0400000003000000
   - idBallType: 2
-    powers: 0100000002000000
+    powers: 0100000000000000
   followersList:
   - {fileID: 4879311319426532}
   - {fileID: 4395033982282366}
