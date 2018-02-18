@@ -30,7 +30,7 @@ public class WeaponJump : Weapon
 
     #region core script
     /// <summary>
-    /// functionTest
+    /// Jump
     /// </summary>
 	protected override void OnShoot()
     {

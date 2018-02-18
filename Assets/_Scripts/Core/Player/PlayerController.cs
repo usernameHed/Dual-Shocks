@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     [FoldoutGroup("Objects"), Tooltip("rope reliant les 2 followers"), SerializeField]
     private GameObject rope;
+    public Transform Rope { get { return rope.transform; } }
 
 
     [FoldoutGroup("Debug"), Tooltip("id unique du joueur correspondant à sa manette"), SerializeField]
@@ -143,6 +144,36 @@ public class PlayerController : MonoBehaviour, IKillable
     #endregion
 
     #region Core
+    /// <summary>
+    /// test si la ball passé en parametre est contenue dans le player
+    /// </summary>
+    public bool isContainingThisBall(GameObject ball)
+    {
+        if (ball.GetInstanceID() == ballsList[0].gameObject.GetInstanceID()
+            || ball.GetInstanceID() == ballsList[1].gameObject.GetInstanceID())
+        {
+            return (true);
+        }
+        return (false);
+    }
+
+    /// <summary>
+    /// test si le link passé en paramettre est contenue dans la rope du player
+    /// </summary>
+    /// <param name="link">Link est l'objet link à tester</param>
+    public bool isContainingThisLink(GameObject link)
+    {
+        Line rope = link.transform.parent.GetComponent<Line>();
+        if (!rope)
+            return (false);
+
+        if (rope.PlayerControllerVariable == this)
+        {
+            return (true);
+        }
+        return (false);
+    }
+
     /// <summary>
     /// input of player for both joystick
     /// </summary>

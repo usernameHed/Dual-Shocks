@@ -111,7 +111,6 @@ public abstract class Weapon : MonoBehaviour, IKillable
     protected virtual void OnShootHold() { }          //appelé lorsque l'on reste appuyé
     protected virtual void OnShootRelease() { }          //appelé lorsque l'on reste appuyé
 
-    //public virtual void OnShootNoMoreThrust() {}  //appelé lorsque on stop d'appuyé
 
     public virtual float WeaponPercent()
 	{

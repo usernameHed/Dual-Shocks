@@ -25,18 +25,26 @@ public class WeaponThrowerBoost : Weapon
 
     #region core script
     /// <summary>
-    /// functionTest
+    /// appelé la première fois qu'on appui
     /// </summary>
 	protected override void OnShoot()
     {
         SoundManager.GetSingleton.playSound("Thrower" + transform.GetInstanceID().ToString());
     }
 
+    /// <summary>
+    /// appelé quand on reste appuyé, après OnShoot
+    /// (seulement si la variable hold est activé)
+    /// </summary>
     protected override void OnShootHold()
     {
         
     }
 
+    /// <summary>
+    /// appelé quand on relache
+    /// (seulement si la variable hold est activé)
+    /// </summary>
     protected override void OnShootRelease()
     {
 

@@ -29,17 +29,8 @@ public class Rope : MonoBehaviour
     [FoldoutGroup("Object"), Tooltip("Prefab du Maillon"), SerializeField]
     private GameObject prefabLink;
 
-    //[FoldoutGroup("Object"), Tooltip("Prefab des liaisons des maillons"), SerializeField]
-    //private GameObject prefabBetweenLink;
-
-
-    [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
-    private FrequencyTimer updateTimer;
-
     [FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     private List<GameObject> linkList;
-    //[FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
-    //private List<GameObject> betweenLinkList;
 
     [FoldoutGroup("Debug"), Tooltip("playerController"), SerializeField]
     private PlayerController playerController;
@@ -52,7 +43,7 @@ public class Rope : MonoBehaviour
 
     #region Core
     /// <summary>
-    /// initialise les springJoints;
+    /// initialise les springJoints; appelé depuis player
     /// </summary>
     public void InitPhysicRope()
     {
@@ -80,7 +71,7 @@ public class Rope : MonoBehaviour
             Vector3 posJoint = new Vector3(x1, y1, z1);
 
             //créé un joint, à une position quelquonque, en parent: la où se trouve les balls du player
-            GameObject newLink = Instantiate(prefabLink, posJoint, Quaternion.identity, playerController.ParentBalls);
+            GameObject newLink = Instantiate(prefabLink, posJoint, Quaternion.identity, playerController.Rope);
             linkList.Add(newLink);
         }
         //détruit le springJoint de la dernière ball si il y a
@@ -133,15 +124,6 @@ public class Rope : MonoBehaviour
     #endregion
 
     #region Unity ending functions
-
-    private void Update()
-    {
-        //optimisation des fps
-        if (updateTimer.Ready())
-        {
-
-        }
-    }
 
 	#endregion
 }

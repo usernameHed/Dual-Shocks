@@ -420,10 +420,15 @@ MonoBehaviour:
   ballRef: {fileID: 0}
   idWeapon: 4
   orderWeapon: 0
-  forceImpulse: 100
+  forceImpulse: 30
   radius: 6
+  pushLink: 1
+  pushFriendLink: 0
+  forceImpulseLink: 30
+  pushFriendBall: 0
   layerToPush:
   - Player
+  - Rope
 --- !u!114 &114688186563547586
 MonoBehaviour:
   m_ObjectHideFlags: 1

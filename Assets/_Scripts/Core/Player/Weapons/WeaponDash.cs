@@ -17,6 +17,8 @@ public class WeaponDash : Weapon
     private float forceImpulse = 10f;
     [FoldoutGroup("Gameplay"), Tooltip("distance de téléportation"), SerializeField]
     private float forwardDist = 3f;
+    [FoldoutGroup("Gameplay"), Tooltip("Temps d'attente entre la poussé et le dash"), SerializeField]
+    private float timeToCallTeleport = 0.1f;
 
     #endregion
 
@@ -39,17 +41,24 @@ public class WeaponDash : Weapon
 
 
     /// <summary>
-    /// functionTest
+    /// Applique une force qui pousse la ball devant lui, selon la fariable forceImpulse
     /// </summary>
     protected override void OnShoot()
     {
 		Debug.Log("Dash");
         SoundManager.GetSingleton.playSound("Swouch" + transform.GetInstanceID().ToString());
+
+        //pousse la balle
         ballRef.BallBody.AddForce(playerRef.FollowersList[ballRef.IdBallPlayer].transform.forward * -forceImpulse, ForceMode.VelocityChange);
-        Invoke("Teleport", 0.1f);
+
+        //ici attend timeToCallTeleport seconde, puis téléporte
+        Invoke("Teleport", timeToCallTeleport);
 
     }
 
+    /// <summary>
+    /// téléporte devant, selon la variable forwardDist
+    /// </summary>
     private void Teleport()
     {
         Vector3 forward = playerRef.FollowersList[ballRef.IdBallPlayer].transform.forward * -1;

@@ -301,9 +301,9 @@ MonoBehaviour:
   turnRateFollowers: 400
   ballInfo:
   - idBallType: 1
-    powers: 00000000ffffffff
+    powers: 0400000003000000
   - idBallType: 2
-    powers: 01000000ffffffff
+    powers: 0100000002000000
   followersList:
   - {fileID: 4879311319426532}
   - {fileID: 4395033982282366}
@@ -445,8 +445,6 @@ MonoBehaviour:
   max: 0
   linkCount: 20
   prefabLink: {fileID: 1608521408533352, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
-  updateTimer:
-    updateFrequency: 0
   linkList: []
   playerController: {fileID: 114064721508296888}
 --- !u!120 &120605678903995888

@@ -35,9 +35,11 @@ public class CameraController : MonoBehaviour
 	//Fallback target if target list is empty
 	[SerializeField, Space(10)]
 	private Transform fallBackTarget;
+    [SerializeField, Space(10)]
+    private Transform fmodListener;
 
-	//Target list
-	[SerializeField, Space(10), Header("Debug")]
+    //Target list
+    [SerializeField, Space(10), Header("Debug")]
 	private List<CameraTarget> targetList = new List<CameraTarget>();
 
 	[SerializeField]
@@ -51,9 +53,17 @@ public class CameraController : MonoBehaviour
 		get { return averageTargetPosition; }
 	}
 
+    private Vector3 posLisener;
+
     #endregion
 
     #region Core
+
+    private void Start()
+    {
+        posLisener = new Vector3(0, 0, 0);
+    }
+
     /// <summary>
     /// Add target to camera
     /// </summary>
@@ -226,6 +236,14 @@ public class CameraController : MonoBehaviour
 
         // Move to desired position
 		transform.position = Vector3.SmoothDamp(transform.position, averageTargetPosition, ref currentVelocity, smoothTime);
+        //posLisener = transform.position;    //change listenerPosition
+    }
+
+    private void LateUpdate()
+    {
+        posLisener = fmodListener.position;
+        posLisener.y = 0f;
+        fmodListener.position = posLisener;
     }
 
     #endregion

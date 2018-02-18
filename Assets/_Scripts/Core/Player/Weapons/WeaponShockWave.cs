@@ -17,6 +17,20 @@ public class WeaponShockWave : Weapon
     private float forceImpulse = 10f;
     [FoldoutGroup("Gameplay"), Tooltip("radius de l'explosion"), SerializeField]
     private float radius = 5f;
+
+    [Space(10)]
+
+    [FoldoutGroup("Gameplay"), Tooltip("Est-ce qu'on pousse les Link ?"), SerializeField]
+    private bool pushLink = false;
+    [FoldoutGroup("Gameplay"), EnableIf("pushLink"), Tooltip("Est-ce qu'on pousse les ball & rope allié ?"), SerializeField]
+    private bool pushFriendLink = false;
+    [FoldoutGroup("Gameplay"), EnableIf("pushLink"), Tooltip("Impulsion du joueur lors du tir"), SerializeField]
+    private float forceImpulseLink = 1f;
+
+    [Space(10)]
+    [FoldoutGroup("Gameplay"), Tooltip("Est-ce qu'on pousse les ball & rope allié ?"), SerializeField]
+    private bool pushFriendBall = false;
+
     [FoldoutGroup("Gameplay"), Tooltip("Nom des layers à chercher et à pousser"), SerializeField]
     private string[] layerToPush;
 
@@ -46,11 +60,10 @@ public class WeaponShockWave : Weapon
 	protected override void OnShoot()
     {
         Debug.Log("shockwave !");
+        shockwaveEffect.CreateWave(ballRef.transform);  //créé l'effet de shackwave
 
-        //ballRef.BallBody.AddForce(Vector3.up * forceImpulse, ForceMode.VelocityChange);
-        shockwaveEffect.CreateWave(ballRef.transform);
         SoundManager.GetSingleton.playSound("ShockWave" + transform.GetInstanceID().ToString());
-        CreateShackWave();
+        CreateShackWave();  //applique les forces
     }
 
     /// <summary>
@@ -65,23 +78,64 @@ public class WeaponShockWave : Weapon
         for (int i = 0; i < ToPush.Length; i++)
         {
             Collider toPush = ToPush[i];
-            //si ce collider n'est pas notre ball attaquante...
-            if (toPush.gameObject.GetInstanceID() != ballRef.gameObject.GetInstanceID())
+
+            //ne rien faire si c'est l'objet courrant...
+            if (toPush.gameObject.GetInstanceID() == ballRef.gameObject.GetInstanceID())
+                continue;
+
+            //si on a trouvé un link...
+            if (toPush.gameObject.CompareTag("Link"))
             {
-                //pousser ! Trouver le vecteur direction ball - collider, et ajouter une force au collider
-                Vector3 forceDirection = ballRef.transform.position - toPush.transform.position;
-                forceDirection = forceDirection.normalized;
-                forceDirection.y = 0f;
-                Debug.DrawRay(ballRef.transform.position, forceDirection, Color.red, 3f);
-                toPush.GetComponent<Rigidbody>().AddForce(forceImpulse * -forceDirection, ForceMode.Impulse);
+                if (!pushLink)  //ne rien faire si on a choisi de ne pas pousser les links...
+                    continue;
+                //ici on a un link
+
+                //ne rien faire si ce link est amis et !pushFriendLink
+                if (!pushFriendLink && playerRef.isContainingThisLink(toPush.gameObject))
+                    continue;
+
+                //ici on a un link enemi (ou allié si pushFriendLink est vrai)
+                PushObject(toPush, true);   //dis qu'on applique la force des links !
             }
+            //si on a trouvé une ball..
+            else if (toPush.gameObject.CompareTag("Ball"))
+            {
+                if (!pushFriendBall && playerRef.isContainingThisBall(toPush.gameObject))
+                    continue;
+                //ici on a une ball ennemi (ou allié si pushFriendBall est vrai)
+                PushObject(toPush);
+            }
+            else
+            {
+                //ici on a un autre objet, si il est la ça veut dire qu'on veut
+                //le pousser, car il est dans les layer du tableau layerToPush
+                PushObject(toPush);
+            }
+
         }
+    }
+
+    /// <summary>
+    /// ici pousse l'objet
+    /// </summary>
+    private void PushObject(Collider toPush, bool isLinkForce = false)
+    {
+        //pousser ! Trouver le vecteur direction ball - collider, et ajouter une force au collider
+        Vector3 forceDirection = ballRef.transform.position - toPush.transform.position;
+        forceDirection = forceDirection.normalized;
+        forceDirection.y = 0f;
+        Debug.DrawRay(ballRef.transform.position, forceDirection, Color.red, 3f);
+
+        //détermine si on applque la force pour les link ou pas
+        float force = (!isLinkForce) ? forceImpulse : forceImpulseLink;
+
+        toPush.GetComponent<Rigidbody>().AddForce(force * -forceDirection, ForceMode.Impulse);
     }
     #endregion
 
     #region unity fonction and ending
     /// <summary>
-    /// affichage du radius
+    /// affichage du radius dans l'éditeur quand on sélectionne la ball
     /// </summary>
     void OnDrawGizmosSelected()
     {
