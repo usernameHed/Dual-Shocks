@@ -64,6 +64,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1447965590512844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4966503685518634}
+  - component: {fileID: 114977232968263466}
+  - component: {fileID: 114688186563547586}
+  m_Layer: 0
+  m_Name: SpiksOn Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1499879419650180
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +200,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1893253413174620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4016588364539970}
+  - component: {fileID: 114624794338726350}
+  - component: {fileID: 114677864846836838}
+  m_Layer: 0
+  m_Name: SpiksOff Music
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1995181605325364
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,8 +245,23 @@ Transform:
   m_Children:
   - {fileID: 4643168902308824}
   - {fileID: 4643363027554326}
+  - {fileID: 4966503685518634}
+  - {fileID: 4016588364539970}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4016588364539970
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1893253413174620}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4012611394004534}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4108098305841764
 Transform:
@@ -222,7 +271,7 @@ Transform:
   m_GameObject: {fileID: 1003194575413214}
   m_LocalRotation: {x: -0.40957606, y: -0.40957606, z: -0.21321179, w: 0.7867883}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.100000024, y: 2, z: 0.10000001}
+  m_LocalScale: {x: 0.100000024, y: 1.2, z: 0.10000001}
   m_Children: []
   m_Father: {fileID: 4643363027554326}
   m_RootOrder: 2
@@ -235,7 +284,7 @@ Transform:
   m_GameObject: {fileID: 1627266686689262}
   m_LocalRotation: {x: 0.40957606, y: 0.40957606, z: -0.21321179, w: 0.7867883}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 2, z: 0.1}
+  m_LocalScale: {x: 0.1, y: 1.2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4643363027554326}
   m_RootOrder: 0
@@ -261,7 +310,7 @@ Transform:
   m_GameObject: {fileID: 1765249892684394}
   m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.10000002, y: 2.0000002, z: 0.10000003}
+  m_LocalScale: {x: 0.10000002, y: 1.2, z: 0.10000003}
   m_Children: []
   m_Father: {fileID: 4643363027554326}
   m_RootOrder: 4
@@ -274,7 +323,7 @@ Transform:
   m_GameObject: {fileID: 1514095211498880}
   m_LocalRotation: {x: 0, y: 0.8870109, z: -0.46174863, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.099999994, y: 2.0000005, z: 0.100000024}
+  m_LocalScale: {x: 0.099999994, y: 1.2, z: 0.100000024}
   m_Children: []
   m_Father: {fileID: 4643363027554326}
   m_RootOrder: 5
@@ -287,7 +336,7 @@ Transform:
   m_GameObject: {fileID: 1612681796489070}
   m_LocalRotation: {x: 0.40957606, y: -0.40957606, z: 0.21321179, w: 0.7867883}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.100000024, y: 2, z: 0.10000001}
+  m_LocalScale: {x: 0.100000024, y: 1.2, z: 0.10000001}
   m_Children: []
   m_Father: {fileID: 4643363027554326}
   m_RootOrder: 3
@@ -334,7 +383,7 @@ Transform:
   m_GameObject: {fileID: 1202853236337238}
   m_LocalRotation: {x: -0.40957606, y: 0.40957606, z: 0.21321179, w: 0.7867883}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.100000024, y: 2, z: 0.10000001}
+  m_LocalScale: {x: 0.100000024, y: 1.2, z: 0.10000001}
   m_Children: []
   m_Father: {fileID: 4643363027554326}
   m_RootOrder: 1
@@ -352,6 +401,19 @@ Transform:
   m_Father: {fileID: 4643168902308824}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!4 &4966503685518634
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447965590512844}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4012611394004534}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23022616238880858
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -763,15 +825,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7150055a0ecf9646a871a67c7a4daf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hold: 1
   cooldown: 0
   display: {fileID: 1499879419650180}
-  animator: {fileID: 0}
   playerRef: {fileID: 0}
   ballRef: {fileID: 0}
-  idWeapon: 0
+  idWeapon: 3
   orderWeapon: 0
-  dragWhenStop: 6
-  maxFuel: 5
-  fuelIncreaseMultiplier: 1
+  dragWhenStop: 8
   Spiks: {fileID: 1642116018543144}
-  timeOpti: 0.1
+--- !u!114 &114624794338726350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1893253413174620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/SFX/SpiksOff
+  PlayEvent: 0
+  StopEvent: 2
+  CollisionTag: 
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &114677864846836838
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1893253413174620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8b0e4b6ae921a49800527ff28d4c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  additionnalName: 
+  addIdOfObject: {fileID: 4012611394004534}
+--- !u!114 &114688186563547586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447965590512844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c8b0e4b6ae921a49800527ff28d4c28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  additionnalName: 
+  addIdOfObject: {fileID: 4012611394004534}
+--- !u!114 &114977232968263466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1447965590512844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/SFX/SpiksOn
+  PlayEvent: 0
+  StopEvent: 2
+  CollisionTag: 
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20

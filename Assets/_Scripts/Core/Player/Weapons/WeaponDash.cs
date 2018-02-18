@@ -11,43 +11,20 @@ public class WeaponDash : Weapon
 {
     #region public variable
     /// <summary>
-    /// variable public
+    /// variable
     /// </summary>
-    [FoldoutGroup("Gameplay")] [Tooltip("la vitesse de turnRate du weapon")] [SerializeField] private float turnRate = 2000f;
-    [FoldoutGroup("Gameplay")] [Tooltip("Impulsion du joueur lors du tir")] [SerializeField] private float forceImpulse = 10f;
-    [FoldoutGroup("Gameplay")] [Tooltip("cree la rocket un peu devant ?")] [SerializeField] private float forwardPoint = 0f;
-
-    /// <summary>
-    /// variable public HideInInspector
-    /// </summary>
-    //[HideInInspector] public bool tmp;
+    [FoldoutGroup("Gameplay"), Tooltip("Impulsion du joueur lors du dash"), SerializeField]
+    private float forceImpulse = 10f;
+    [FoldoutGroup("Gameplay"), Tooltip("distance de téléportation"), SerializeField]
+    private float forwardDist = 3f;
 
     #endregion
 
     #region private variable
-    /// <summary>
-    /// variable privé
-    /// </summary>
-	private Rigidbody playerBody;
-    private float timeToGo;
-
-    /// <summary>
-    /// variable privé serealized
-    /// </summary>
-    [FoldoutGroup("Debug")] [Tooltip("Optimisation des fps")] [SerializeField] [Range(0, 10.0f)] private float timeOpti = 0.1f;
-    [FoldoutGroup("Debug")] [Tooltip("rocket prefabs")] [SerializeField] private GameObject prefabsRocket;
 
     #endregion
-    
+
     #region  initialisation
-    /// <summary>
-    /// Initialisation à l'activation
-    /// </summary>
-    private void Start()
-    {
-        timeToGo = Time.fixedTime + timeOpti;                               //setup le temps
-		//playerBody = PC.GetComponent<Rigidbody>();
-    }
 
     /// <summary>
     /// appelé lors de l'initialisation de ce weapon
@@ -64,31 +41,23 @@ public class WeaponDash : Weapon
     /// <summary>
     /// functionTest
     /// </summary>
-    protected override void Shoot()
+    protected override void OnShoot()
     {
-        //SoundManager.Instance.PlaySound (SoundManager.Instance.RocketLaunchSound);
-
 		Debug.Log("Dash");
-		
-		//playerBody.AddForce(transform.up * -forceImpulse, ForceMode.Impulse);
+        SoundManager.GetSingleton.playSound("Swouch" + transform.GetInstanceID().ToString());
+        ballRef.BallBody.AddForce(playerRef.FollowersList[ballRef.IdBallPlayer].transform.forward * -forceImpulse, ForceMode.VelocityChange);
+        Invoke("Teleport", 0.1f);
+
+    }
+
+    private void Teleport()
+    {
+        Vector3 forward = playerRef.FollowersList[ballRef.IdBallPlayer].transform.forward * -1;
+        ballRef.BallBody.MovePosition(ballRef.BallBody.transform.position + forward * forwardDist);
     }
     #endregion
 
     #region unity fonction and ending
-
-    /// <summary>
-    /// effectué à chaque frame
-    /// </summary>
-    private void Update()
-    {
-        //effectué à chaque opti frame
-        if (Time.fixedTime >= timeToGo)
-        {
-            //ici action optimisé
-
-            timeToGo = Time.fixedTime + timeOpti;
-        }
-    }
 
    
     #endregion

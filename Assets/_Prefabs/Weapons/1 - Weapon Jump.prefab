@@ -104,7 +104,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4643168902308824}
-  - component: {fileID: 95560237351594868}
   m_Layer: 0
   m_Name: Display
   m_TagString: Untagged
@@ -533,23 +532,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1600323459665308}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!95 &95560237351594868
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1499879419650180}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1bd1f814e95d7034b9a8d37826e75c6d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114159107089432142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -561,9 +543,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed3017f1262dfdd49925b8e25e0a3080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hold: 0
   cooldown: 1
   display: {fileID: 1499879419650180}
-  animator: {fileID: 95560237351594868}
   playerRef: {fileID: 0}
   ballRef: {fileID: 0}
   idWeapon: 0

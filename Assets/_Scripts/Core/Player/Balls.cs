@@ -37,7 +37,7 @@ public class Balls : MonoBehaviour, IKillable
         {
             if (value != power1 && value == false && weaponsList[0])
             {
-                weaponsList[0].OnShootRelease();
+                weaponsList[0].ReleaseShoot();
             }
             power1 = value;
         }
@@ -53,7 +53,7 @@ public class Balls : MonoBehaviour, IKillable
         {
             if (value != power2 && value == 0 && weaponsList[1])
             {
-                weaponsList[1].OnShootRelease();
+                weaponsList[1].ReleaseShoot();
             }
             power2 = value;
         }

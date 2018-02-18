@@ -11,15 +11,10 @@ public class WeaponJump : Weapon
 {
     #region variable
     /// <summary>
-    /// variable public
+    /// variable
     /// </summary>
     [FoldoutGroup("Gameplay"), Tooltip("Impulsion du joueur lors du tir"), SerializeField]
     private float forceImpulse = 10f;
-
-    /// <summary>
-    /// variable privé
-    /// </summary>
-    //private Rigidbody playerBody;
 
     #endregion
 
@@ -37,12 +32,10 @@ public class WeaponJump : Weapon
     /// <summary>
     /// functionTest
     /// </summary>
-	protected override void Shoot()
+	protected override void OnShoot()
     {
-        //SoundManager.Instance.PlaySound (SoundManager.Instance.RocketLaunchSound);
-
 		Debug.Log("Jumpi !");
-        //animator.SetBool(0, true);
+
         ballRef.BallBody.AddForce(Vector3.up * forceImpulse, ForceMode.VelocityChange);
         SoundManager.GetSingleton.playSound("Jump" + transform.GetInstanceID().ToString());
     }
