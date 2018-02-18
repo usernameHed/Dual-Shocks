@@ -406,6 +406,7 @@ MonoBehaviour:
   ballRef: {fileID: 0}
   idWeapon: 2
   orderWeapon: 0
+  forceImpulse: 400
 --- !u!114 &114843885301623244
 MonoBehaviour:
   m_ObjectHideFlags: 1

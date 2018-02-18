@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     [FoldoutGroup("Debug"), Tooltip("playerController"), SerializeField]
     private Rope ropeScript;
+    public Rope RopeScript { get { return ropeScript; } }
 
     private FrequencyTimer updateTimer;
     private const int SizeArrayId = 2;  //nombre de ball du joueur

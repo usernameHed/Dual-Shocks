@@ -9,6 +9,8 @@ using Sirenix.OdinInspector;
 public class WeaponThrowerBoost : Weapon
 {
     #region variable
+    [FoldoutGroup("Gameplay"), Tooltip("Impulsion du joueur lors du dash"), SerializeField]
+    private float forceImpulse = 10f;
 
     #endregion
 
@@ -30,6 +32,7 @@ public class WeaponThrowerBoost : Weapon
 	protected override void OnShoot()
     {
         SoundManager.GetSingleton.playSound("Thrower" + transform.GetInstanceID().ToString());
+        ApplyForce();
     }
 
     /// <summary>
@@ -38,7 +41,7 @@ public class WeaponThrowerBoost : Weapon
     /// </summary>
     protected override void OnShootHold()
     {
-        
+        ApplyForce();
     }
 
     /// <summary>
@@ -47,8 +50,15 @@ public class WeaponThrowerBoost : Weapon
     /// </summary>
     protected override void OnShootRelease()
     {
-
         SoundManager.GetSingleton.playSound("Thrower" + transform.GetInstanceID().ToString(), true);
+    }
+
+    /// <summary>
+    /// applique la force constante
+    /// </summary>
+    private void ApplyForce()
+    {
+        ballRef.BallBody.AddForce(playerRef.FollowersList[ballRef.IdBallPlayer].transform.forward * -forceImpulse * Time.deltaTime, ForceMode.Impulse);
     }
 
     #endregion

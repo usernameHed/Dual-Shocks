@@ -833,7 +833,7 @@ MonoBehaviour:
   idWeapon: 3
   orderWeapon: 0
   dragWhenStop: 8
-  Spiks: {fileID: 1642116018543144}
+  Spikes: {fileID: 1642116018543144}
 --- !u!114 &114624794338726350
 MonoBehaviour:
   m_ObjectHideFlags: 1

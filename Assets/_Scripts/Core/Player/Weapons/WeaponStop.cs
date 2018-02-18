@@ -16,7 +16,7 @@ public class WeaponStop : Weapon
     private float dragWhenStop = 3f;
 
     [FoldoutGroup("Object"), Tooltip("l'objet à mettre actif lors du pouvoir"), SerializeField]
-    private GameObject Spiks;
+    private GameObject Spikes;
 
     private float saveDrag = 0;
 
@@ -46,7 +46,7 @@ public class WeaponStop : Weapon
     /// </summary>
 	protected override void OnShoot()
     {
-        Spiks.SetActive(true);
+        Spikes.SetActive(true);
         SoundManager.GetSingleton.playSound("SpiksOn" + transform.GetInstanceID().ToString());
         ballRef.BallBody.drag = dragWhenStop;
     }
@@ -64,7 +64,7 @@ public class WeaponStop : Weapon
     /// </summary>
     protected override void OnShootRelease()
     {
-        Spiks.SetActive(false);
+        Spikes.SetActive(false);
         ballRef.BallBody.drag = saveDrag;
 
         SoundManager.GetSingleton.playSound("SpiksOff" + transform.GetInstanceID().ToString());

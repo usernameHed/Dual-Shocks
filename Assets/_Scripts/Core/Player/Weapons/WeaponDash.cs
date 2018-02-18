@@ -15,9 +15,15 @@ public class WeaponDash : Weapon
     /// </summary>
     [FoldoutGroup("Gameplay"), Tooltip("Impulsion du joueur lors du dash"), SerializeField]
     private float forceImpulse = 10f;
-    [FoldoutGroup("Gameplay"), Tooltip("distance de téléportation"), SerializeField]
+    [FoldoutGroup("Gameplay"), Tooltip("Nombre de link à pousser aussi"), SerializeField]
+    private int linkToPush = 0;
+
+    [FoldoutGroup("Gameplay"), Tooltip("Téléporte le joueur ?"), SerializeField]
+    private bool teleport = true;
+
+    [FoldoutGroup("Gameplay"), EnableIf("teleport"), Tooltip("distance de téléportation"), SerializeField]
     private float forwardDist = 3f;
-    [FoldoutGroup("Gameplay"), Tooltip("Temps d'attente entre la poussé et le dash"), SerializeField]
+    [FoldoutGroup("Gameplay"), EnableIf("teleport"), Tooltip("Temps d'attente entre la poussé et le dash"), SerializeField]
     private float timeToCallTeleport = 0.1f;
 
     #endregion
@@ -49,11 +55,56 @@ public class WeaponDash : Weapon
         SoundManager.GetSingleton.playSound("Swouch" + transform.GetInstanceID().ToString());
 
         //pousse la balle
-        ballRef.BallBody.AddForce(playerRef.FollowersList[ballRef.IdBallPlayer].transform.forward * -forceImpulse, ForceMode.VelocityChange);
+        ApplyForce(ballRef.BallBody, forceImpulse);
+        //ballRef.BallBody.AddForce(playerRef.FollowersList[ballRef.IdBallPlayer].transform.forward * -forceImpulse, ForceMode.VelocityChange);
+
+        //pousse les X link aussi
+        if (linkToPush > 0)
+            PushLink();
 
         //ici attend timeToCallTeleport seconde, puis téléporte
-        Invoke("Teleport", timeToCallTeleport);
+        if (teleport)
+            Invoke("Teleport", timeToCallTeleport);
+    }
 
+    /// <summary>
+    /// pousse les X link attaché à la ball
+    /// </summary>
+    private void PushLink()
+    {
+        Rope rope = playerRef.RopeScript;
+
+        int startLoop = 0;
+        int stopLoop = 0;
+
+        //si la ball de référence est au début de la chaine, partir du bas vers le haut de la list !
+        if (rope.LinkList[0].GetInstanceID() == playerRef.gameObject.GetInstanceID())
+        {
+            stopLoop = Mathf.Min(linkToPush, rope.LinkList.Count - 1);
+            for (int i = 1; i < stopLoop; i++)
+            {
+                ApplyForce(rope.LinkList[i].GetComponent<Rigidbody>(), forceImpulse);
+            }
+        }
+        //si la ball de référence est à la fin, partir du haut vers le bas
+        else if (rope.LinkList[rope.LinkList.Count - 1].GetInstanceID() == playerRef.gameObject.GetInstanceID())
+        {
+            startLoop = rope.LinkList.Count - 2;
+            stopLoop = Mathf.Max(0, (rope.LinkList.Count - 1) - linkToPush);
+            for (int i = startLoop; i > stopLoop; i--)
+            {
+                ApplyForce(ballRef.BallBody, forceImpulse);
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// applique la force sur la ball / le link
+    /// </summary>
+    private void ApplyForce(Rigidbody rbToPush, float force)
+    {
+        rbToPush.AddForce(playerRef.FollowersList[ballRef.IdBallPlayer].transform.forward * -force, ForceMode.VelocityChange);
     }
 
     /// <summary>

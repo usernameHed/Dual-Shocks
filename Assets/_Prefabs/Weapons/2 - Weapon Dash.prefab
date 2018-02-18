@@ -263,7 +263,10 @@ MonoBehaviour:
   idWeapon: 1
   orderWeapon: 0
   forceImpulse: 100
+  linkToPush: 0
+  teleport: 1
   forwardDist: 10
+  timeToCallTeleport: 0.1
 --- !u!114 &114519891297572570
 MonoBehaviour:
   m_ObjectHideFlags: 1

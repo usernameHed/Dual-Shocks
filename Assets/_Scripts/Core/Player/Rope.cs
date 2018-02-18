@@ -31,6 +31,7 @@ public class Rope : MonoBehaviour
 
     [FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     private List<GameObject> linkList;
+    public List<GameObject> LinkList { get { return linkList; } }
 
     [FoldoutGroup("Debug"), Tooltip("playerController"), SerializeField]
     private PlayerController playerController;
