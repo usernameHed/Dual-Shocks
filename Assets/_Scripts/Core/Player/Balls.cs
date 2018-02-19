@@ -17,6 +17,11 @@ public class Balls : MonoBehaviour, IKillable
     private float ratioTurnRateFocus = 1;
     public float RatioTurnRateFocus { get { return ratioTurnRateFocus; } }
 
+    [FoldoutGroup("GamePlay"), Tooltip("Clamp la position du player aux borders de la caméra"), SerializeField]
+    private float borderMin = 0.1f;
+    [FoldoutGroup("GamePlay"), Tooltip("Clamp la position du player aux borders de la caméra"), SerializeField]
+    private float borderMax = 0.9f;
+
     [FoldoutGroup("Debug"), Tooltip("List des weapons de la ball créé"), SerializeField]
     private List<Weapon> weaponsList;
     public List<Weapon> WeaponsList { get { return weaponsList; } }
@@ -194,6 +199,9 @@ public class Balls : MonoBehaviour, IKillable
         weaponsList.Add(null);
     }
 
+    /// <summary>
+    /// déplace et tir
+    /// </summary>
     private void MovePlayer()
     {
         if (HasMoved)
@@ -209,6 +217,17 @@ public class Balls : MonoBehaviour, IKillable
         {
             weaponsList[1].TryShoot();
         }            
+    }
+
+    /// <summary>
+    /// clamp la position du player dans la caméra !
+    /// </summary>
+    private void ClampPlayer()
+    {
+        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        pos.x = Mathf.Clamp(pos.x, borderMin, borderMax);
+        pos.y = Mathf.Clamp(pos.y, borderMin, borderMax);
+        transform.position = Camera.main.ViewportToWorldPoint(pos);
     }
     #endregion
 
@@ -247,6 +266,7 @@ public class Balls : MonoBehaviour, IKillable
         if (!activated) //si la ball n'est pas activé, ne rien faire
             return;
         MovePlayer();
+        ClampPlayer();
     }
 
     #endregion

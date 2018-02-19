@@ -4656,7 +4656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTime: 0.05
   minZoom: 15
-  maxZoom: 30
+  maxZoom: 20
   defaultZoom: 15
   focusThreshold: 0
   borderMargin: 4
