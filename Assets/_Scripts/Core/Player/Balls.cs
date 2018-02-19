@@ -22,6 +22,16 @@ public class Balls : MonoBehaviour, IKillable
     [FoldoutGroup("GamePlay"), Tooltip("Clamp la position du player aux borders de la caméra"), SerializeField]
     private float borderMax = 0.9f;
 
+    [FoldoutGroup("GamePlay"), Tooltip("Temps d'attente entre le moment de la mort et la réel mort"), SerializeField]
+    private float timeBeforeDie = 2f;
+
+    [FoldoutGroup("Object"), Tooltip("explosion prefabs"), SerializeField]
+    private GameObject prefabsExplode;
+    [FoldoutGroup("Object"), Tooltip("ball render"), SerializeField]
+    private MeshRenderer renderBall;
+
+
+
     [FoldoutGroup("Debug"), Tooltip("List des weapons de la ball créé"), SerializeField]
     private List<Weapon> weaponsList;
     public List<Weapon> WeaponsList { get { return weaponsList; } }
@@ -270,6 +280,13 @@ public class Balls : MonoBehaviour, IKillable
     }
 
     #endregion
+    /// <summary>
+    /// ici détruit l'objet finalement
+    /// </summary>
+    private void RealyDestroy()
+    {
+        Destroy(gameObject);
+    }
 
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
@@ -277,10 +294,27 @@ public class Balls : MonoBehaviour, IKillable
         Debug.Log("ici la mort !");
         activated = false;
 
+        //désactive les pouvoirs
         if (weaponsList[0])
             weaponsList[0].Kill();
         if (weaponsList[1])
             weaponsList[1].Kill();
-        Destroy(gameObject);
+
+        Debug.Log("TODO: disable le followerList !!");
+
+        //créé la particule
+        Instantiate(prefabsExplode, transform.position, Quaternion.identity, null);
+
+        //stop la ball
+        ballBody.velocity = Vector3.zero;
+        ballBody.angularVelocity = Vector3.zero;
+
+        //animation ?
+        renderBall.enabled = false;
+
+        //créé un slowMotion
+        TimeManager.GetSingleton.DoSlowMothion();
+
+        Invoke("RealyDestroy", timeBeforeDie);
     }
 }

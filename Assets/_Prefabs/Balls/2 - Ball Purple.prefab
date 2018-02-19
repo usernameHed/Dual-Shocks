@@ -664,6 +664,12 @@ MonoBehaviour:
   moveSpeed: 250
   idBall: 2
   ratioTurnRateFocus: 2
+  borderMin: 0.1
+  borderMax: 0.9
+  timeBeforeDie: 2
+  prefabsExplode: {fileID: 1252393073312354, guid: d7b2624c26da00e4ea5aa8df057d08b2,
+    type: 2}
+  renderBall: {fileID: 23272596771757678}
   weaponsList: []
   updateTimer:
     updateFrequency: 0

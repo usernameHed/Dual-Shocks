@@ -12,24 +12,45 @@ public class TimeManager : MonoBehaviour
     [FoldoutGroup("GamePlay"), Tooltip("slowDonwFactor"), SerializeField]
     private float slowDonwLenght = 2f;             //le type de ball (bleu, red...)
 
+
+    private static TimeManager instance;
+    public static TimeManager GetSingleton
+    {
+        get { return instance; }
+    }
     #endregion
 
     #region Initialization
-
-    private void Start()
+    /// <summary>
+    /// test si on met le script en UNIQUE
+    /// </summary>
+    public void SetSingleton()
     {
-		// Start function
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+    }
+
+    private void Awake()
+    {
+        SetSingleton();
     }
     #endregion
 
     #region Core
-    private void DoSlowMothion()
+    public void DoSlowMothion()
     {
         Time.timeScale = slowDonwFactor;
+        Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
     #endregion
 
     #region Unity ending functions
-
-	#endregion
+    private void Update()
+    {
+        Time.timeScale += (1f / slowDonwLenght) * Time.unscaledDeltaTime;
+        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+    }
+    #endregion
 }
