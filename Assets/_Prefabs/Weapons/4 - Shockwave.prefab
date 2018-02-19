@@ -421,7 +421,7 @@ MonoBehaviour:
   idWeapon: 4
   orderWeapon: 0
   forceImpulse: 30
-  radius: 6
+  radius: 10
   pushLink: 1
   pushFriendLink: 0
   forceImpulseLink: 20
