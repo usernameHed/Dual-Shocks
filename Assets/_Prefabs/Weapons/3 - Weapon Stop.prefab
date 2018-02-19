@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 4012611394004534}
   - component: {fileID: 114590566727303596}
   m_Layer: 0
-  m_Name: 4 - Weapon Stop
+  m_Name: 3 - Weapon Stop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -832,7 +832,8 @@ MonoBehaviour:
   ballRef: {fileID: 0}
   idWeapon: 3
   orderWeapon: 0
-  dragWhenStop: 10
+  dragWhenStop: 6
+  additionalMass: 12
   Spikes: {fileID: 1642116018543144}
 --- !u!114 &114624794338726350
 MonoBehaviour:

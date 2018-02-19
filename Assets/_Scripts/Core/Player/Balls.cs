@@ -204,22 +204,31 @@ public class Balls : MonoBehaviour, IKillable
         if (Power1 && weaponsList[0])
         {
             weaponsList[0].TryShoot();
-            //Debug.Log("power 1 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBallPlayer + "] activated");
         }            
         if (Power2 > 0 && weaponsList[1])
         {
             weaponsList[1].TryShoot();
-            //Debug.Log("power 2 of [playerId " + playerRef.IdPlayer + ", ballId: " + IdBallPlayer + "] activated with " + Power2);
         }            
-        /*if (isJumping)
-        {
-            SoundManager.GetSingleton.playSound("Jump");
-            isJumping = false;
-        }*/
     }
     #endregion
 
     #region Unity ending functions
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!activated) //si la ball n'est pas activé, ne rien faire
+            return;
+
+        if (other.tag == "Link")
+        {
+            Line line = other.transform.parent.GetComponent<Line>();
+            if (line && line.PlayerControllerVariable != playerRef)
+            {
+                Kill();
+            }
+        }
+
+    }
 
     private void Update()
     {
@@ -245,6 +254,9 @@ public class Balls : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
     {
+        Debug.Log("ici la mort !");
+        activated = false;
+
         if (weaponsList[0])
             weaponsList[0].Kill();
         if (weaponsList[1])

@@ -150,6 +150,9 @@ public class PlayerController : MonoBehaviour, IKillable
     /// </summary>
     public bool isContainingThisBall(GameObject ball)
     {
+        if (!ballsList[0] || !ballsList[1])
+            return (false);
+
         if (ball.GetInstanceID() == ballsList[0].gameObject.GetInstanceID()
             || ball.GetInstanceID() == ballsList[1].gameObject.GetInstanceID())
         {
@@ -207,7 +210,11 @@ public class PlayerController : MonoBehaviour, IKillable
         {
             if (!ballsList[i])
             {
-                Debug.Log("la balle n'existe pas....");
+                if (followersList[i].gameObject.activeInHierarchy)
+                {
+                    Debug.Log("la balle n'existe pas....");
+                    followersList[i].gameObject.SetActive(false);
+                }
                 continue;
             }
 
@@ -241,6 +248,12 @@ public class PlayerController : MonoBehaviour, IKillable
     private void LateUpdate()
     {
         ChangePosFollower();
+
+        if (!followersList[0].gameObject.activeInHierarchy
+            && !followersList[1].gameObject.activeInHierarchy)
+        {
+            Kill();
+        }
     }
 
     #endregion
@@ -260,7 +273,7 @@ public class PlayerController : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
 	{
-		Debug.Log ("Dead");
+		Debug.Log ("Player dead !");
         Destroy(gameObject);
 	}
 }

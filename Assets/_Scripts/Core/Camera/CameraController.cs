@@ -141,7 +141,7 @@ public class CameraController : MonoBehaviour
             if (i == 0)
             {
                 minX = maxX = target.transform.position.x;
-                minY = maxY = target.transform.position.y;
+                minY = maxY = target.transform.position.z;
             }
             else
             {
@@ -160,9 +160,9 @@ public class CameraController : MonoBehaviour
         // Find middle point for all targets
         if (activeTargetAmount > 0)
         {
-            averagePos.x = (minX + maxX) / 2.0F;
+            averagePos.x = (minX + maxX) / 2.0f;
             //averagePos.y = (minY + maxY) / 2.0F;
-            averagePos.z = (minY + maxY) / 2.0F;
+            averagePos.z = (minY + maxY) / 2.0f;
         }
 
         // If no targets, select fallback focus

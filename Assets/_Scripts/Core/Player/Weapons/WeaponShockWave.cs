@@ -107,9 +107,8 @@ public class WeaponShockWave : Weapon
             }
             else
             {
-                //ici on a un autre objet, si il est la ça veut dire qu'on veut
-                //le pousser, car il est dans les layer du tableau layerToPush
-                PushObject(toPush);
+                //ici on a un autre objet
+                //PushObject(toPush);
             }
 
         }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Link
   - Ball
+  - BallColliderLink
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Lock
   - Rope
   - Player
-  - 
+  - BallColliderLink
   - 
   - 
   - 

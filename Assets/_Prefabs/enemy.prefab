@@ -21,12 +21,10 @@ GameObject:
   - component: {fileID: 4595459802124488}
   - component: {fileID: 33918471589832094}
   - component: {fileID: 135443642289461902}
-  - component: {fileID: 135674505060997816}
+  - component: {fileID: 135691051090492956}
   - component: {fileID: 23683034975918812}
   - component: {fileID: 54966931066097826}
-  - component: {fileID: 114588804504731022}
   - component: {fileID: 114482737029558584}
-  - component: {fileID: 114170763260750704}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
@@ -103,22 +101,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114170763260750704
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1221095074222132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 808de9dae972df8438a9ee6600d0f45c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateTimer:
-    updateFrequency: 1
-  xMargin: 0
-  yMargin: 0
-  isOnScreen: 0
 --- !u!114 &114482737029558584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,51 +114,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   killOnEnter: 1
   killOnExit: 0
---- !u!114 &114588804504731022
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1221095074222132}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 341817a154a515c44b5e51862b0afd99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasSortOrder: 0
-  startVisible: 1
-  usedDrawMode: 0
-  timeOpti: 0
-  isInPlayer: 0
-  isMulti: 0
-  addUp: 83
-  isOpPowerPlayer: 0
-  opacityOpOnScreen: 0.6
-  opacityOpOutScreen: 1
-  hideOnScreen: 0
-  onScreenSprite: {fileID: 21300000, guid: d5bf0a1cdcb164f45bb6171e3ec5f5d4, type: 3}
-  onScreenTextureColor: {r: 1, g: 1, b: 1, a: 1}
-  onScreenTextureSize: 0.1
-  onScreenTextureRotation: 0
-  hideOutofScreen: 0
-  outofScreenSprite: {fileID: 21300000, guid: 8092f7be72b4ab144bb2a383e0e020a3, type: 3}
-  outofScreenSpriteArray: []
-  outofScreenTextureColor: {r: 1, g: 1, b: 1, a: 1}
-  outofScreenTextureScreenPercentSize: 0.1
-  outofScreenBorderOffset: {x: 0, y: 0}
-  outofScreenTextureRotation: 0
-  outofScreenRotateTexture: 1
-  outofScreenBaseOrientation: 0
-  fadeInDuration: 2
-  fadeOutDuration: 4
-  minScale: 0.25
-  maxScale: 1
-  minDistance: 1
-  maxDistance: 20
-  scaleOnScreen: 0.6
-  animationMode: 0
-  scaleAnimAmplitude: 0.5
-  scaleAnimSmooth: 0.4
 --- !u!135 &135443642289461902
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -189,14 +126,14 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135674505060997816
+--- !u!135 &135691051090492956
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1221095074222132}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.6

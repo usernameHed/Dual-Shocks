@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 4012611394004534}
   - component: {fileID: 114159107089432142}
   m_Layer: 0
-  m_Name: 1 - Weapon Jump
+  m_Name: 0 - Weapon Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
