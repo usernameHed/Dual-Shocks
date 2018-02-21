@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
+using TMPro;
+using System;
 using System.Collections.Generic;
 
 /// <summary>
@@ -8,34 +10,45 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour
 {
     #region Attributes
+    [FoldoutGroup("Objects"), Tooltip("player parent"), SerializeField]
+    private Transform playerParent;
 
-    [Tooltip("opti fps"), SerializeField]
-	private FrequencyTimer updateTimer;
-
+    [FoldoutGroup("Debug"), Tooltip("gère la GUI in games"), SerializeField]
+    private DisplayInGame displayInGame;
     #endregion
 
     #region Initialization
 
-    private void Start()
+    private void Awake()
     {
-		// Start function
+        GameManager.GetSingleton.LevelManager = this;
+    }
+
+    /// <summary>
+    /// appelé depuis le gameManager quand tout semble bon
+    /// </summary>
+    public void StartGame()
+    {
+        SpawnPlayer();
+        displayInGame.InitDisplay();
+        displayInGame.ChangeDisplayInGame();
     }
     #endregion
 
     #region Core
 
+
+    /// <summary>
+    /// ici créé les players
+    /// </summary>
+    private void SpawnPlayer()
+    {
+        Debug.Log("ici Spawn les players");
+    }
+
     #endregion
 
     #region Unity ending functions
 
-    private void Update()
-    {
-      //optimisation des fps
-      if (updateTimer.Ready())
-      {
-
-      }
-    }
-
-	#endregion
+    #endregion
 }

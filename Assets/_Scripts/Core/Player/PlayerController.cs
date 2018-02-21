@@ -62,6 +62,8 @@ public class PlayerController : MonoBehaviour, IKillable
     private FrequencyTimer updateTimer;
     private const int SizeArrayId = 2;  //nombre de ball du joueur
 
+    private int ballRemaining = SizeArrayId;
+
     #endregion
 
     #region Initialize
@@ -80,6 +82,8 @@ public class PlayerController : MonoBehaviour, IKillable
         if (ballsList.Count != 2)
             ClearListBall();    //debug si il n'y a pas 2 emplacements vide pour les balls
         ChangeBalls();
+
+        ballRemaining = SizeArrayId;
         //Invoke("initRope", 1.0f);
         initRope();
     }
@@ -208,13 +212,13 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         for (int i = 0; i < followersList.Count; i++)
         {
-            if (!ballsList[i])
+            if (!ballsList[i] || !followersList[i].gameObject.activeSelf)
             {
-                if (followersList[i].gameObject.activeInHierarchy)
+                /*if (followersList[i].gameObject.activeInHierarchy)
                 {
                     Debug.Log("la balle n'existe pas....");
                     followersList[i].gameObject.SetActive(false);
-                }
+                }*/
                 continue;
             }
 
@@ -249,11 +253,23 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         ChangePosFollower();
 
-        if (!followersList[0].gameObject.activeInHierarchy
+        /*if (!followersList[0].gameObject.activeInHierarchy
             && !followersList[1].gameObject.activeInHierarchy)
         {
             Kill();
-        }
+        }*/
+    }
+
+    /// <summary>
+    /// appelé lorsqu'une ball est en train de se faire détruire...
+    /// </summary>
+    /// <param name="ball"></param>
+    public void BallDestroyed(int ball)
+    {
+        Debug.Log("ball destroyed: " + ball);
+        ballRemaining--;
+        if (ballRemaining <= 0)
+            Kill();
     }
 
     #endregion

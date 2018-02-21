@@ -286,6 +286,7 @@ public class Balls : MonoBehaviour, IKillable
     private void RealyDestroy()
     {
         Destroy(gameObject);
+        playerRef.BallDestroyed(IdBallPlayer);
     }
 
     [FoldoutGroup("Debug"), Button("Kill")]
@@ -301,6 +302,8 @@ public class Balls : MonoBehaviour, IKillable
             weaponsList[1].Kill();
 
         Debug.Log("TODO: disable le followerList !!");
+        playerRef.FollowersList[IdBallPlayer].gameObject.SetActive(false);
+
 
         //créé la particule
         Instantiate(prefabsExplode, transform.position, Quaternion.identity, null);

@@ -56,7 +56,6 @@ public class ScoreManager : MonoBehaviour
     /// </summary>
     public void ResetAll()
     {
-        Debug.Log("reset les stats du joueurs");
         if (data == null)
             data = new PlayerData();
         data.SetDefault();

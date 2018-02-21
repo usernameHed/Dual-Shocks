@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 
+
 /// <summary>
 /// GameManager Description
 /// </summary>
@@ -16,8 +17,14 @@ public class GameManager : MonoBehaviour
     private List<GameObject> prefabsPowersList;
     public int PrefabsPowerCount() { return (prefabsPowersList.Count); }
 
+    [FoldoutGroup("Debug"), Tooltip("liens du levelManager"), SerializeField]
+    private LevelManager levelManager;
+    public LevelManager LevelManager { set { levelManager = value; InitLevelWhenLoaded(); } }
+
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
+
+    
 
     private static GameManager instance;
     public static GameManager GetSingleton
@@ -46,6 +53,15 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Core
+    /// <summary>
+    /// appelé lorsque le level viens de se charger
+    /// </summary>
+    private void InitLevelWhenLoaded()
+    {
+        ScoreManager.GetSingleton.ResetAll();   //reset les scores
+        levelManager.StartGame();               //commence le jeu (spawn etc);
+    }
+
     /// <summary>
     /// selon l'id, renvoi le bon prefabs de ball à créé
     /// </summary>

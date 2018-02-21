@@ -26,9 +26,6 @@ public class Rope : MonoBehaviour
     [FoldoutGroup("Rope"), Range(0, 100), OnValueChanged("InitPhysicRope"), Tooltip("Nombre de maillons"), SerializeField]
     private int linkCount = 3;
 
-    [FoldoutGroup("Object"), Tooltip("Prefab du Maillon"), SerializeField]
-    private GameObject prefabLink;
-
     [FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     private List<GameObject> linkList;
     public List<GameObject> LinkList { get { return linkList; } }
@@ -72,7 +69,8 @@ public class Rope : MonoBehaviour
             Vector3 posJoint = new Vector3(x1, y1, z1);
 
             //créé un joint, à une position quelquonque, en parent: la où se trouve les balls du player
-            GameObject newLink = Instantiate(prefabLink, posJoint, Quaternion.identity, playerController.Rope);
+            //GameObject newLink = Instantiate(prefabLink, posJoint, Quaternion.identity, playerController.Rope);
+            GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, Quaternion.identity, playerController.Rope);
             linkList.Add(newLink);
         }
         //détruit le springJoint de la dernière ball si il y a
@@ -98,7 +96,9 @@ public class Rope : MonoBehaviour
         {
             if (!linkList[i] || linkList[i].GetComponent<Balls>())
                 continue;
-            Destroy(linkList[i]);
+            linkList[i].transform.SetParent(ObjectsPooler.GetSingleton.transform);
+            linkList[i].SetActive(false);
+            //Destroy(linkList[i]);
         }
         linkList.Clear();
     }
