@@ -444,9 +444,11 @@ MonoBehaviour:
   min: 0
   max: 0
   linkCount: 20
-  prefabLink: {fileID: 1608521408533352, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
+  objectToConnect:
+  - {fileID: 0}
+  - {fileID: 0}
+  parentLink: {fileID: 0}
   linkList: []
-  playerController: {fileID: 114064721508296888}
 --- !u!120 &120605678903995888
 LineRenderer:
   m_ObjectHideFlags: 1

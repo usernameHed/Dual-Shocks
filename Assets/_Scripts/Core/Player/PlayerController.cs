@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     private void initRope()
     {
+        ropeScript.InitObjects(ballsList[0].gameObject, ballsList[1].gameObject, Rope);
         ropeScript.InitPhysicRope();
     }
 

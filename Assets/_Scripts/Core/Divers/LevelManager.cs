@@ -37,13 +37,13 @@ public class LevelManager : MonoBehaviour
 
     #region Core
 
-
     /// <summary>
     /// ici créé les players
     /// </summary>
     private void SpawnPlayer()
     {
         Debug.Log("ici Spawn les players");
+
     }
 
     #endregion

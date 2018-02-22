@@ -31,7 +31,7 @@ public class ObjectsPooler : MonoBehaviour
     [FoldoutGroup("GamePlay"), Tooltip("new pool"), SerializeField]
     private List<Pool> pools;
 
-    private Dictionary<string, Queue<GameObject>> poolDictionary;
+    private Dictionary<string, List<GameObject>> poolDictionary;
 
 
 
@@ -76,16 +76,16 @@ public class ObjectsPooler : MonoBehaviour
     /// </summary>
     private void InitPool()
     {
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolDictionary = new Dictionary<string, List<GameObject>>();
 
         foreach(Pool pool  in pools)
         {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
+            List<GameObject> objectPool = new List<GameObject>();
             for (int i = 0; i < pool.size; i++)
             {
                 GameObject obj = Instantiate(pool.prefab, transform);
                 obj.SetActive(false);
-                objectPool.Enqueue(obj);
+                objectPool.Add(obj);
             }
             poolDictionary.Add(pool.tag, objectPool);
         }
@@ -105,46 +105,69 @@ public class ObjectsPooler : MonoBehaviour
             return (null);
         }
 
-        GameObject objectToSpawn = poolDictionary[tag].Dequeue();
+        List<GameObject> objFromTag = poolDictionary[tag];
 
-        if (objectToSpawn.activeSelf)
+        for (int i = 0; i < objFromTag.Count; i++)
         {
-            Debug.Log("on a dépassé la limite ! que faire ?");
-            //poolDictionary[tag].Enqueue(objectToSpawn);
-
-            foreach (Pool pool in pools)
+            if (objFromTag[i] && !objFromTag[i].activeSelf)
             {
-                if (pool.tag == tag)
+                //ici on récupère un objet de la pool !
+
+                objFromTag[i].SetActive(true);
+                objFromTag[i].transform.position = position;
+                objFromTag[i].transform.rotation = rotation;
+                objFromTag[i].transform.SetParent(parent);
+
+                IPooledObject pooledObject = objFromTag[i].GetComponent<IPooledObject>();
+
+                if (pooledObject != null)
                 {
-                    if (pool.shouldExpand)
+                    pooledObject.OnObjectSpawn();
+                }
+
+                return (objFromTag[i]);
+            }
+        }
+
+        Debug.Log("ici on a raté ! tout les objets de la pools sont complet !!");
+        foreach (Pool pool in pools)
+        {
+            if (pool.tag == tag)
+            {
+                if (pool.shouldExpand)
+                {
+                    GameObject obj = Instantiate(pool.prefab, transform);
+                    //obj.SetActive(false);
+                    objFromTag.Add(obj);
+
+
+                    obj.SetActive(true);
+                    obj.transform.position = position;
+                    obj.transform.rotation = rotation;
+                    obj.transform.SetParent(parent);
+
+                    IPooledObject pooledObject = obj.GetComponent<IPooledObject>();
+
+                    if (pooledObject != null)
                     {
-                        poolDictionary[tag].Enqueue(objectToSpawn);
-                        objectToSpawn = Instantiate(pool.prefab, position, rotation, parent);
+                        pooledObject.OnObjectSpawn();
                     }
-                    else
-                    {
-                        Debug.Log("pas d'expantion, on réutilise un objet déja actif !!");
-                        break;
-                    }
+
+                    return (obj);
+
+
+                }
+                else
+                {
+                    Debug.LogError("pas d'expantion, error");
+
+                    break;
                 }
             }
         }
 
-        objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
-        objectToSpawn.transform.SetParent(parent);
 
-        IPooledObject pooledObject = objectToSpawn.GetComponent<IPooledObject>();
-
-        if (pooledObject != null)
-        {
-            pooledObject.OnObjectSpawn();
-        }
-
-        poolDictionary[tag].Enqueue(objectToSpawn);
-
-        return (objectToSpawn);
+        return (null);
     }
 
     /*

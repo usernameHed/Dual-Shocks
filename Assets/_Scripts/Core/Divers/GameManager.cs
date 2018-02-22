@@ -17,10 +17,19 @@ public class GameManager : MonoBehaviour
     private List<GameObject> prefabsPowersList;
     public int PrefabsPowerCount() { return (prefabsPowersList.Count); }
 
-    [FoldoutGroup("Debug"), Tooltip("liens du levelManager"), SerializeField]
+    [FoldoutGroup("Scenes"), Tooltip("liens du levelManager"), SerializeField]
+    private MenuManager menuManager;
+    public MenuManager MenuManagerScript { set { menuManager = value; InitMenulWhenLoaded(); } }
+
+    [FoldoutGroup("Scenes"), Tooltip("liens du levelManager"), SerializeField]
+    private SetupManager setupManager;
+    public SetupManager SetupManagerScript { set { setupManager = value; InitSetuplWhenLoaded(); } }
+
+    [FoldoutGroup("Scenes"), Tooltip("liens du levelManager"), SerializeField]
     private LevelManager levelManager;
     public LevelManager LevelManager { set { levelManager = value; InitLevelWhenLoaded(); } }
 
+    
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
@@ -50,9 +59,23 @@ public class GameManager : MonoBehaviour
     {
         SetSingleton();
     }
-    #endregion
 
-    #region Core
+    /// <summary>
+    /// est appelé quand le menu est chargé !
+    /// </summary>
+    private void InitMenulWhenLoaded()
+    {
+        Debug.Log("menu ready");
+    }
+
+    /// <summary>
+    /// est appelé quand le menu est chargé !
+    /// </summary>
+    private void InitSetuplWhenLoaded()
+    {
+        Debug.Log("setup ready");
+    }
+
     /// <summary>
     /// appelé lorsque le level viens de se charger
     /// </summary>
@@ -61,7 +84,9 @@ public class GameManager : MonoBehaviour
         ScoreManager.GetSingleton.ResetAll();   //reset les scores
         levelManager.StartGame();               //commence le jeu (spawn etc);
     }
+    #endregion
 
+    #region Core
     /// <summary>
     /// selon l'id, renvoi le bon prefabs de ball à créé
     /// </summary>

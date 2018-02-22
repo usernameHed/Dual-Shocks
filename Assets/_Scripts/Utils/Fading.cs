@@ -28,9 +28,11 @@ public class Fading : MonoBehaviour
     }
 
     //set fadeDir -1, 1
-    public float BeginFade(int direction)
+    public float BeginFade(int direction, float speed = -1)
     {
         fadeDir = direction;
+        if (speed != -1)
+            fadeSpeed = speed;
         return (fadeSpeed);             //retur time speed to fade
     }
 

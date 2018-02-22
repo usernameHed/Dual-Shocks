@@ -74,15 +74,38 @@ public class SceneChangeManager : MonoBehaviour
             ActivateScene();
     }
 
+
+    /// <summary>
+    /// est appelé si on doit annuler le chargement d'une scene !
+    /// </summary>
+    public void UnloadScene(string scene)
+    {
+        SceneManager.UnloadSceneAsync(scene);
+    }
+
     /// <summary>
     /// ICI appelle l'activation de la scène précédamment chargé
     /// </summary>
     public void ActivateScene()
     {
         if (!isCharging)
+        {
+            Debug.Log("charging....");
             return;
+        }
         isCharging = false;
         async.allowSceneActivation = true;
+    }
+
+    public void ActivateSceneWithFade(float speedFade = -1f)
+    {
+        StartCoroutine(ActiveSceneWithFadeWait(speedFade));
+    }
+    IEnumerator ActiveSceneWithFadeWait(float speedFade = -1f)
+    {
+        float fadeTime = gameObject.GetComponent<Fading>().BeginFade(1, speedFade);
+        yield return new WaitForSeconds(fadeTime);
+        ActivateScene();
     }
 
     //////////////////////////////////////////////////////////////////////////////// transition scenes
@@ -107,33 +130,31 @@ public class SceneChangeManager : MonoBehaviour
     public void JumpAdditiveScene(string scene = "Game")
     {
         SceneManager.LoadScene(scene, LoadSceneMode.Additive);
-        //SceneManager.UnloadSceneAsync("Game");
     }
-
+    [ContextMenu("JumpToSceneWithFade")]
+    public void JumpToSceneWithFade(string scene, float speed = 1.5f)
+    {
+        StartCoroutine(JumpToSceneWithFadeWait(scene, speed));
+    }
+    private IEnumerator JumpToSceneWithFadeWait(string scene, float speed)
+    {
+        float fadeTime = gameObject.GetComponent<Fading>().BeginFade(1, speed);
+        yield return new WaitForSeconds(speed / 2);
+        JumpToScene(scene);
+    }
 
     /// <summary>
-    /// Change de scène avec un fade
+    /// quit avec un fade !
     /// </summary>
-    /// <param name="scene"></param>
-    [ContextMenu("JumpToSceneWithFade")]
-    public void JumpToSceneWithFade(string scene = "")
+    public void QuitFade(float speed = 1.5f)
     {
-        if (scene == "")
-            scene = SceneManager.GetActiveScene().name;
-
-        if (!gameObject.GetComponent<Fading>().enabled)
-        {
-            gameObject.GetComponent<Fading>().enabled = true;
-        }
-
-        StartCoroutine(JumpToSceneWithFadeWait(scene));
+        StartCoroutine(QuitWithFade(speed));
     }
-
-    IEnumerator JumpToSceneWithFadeWait(string scene = "Game")
+    private IEnumerator QuitWithFade(float speed)
     {
-        float fadeTime = gameObject.GetComponent<Fading>().BeginFade(1);
-        yield return new WaitForSeconds(fadeTime);
-        JumpToScene(scene);
+        float fadeTime = gameObject.GetComponent<Fading>().BeginFade(1, speed);
+        yield return new WaitForSeconds(speed / 2);
+        Quit();
     }
 
     /// <summary>
