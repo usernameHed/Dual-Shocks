@@ -52,4 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    scorePlayer: 0
+    currentRound: 0
+    scorePlayer: 00000000000000000000000000000000
+    maxRound: 3

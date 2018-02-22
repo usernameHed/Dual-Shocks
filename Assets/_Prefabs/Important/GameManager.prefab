@@ -75,6 +75,9 @@ MonoBehaviour:
   - {fileID: 1995181605325364, guid: 12328685f22970e479309138b7711eca, type: 2}
   - {fileID: 1995181605325364, guid: 4461817b9a97b43488a3fef0e3470a3a, type: 2}
   - {fileID: 1995181605325364, guid: 8f2ad8b4f5540214aaaf0bed5520ef37, type: 2}
+  menuManager: {fileID: 0}
+  setupManager: {fileID: 0}
+  levelManager: {fileID: 0}
   updateTimer:
     updateFrequency: 0
 --- !u!114 &114948016746452702
