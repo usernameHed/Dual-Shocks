@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     [FoldoutGroup("GamePlay"), Tooltip("les infos des 2 balls à créé sur le player + ses weapons"), SerializeField]
     private PlayerBall[] ballInfo = new PlayerBall[SizeArrayId];
-    public PlayerBall[] BallInfo { get { return ballInfo; } }
+    public PlayerBall[] BallInfo { set { ballInfo = value; } get { return ballInfo; } }
 
     [FoldoutGroup("Objects"), Tooltip("List des followers qui suivent les balls"), SerializeField]
     private List<Transform> followersList;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     [FoldoutGroup("Debug"), Tooltip("id unique du joueur correspondant à sa manette"), SerializeField]
     private int idPlayer = 0;
-    public int IdPlayer { get { return idPlayer; } }
+    public int IdPlayer { set { idPlayer = value; } get { return idPlayer; } }
 
 
     [FoldoutGroup("Debug"), Tooltip("List des balls créé"), SerializeField]
@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     #region Initialize
 
-    private void Awake()
+    private void OnEnable()
 	{
         InitPlayer();
 	}

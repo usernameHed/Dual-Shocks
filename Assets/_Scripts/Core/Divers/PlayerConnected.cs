@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 /// Gère la connexion / déconnexion des manettes
 /// <summary>
 
-//[RequireComponent(typeof(CircleCollider2D))]
+
 public class PlayerConnected : MonoBehaviour
 {
     #region variable
@@ -16,6 +16,7 @@ public class PlayerConnected : MonoBehaviour
     [FoldoutGroup("Vibration"), Tooltip("full motor speed")]       public float motorLevel = 1.0f;
     [FoldoutGroup("Vibration"), Tooltip("durée de la vibration")]  public float duration = 2.0f;
 
+    public bool simulatePlayerOneifNoGamePad = false;   //Si aucune manette n'est connecté, active le player 1 avec le clavier !
     public bool[] playerArrayConnected;                      //tableau d'état des controller connecté
     private short playerNumber = 4;                     //size fixe de joueurs (0 = clavier, 1-4 = manette)
 
@@ -78,6 +79,17 @@ public class PlayerConnected : MonoBehaviour
             playersRewired[i] = ReInput.players.GetPlayer(i);       //get la class rewired du player X
             playerArrayConnected[i] = false;                             //set son état à false par défault
         }
+
+        setKeyboardForPlayerOne();
+    }
+
+    /// <summary>
+    /// défini le keyboard pour le joueur 1 SI il n'y a pas de manette;
+    /// </summary>
+    private void setKeyboardForPlayerOne()
+    {
+        if (simulatePlayerOneifNoGamePad && NoPlayer())
+            playerArrayConnected[0] = true;
     }
 
     /// <summary>
@@ -174,6 +186,7 @@ public class PlayerConnected : MonoBehaviour
     {
         Debug.Log("A controller was disconnected! Name = " + args.name + " Id = " + args.controllerId + " Type = " + args.controllerType);
         updatePlayerController(args.controllerId, false);
+        setKeyboardForPlayerOne();
     }
 
     void OnDestroy()

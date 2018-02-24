@@ -35,10 +35,10 @@ public class SetupManager : MonoBehaviour
     /// </summary>
     private void InitSetup()
     {
-        for (int i = 0; i < rope.Count; i++)
+        /*for (int i = 0; i < rope.Count; i++)
         {
             rope[i].InitPhysicRope();
-        }
+        }*/
     }
 
     /// <summary>

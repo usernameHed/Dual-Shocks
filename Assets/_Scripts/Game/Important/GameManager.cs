@@ -17,6 +17,14 @@ public class GameManager : MonoBehaviour
     private List<GameObject> prefabsPowersList;
     public int PrefabsPowerCount() { return (prefabsPowersList.Count); }
 
+    [FoldoutGroup("GamePlay"), Tooltip("color players"), SerializeField]
+    private List<Color> colorPlayer;
+    public List<Color> ColorPlayer { get { return (colorPlayer); } }
+
+    [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
+    private List<Material> materialPlayer;
+    public List<Material> MaterialPlayer { get { return (materialPlayer); } }
+
     [FoldoutGroup("Scenes"), Tooltip("liens du levelManager"), SerializeField]
     private MenuManager menuManager;
     public MenuManager MenuManagerScript { set { menuManager = value; InitMenulWhenLoaded(); } }
@@ -32,8 +40,10 @@ public class GameManager : MonoBehaviour
     
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
+    [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
+    private PlayerBallInit playerBallInit;
+    public PlayerBallInit PlayerBallInit { get { return playerBallInit; } }
 
-    
 
     private static GameManager instance;
     public static GameManager GetSingleton
@@ -82,6 +92,7 @@ public class GameManager : MonoBehaviour
     private void InitLevelWhenLoaded()
     {
         ScoreManager.GetSingleton.ResetAll();   //reset les scores
+        playerBallInit.Setup();                 //SETUP les données de créations de joueurs (si besoin !);
         levelManager.StartGame();               //commence le jeu (spawn etc);
     }
     #endregion

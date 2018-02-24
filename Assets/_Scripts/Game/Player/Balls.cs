@@ -17,11 +17,7 @@ public class Balls : MonoBehaviour, IKillable
     private float ratioTurnRateFocus = 1;
     public float RatioTurnRateFocus { get { return ratioTurnRateFocus; } }
 
-    [FoldoutGroup("GamePlay"), Tooltip("Clamp la position du player aux borders de la caméra"), SerializeField]
-    private float borderMin = 0.1f;
-    [FoldoutGroup("GamePlay"), Tooltip("Clamp la position du player aux borders de la caméra"), SerializeField]
-    private float borderMax = 0.9f;
-
+  
     [FoldoutGroup("GamePlay"), Tooltip("Temps d'attente entre le moment de la mort et la réel mort"), SerializeField]
     private float timeBeforeDie = 2f;
 
@@ -29,7 +25,8 @@ public class Balls : MonoBehaviour, IKillable
     private GameObject prefabsExplode;
     [FoldoutGroup("Object"), Tooltip("ball render"), SerializeField]
     private MeshRenderer renderBall;
-
+    [FoldoutGroup("Object"), Tooltip("ball render"), SerializeField]
+    private List<TrailRenderer> trailsBall;
 
 
     [FoldoutGroup("Debug"), Tooltip("List des weapons de la ball créé"), SerializeField]
@@ -116,11 +113,21 @@ public class Balls : MonoBehaviour, IKillable
         Power2 = 0f;
         
         ballBody = gameObject.GetComponent<Rigidbody>();
-
         playerRef = player;
         idBallPlayer = id;
 
+        ChangeVisual();
         InitWeapon();
+    }
+
+    private void ChangeVisual()
+    {
+        GameManager GM = GameManager.GetSingleton;
+        renderBall.material = GM.MaterialPlayer[playerRef.IdPlayer];
+        for (int i = 0; i < trailsBall.Count; i++)
+        {
+            trailsBall[i].endColor = GM.ColorPlayer[playerRef.IdPlayer];
+        }
     }
 
     /// <summary>
@@ -229,16 +236,6 @@ public class Balls : MonoBehaviour, IKillable
         }            
     }
 
-    /// <summary>
-    /// clamp la position du player dans la caméra !
-    /// </summary>
-    private void ClampPlayer()
-    {
-        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-        pos.x = Mathf.Clamp(pos.x, borderMin, borderMax);
-        pos.y = Mathf.Clamp(pos.y, borderMin, borderMax);
-        transform.position = Camera.main.ViewportToWorldPoint(pos);
-    }
     #endregion
 
     #region Unity ending functions
@@ -276,7 +273,6 @@ public class Balls : MonoBehaviour, IKillable
         if (!activated) //si la ball n'est pas activé, ne rien faire
             return;
         MovePlayer();
-        ClampPlayer();
     }
 
     #endregion

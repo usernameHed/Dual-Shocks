@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4160701584753488}
+  - component: {fileID: 114892966174023146}
   - component: {fileID: 114626949772006554}
   - component: {fileID: 114948016746452702}
   - component: {fileID: 114977515064983920}
@@ -75,11 +76,63 @@ MonoBehaviour:
   - {fileID: 1995181605325364, guid: 12328685f22970e479309138b7711eca, type: 2}
   - {fileID: 1995181605325364, guid: 4461817b9a97b43488a3fef0e3470a3a, type: 2}
   - {fileID: 1995181605325364, guid: 8f2ad8b4f5540214aaaf0bed5520ef37, type: 2}
+  colorPlayer:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.98620677, g: 1, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0.13103437, a: 1}
+  - {r: 0, g: 0.75172424, b: 1, a: 1}
+  materialPlayer:
+  - {fileID: 2100000, guid: 6a9c33bd75c9dc645badd80be4f73797, type: 2}
+  - {fileID: 2100000, guid: 16d1e112e144920459836c8a018d90e8, type: 2}
+  - {fileID: 2100000, guid: b1903be25bf8a3f4694b62832b656220, type: 2}
+  - {fileID: 2100000, guid: 3f80951efa24cf743acd83071af8eba8, type: 2}
   menuManager: {fileID: 0}
   setupManager: {fileID: 0}
   levelManager: {fileID: 0}
   updateTimer:
     updateFrequency: 0
+  playerBallInit: {fileID: 114892966174023146}
+--- !u!114 &114892966174023146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1058907828512530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a272754005a1ab4d991d25760a5a1b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromLevel: 0
+  playerData:
+  - idPlayer: 0
+    ballInfo:
+    - idBallType: 2
+      powers: 0000000003000000
+    - idBallType: 2
+      powers: 0000000003000000
+    active: 1
+  - idPlayer: 1
+    ballInfo:
+    - idBallType: 0
+      powers: 0000000003000000
+    - idBallType: 0
+      powers: 0000000003000000
+    active: 1
+  - idPlayer: 2
+    ballInfo:
+    - idBallType: 1
+      powers: 0000000003000000
+    - idBallType: 1
+      powers: 0000000003000000
+    active: 0
+  - idPlayer: 3
+    ballInfo:
+    - idBallType: 1
+      powers: 0000000003000000
+    - idBallType: 2
+      powers: 0000000003000000
+    active: 0
 --- !u!114 &114948016746452702
 MonoBehaviour:
   m_ObjectHideFlags: 1
