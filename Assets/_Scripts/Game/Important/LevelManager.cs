@@ -10,6 +10,13 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour
 {
     #region Attributes
+    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
+    private string sceneToLoad = "3_Game";
+    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
+    private string scenePrevious = "1_Menu";
+    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
+    private float speedTransition = 0.5f;
+
     [FoldoutGroup("Objects"), Tooltip("list des players local du jeu !"), SerializeField]
     private List<GameObject> playersLocal;
     public List<GameObject> PlayersLocal { get { return playersLocal; } }
@@ -36,6 +43,15 @@ public class LevelManager : MonoBehaviour
         SpawnPlayer();
         displayInGame.InitDisplay();
         displayInGame.ChangeDisplayInGame();
+        Invoke("ReplayGame", 3f);   //reload le game après X secondes
+    }
+
+    /// <summary>
+    /// recharge la scene courante pour un meilleur restart !
+    /// </summary>
+    private void ReplayGame()
+    {
+        SceneChangeManager.GetSingleton.StartLoading(sceneToLoad, false);
     }
     #endregion
 
@@ -60,6 +76,23 @@ public class LevelManager : MonoBehaviour
 
             playersLocal[i].SetActive(playerBallInit.PlayerData[i].active);
         }
+    }
+
+    /// <summary>
+    /// restart le jeu
+    /// </summary>
+    [Button("Restart")]
+    public void Restart()
+    {
+        GameManager.GetSingleton.RestartGame(true);
+        SceneChangeManager.GetSingleton.ActivateSceneWithFade(speedTransition);
+    }
+
+    [Button("Quit")]
+    public void Quit()
+    {
+        SceneChangeManager.GetSingleton.UnloadScene(sceneToLoad);
+        SceneChangeManager.GetSingleton.JumpToSceneWithFade(scenePrevious, speedTransition);
     }
 
     #endregion

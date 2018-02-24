@@ -40,6 +40,8 @@ public class PlayerControllerMenu : MonoBehaviour
     private bool[] power1 = new bool[2];
     private float[] power2 = new float[2];
     private Vector3[] initialPos = new Vector3[2];
+    private float[] massBall = new float[2];
+    private float[] sizeScale = new float[2];
 
     #endregion
 
@@ -79,32 +81,18 @@ public class PlayerControllerMenu : MonoBehaviour
     [Button("ChangeBalls")]
     private void ChangeBalls()
     {
-        /*for (int i = 0; i < ballsList.Count; i++)
-        {
-            //SI il y a déja une ball... et que le type voulu est le même, ne pas changer de ball...
-            if (ballsList[i] && ballsList[i].IdBall == ballInfo[i].idBallType)
-            {
-                //ici ne pas recréé la ball
+        DataPlayers dataPlayer = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer];
 
-            }
-            //ici il y a déjà une ball, MAIS on veut une ball différente...
-            else if (ballsList[i] && ballsList[i].IdBall != ballInfo[i].idBallType)
-            {
-                //on supprime l'existante pour créé la nouvelle
-                Destroy(ballsList[i]);
-                CreateBall(i);
-            }
-            //sinon, si il y a rien dans la liste, créé la ball voulu tout simplement !
-            else if (!ballsList[i])
-            {
-                CreateBall(i);
-            }
-        }*/
-    }
-    private void CreateBall(int index)
-    {
-        /*GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[index].idBallType), followersList[index].position, followersList[index].rotation, parentBalls);
-        Destroy(ballsObject.GetComponent<Balls>());*/
+        for (int i = 0; i < ballsList.Count; i++)
+        {
+            int idBall = dataPlayer.ballInfo[i].idBallType;
+            GameObject ball = GameManager.GetSingleton.GiveMeBall(idBall);
+
+            massBall[i] = ball.GetComponent<Rigidbody>().mass;
+            sizeScale[i] = ball.transform.localScale.x;
+
+            ballsList[i].transform.localScale = new Vector3(sizeScale[i], sizeScale[i], sizeScale[i]);
+        }
     }
 
     #endregion
@@ -138,22 +126,24 @@ public class PlayerControllerMenu : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 
-            ballsList[i].transform.position = Vector3.MoveTowards(ballsList[i].transform.position, new Vector3(initialPos[i].x, initialPos[i].y, 0), speedBack * Time.deltaTime);
+
+            
+
+            float speedBackModified = speedBack / massBall[i];
+
+            ballsList[i].transform.position = Vector3.MoveTowards(ballsList[i].transform.position, new Vector3(initialPos[i].x, initialPos[i].y, 0), speedBackModified * Time.deltaTime);
             
 
             if (hasMoved[i])
             {
+
+                float speedModified = speed / massBall[i];
                 
-
-
-                //ballsList[i].GetComponent<Rigidbody>().MovePosition(pos);
-                //rb.MovePosition(new Vector3(horizMove[i] * speed * Time.deltaTime, 0.0f, vertiMove[i] * speed * Time.deltaTime));
-                //rb.AddForce(horizMove[i] * speed * Time.deltaTime, 0.0f, vertiMove[i] * speed * Time.deltaTime, ForceMode.Impulse);
-                ballsList[i].transform.Translate(new Vector3(horizMove[i] * speed * Time.deltaTime, vertiMove[i] * speed * Time.deltaTime, 0), Space.World);
+                ballsList[i].transform.Translate(new Vector3(horizMove[i] * speedModified * Time.deltaTime, vertiMove[i] * speedModified * Time.deltaTime, 0), Space.World);
                 Vector3 pos = ballsList[i].transform.position;
                 pos.x = Mathf.Clamp(pos.x, initialPos[i].x - clampDistance, initialPos[i].x + clampDistance);
                 pos.y = Mathf.Clamp(pos.y, initialPos[i].y - clampDistance, initialPos[i].y + clampDistance);
-                //pos.z = Mathf.Clamp(pos.z, initialPos[i].z - clampDistance, initialPos[i].z + clampDistance);
+                
                 ballsList[i].transform.position = pos;
             }
 

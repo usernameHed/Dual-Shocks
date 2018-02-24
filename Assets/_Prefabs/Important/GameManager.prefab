@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a272754005a1ab4d991d25760a5a1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromLevel: 0
+  fromLevel: 1
   playerData:
   - idPlayer: 0
     ballInfo:
@@ -112,6 +112,7 @@ MonoBehaviour:
     - idBallType: 2
       powers: 0000000003000000
     active: 1
+    gamepadActive: 0
   - idPlayer: 1
     ballInfo:
     - idBallType: 0
@@ -119,6 +120,7 @@ MonoBehaviour:
     - idBallType: 0
       powers: 0000000003000000
     active: 1
+    gamepadActive: 0
   - idPlayer: 2
     ballInfo:
     - idBallType: 1
@@ -126,6 +128,7 @@ MonoBehaviour:
     - idBallType: 1
       powers: 0000000003000000
     active: 0
+    gamepadActive: 0
   - idPlayer: 3
     ballInfo:
     - idBallType: 1
@@ -133,6 +136,7 @@ MonoBehaviour:
     - idBallType: 2
       powers: 0000000003000000
     active: 0
+    gamepadActive: 0
 --- !u!114 &114948016746452702
 MonoBehaviour:
   m_ObjectHideFlags: 1

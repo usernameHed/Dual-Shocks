@@ -1401,7 +1401,7 @@ Transform:
   - {fileID: 154326782}
   - {fileID: 1858274969}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &215940445
 GameObject:
@@ -1967,7 +1967,7 @@ Transform:
   - {fileID: 440907874}
   - {fileID: 632558549}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &422851869
 MonoBehaviour:
@@ -2396,7 +2396,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &588067135
 Prefab:
@@ -7870,6 +7870,31 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: fromLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[0].gamepadActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[1].gamepadActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114948016746452702, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: alpha
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c935be67d020ee64b98f486d6aa0ff15, type: 2}
   m_IsPrefabParent: 0
@@ -7919,6 +7944,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d0bca24ddd02e49aca5e55d719c225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneToLoad: 3_Game
+  scenePrevious: 2_Setup
+  speedTransition: 1.5
   playersLocal:
   - {fileID: 982686572}
   - {fileID: 119747278}

@@ -77,6 +77,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("menu ready");
     }
+    /// <summary>
+    /// appelé quand les joypad se co/deco.
+    /// </summary>
+    public void CallChangePhase()
+    {
+        playerBallInit.SetupGamePadActive();
+        if (setupManager)
+            setupManager.ChangePhase();
+    }
 
     /// <summary>
     /// est appelé quand le menu est chargé !
@@ -84,6 +93,7 @@ public class GameManager : MonoBehaviour
     private void InitSetuplWhenLoaded()
     {
         Debug.Log("setup ready");
+        setupManager.InitSetup();
     }
 
     /// <summary>
@@ -93,7 +103,16 @@ public class GameManager : MonoBehaviour
     {
         ScoreManager.GetSingleton.ResetAll();   //reset les scores
         playerBallInit.Setup();                 //SETUP les données de créations de joueurs (si besoin !);
+
         levelManager.StartGame();               //commence le jeu (spawn etc);
+    }
+    /// <summary>
+    /// appelé lorsque, depuis le game, on restart la scene courante
+    /// restart: si c'est true, alors on a restart, sinon, on fait juste un start...
+    /// </summary>
+    public void RestartGame(bool restart)
+    {
+        playerBallInit.FromLevel = true;
     }
     #endregion
 

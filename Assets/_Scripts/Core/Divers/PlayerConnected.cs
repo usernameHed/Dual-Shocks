@@ -177,6 +177,8 @@ public class PlayerConnected : MonoBehaviour
     {
         Debug.Log("A controller was connected! Name = " + args.name + " Id = " + args.controllerId + " Type = " + args.controllerType);
         updatePlayerController(args.controllerId, true);
+
+        GameManager.GetSingleton.CallChangePhase();
     }
 
     /// <summary>
@@ -187,6 +189,8 @@ public class PlayerConnected : MonoBehaviour
         Debug.Log("A controller was disconnected! Name = " + args.name + " Id = " + args.controllerId + " Type = " + args.controllerType);
         updatePlayerController(args.controllerId, false);
         setKeyboardForPlayerOne();
+
+        GameManager.GetSingleton.CallChangePhase();
     }
 
     void OnDestroy()

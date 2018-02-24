@@ -9,12 +9,14 @@ public struct DataPlayers
     public int idPlayer;
     public PlayerBall[] ballInfo;
     public bool active;
+    public bool gamepadActive;
 
-    DataPlayers(int _idPlayer, PlayerBall[] _ballInfo, bool _active)
+    DataPlayers(int _idPlayer, PlayerBall[] _ballInfo, bool _active, bool _gamepadActive)
     {
         idPlayer = _idPlayer;
         ballInfo = _ballInfo;
         active = _active;
+        gamepadActive = _gamepadActive;
     }
 }
 
@@ -26,6 +28,7 @@ public class PlayerBallInit : MonoBehaviour
     #region Attributes
     [FoldoutGroup("GamePlay"), Tooltip("Important, défini si on vient du level setup, ou du play !"), SerializeField]
     private bool fromLevel = false;
+    public bool FromLevel { set { fromLevel = value; } }
 
     [FoldoutGroup("GamePlay"), Tooltip("les infos des 2 balls à créé sur le player + ses weapons"), SerializeField]
     //private PlayerBall[] playerBallInfo = new PlayerBall[2];
@@ -47,6 +50,18 @@ public class PlayerBallInit : MonoBehaviour
     {
         if (!fromLevel)
             SetPlayerActiveWithGamePadConnexion();
+        SetupGamePadActive();
+    }
+
+    /// <summary>
+    /// ici appelé quand les changement de manette se passe...
+    /// </summary>
+    public void SetupGamePadActive()
+    {
+        for (int i = 0; i < PlayerConnected.GetSingleton.playerArrayConnected.Length; i++)
+        {
+            playerData[i].gamepadActive = PlayerConnected.GetSingleton.playerArrayConnected[i];
+        }
     }
 
     /// <summary>
@@ -56,10 +71,9 @@ public class PlayerBallInit : MonoBehaviour
     /// </summary>
     private void SetPlayerActiveWithGamePadConnexion()
     {
-        PlayerConnected playerConnected = PlayerConnected.GetSingleton;
-        for (int i = 0; i < playerConnected.playerArrayConnected.Length; i++)
+        for (int i = 0; i < PlayerConnected.GetSingleton.playerArrayConnected.Length; i++)
         {
-            playerData[i].active = playerConnected.playerArrayConnected[i];
+            playerData[i].active = PlayerConnected.GetSingleton.playerArrayConnected[i];
         }
     }
     #endregion
