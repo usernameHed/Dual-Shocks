@@ -15,6 +15,23 @@ public class PlayerControllerMenu : MonoBehaviour
     private float speed = 2f;
     [FoldoutGroup("GamePlay"), Tooltip("speed to get back to normal"), SerializeField]
     private float speedBack = 0.5f;
+    [FoldoutGroup("GamePlay"), Tooltip("Clamp la speed (debug pour gerer les masse...)"), SerializeField]
+    private float minSpeedToDivised = 10f;
+    [FoldoutGroup("GamePlay"), Tooltip("marge de positionnement pour changer de ball"), SerializeField]
+    private float margeChangeBall = 0.1f;
+    [FoldoutGroup("GamePlay"), Tooltip("marge de positionnement pour changer de ball"), SerializeField]
+    private bool loopBallAndPower = true;
+
+    [FoldoutGroup("Objects"), Tooltip("rope reliant les 2 followers"), SerializeField]
+    private GameObject rope;
+    public Transform Rope { get { return rope.transform; } }
+
+    [FoldoutGroup("Debug"), Tooltip("ref du SetupManager"), SerializeField]
+    private SetupManager setupManager;
+
+    [FoldoutGroup("Debug"), Tooltip("active ou pas le joueur"), SerializeField]
+    private bool enabledScript = true;
+    public bool EnabledScript { set { enabledScript = value; } get { return enabledScript; } }
 
 
     [FoldoutGroup("Debug"), Tooltip("id unique du joueur correspondant à sa manette"), SerializeField]
@@ -30,9 +47,13 @@ public class PlayerControllerMenu : MonoBehaviour
     private Rope ropeScript;
     public Rope RopeScript { get { return ropeScript; } }
 
-    [FoldoutGroup("Objects"), Tooltip("rope reliant les 2 followers"), SerializeField]
-    private GameObject rope;
-    public Transform Rope { get { return rope.transform; } }
+    [FoldoutGroup("Debug"), Tooltip("coolDown balls"), SerializeField]
+    private FrequencyTimer[] coolDownBalls = new FrequencyTimer[2];
+    [FoldoutGroup("Debug"), Tooltip("coolDown power 1"), SerializeField]
+    private FrequencyTimer[] coolDownPowers1 = new FrequencyTimer[2];
+    [FoldoutGroup("Debug"), Tooltip("coolDown power 2"), SerializeField]
+    private FrequencyTimer[] coolDownPowers2 = new FrequencyTimer[2];
+
 
     private float[] horizMove = new float[2];
     private float[] vertiMove = new float[2];
@@ -81,6 +102,9 @@ public class PlayerControllerMenu : MonoBehaviour
     [Button("ChangeBalls")]
     private void ChangeBalls()
     {
+        if (!enabledScript)
+            return;
+        Debug.Log("changement de ball !");
         DataPlayers dataPlayer = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer];
 
         for (int i = 0; i < ballsList.Count; i++)
@@ -118,6 +142,49 @@ public class PlayerControllerMenu : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ici éffectue les changements de ball / pouvoir
+    /// </summary>
+    private void ChangeFromInput()
+    {
+        for (int i = 0; i < ballsList.Count; i++)
+        {
+            //Changement de ball
+            Vector3 pos = ballsList[i].transform.position;
+            if (pos.x - margeChangeBall <= initialPos[i].x - clampDistance && coolDownBalls[i].Ready())
+            {
+                int id = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType;
+                id = GameManager.GetSingleton.GiveMeGoodIdBall(id - 1, loopBallAndPower);
+                GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType = id;
+                ChangeBalls();
+            }
+            if (pos.x + margeChangeBall >= initialPos[i].x + clampDistance && coolDownBalls[i].Ready())
+            {
+                int id = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType;
+                id = GameManager.GetSingleton.GiveMeGoodIdBall(id + 1, loopBallAndPower);
+                GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType = id;
+                ChangeBalls();
+            }
+
+            //ici power 1 activé
+            if (power1[i] && coolDownPowers1[i].Ready())
+            {
+                int id = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[0];
+                id = GameManager.GetSingleton.GiveMeGoodIdPower(id + 1, 0);
+                GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[0] = id;
+                setupManager.DisplayInSetupScript.ChangePowerDisplay();
+            }
+            //ici power 2 activé
+            if (power2[i] >= 1.0f && coolDownPowers2[i].Ready())
+            {
+                int id = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[1];
+                id = GameManager.GetSingleton.GiveMeGoodIdPower(id + 1, 1);
+                GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[1] = id;
+                setupManager.DisplayInSetupScript.ChangePowerDisplay();
+            }
+        }
+    }
+
     private void MovePlayer()
     {
         for (int i = 0; i < ballsList.Count; i++)
@@ -127,9 +194,9 @@ public class PlayerControllerMenu : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
 
 
-            
 
-            float speedBackModified = speedBack / massBall[i];
+
+            float speedBackModified = speedBack / Mathf.Min(massBall[i], minSpeedToDivised);
 
             ballsList[i].transform.position = Vector3.MoveTowards(ballsList[i].transform.position, new Vector3(initialPos[i].x, initialPos[i].y, 0), speedBackModified * Time.deltaTime);
             
@@ -137,8 +204,8 @@ public class PlayerControllerMenu : MonoBehaviour
             if (hasMoved[i])
             {
 
-                float speedModified = speed / massBall[i];
-                
+                float speedModified = speed / Mathf.Min(massBall[i], minSpeedToDivised);
+
                 ballsList[i].transform.Translate(new Vector3(horizMove[i] * speedModified * Time.deltaTime, vertiMove[i] * speedModified * Time.deltaTime, 0), Space.World);
                 Vector3 pos = ballsList[i].transform.position;
                 pos.x = Mathf.Clamp(pos.x, initialPos[i].x - clampDistance, initialPos[i].x + clampDistance);
@@ -159,11 +226,16 @@ public class PlayerControllerMenu : MonoBehaviour
     /// </summary>
     private void Update()
 	{
+        if (!enabledScript)
+            return;
         InputPlayer();
+        ChangeFromInput();
     }
 
 	private void FixedUpdate()
 	{
+        if (!enabledScript)
+            return;
         MovePlayer();
 	}
 

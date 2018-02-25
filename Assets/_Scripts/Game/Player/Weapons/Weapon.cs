@@ -21,9 +21,12 @@ public abstract class Weapon : MonoBehaviour, IKillable
     protected PlayerController playerRef;
     [FoldoutGroup("Debug"), Tooltip("ref sur la ball"), SerializeField]
     protected Balls ballRef;
-    [FoldoutGroup("Debug"), Tooltip("cooldown de l'arme"), SerializeField]
+    [FoldoutGroup("Debug"), Tooltip("id de l'arme"), SerializeField]
     private float idWeapon;
     public float IdWeapon { get { return idWeapon; } }
+    [FoldoutGroup("Debug"), Tooltip("est-ce un cooldown ?"), SerializeField]
+    private bool weaponCoolDown;
+    public bool WeaponCoolDown { get { return weaponCoolDown; } }
     [FoldoutGroup("Debug"), Tooltip("id (0 ou 1) du numéro du weapoin par rapport au joueur"), SerializeField]
     protected int orderWeapon;
     public int OrderWeapon { get { return orderWeapon; } }

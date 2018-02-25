@@ -14,8 +14,25 @@ public class GameManager : MonoBehaviour
     private List<GameObject> prefabsBallsList;
 
     [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
-    private List<GameObject> prefabsPowersList;
-    public int PrefabsPowerCount() { return (prefabsPowersList.Count); }
+    private List<GameObject> prefabsPowers1List;
+    [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
+    public List<GameObject> prefabsPowers2List;
+
+    public int GetSizePowerList(int powerType)
+    {
+        if (powerType == 0)
+            return (prefabsPowers1List.Count);
+        else
+            return (prefabsPowers2List.Count);
+    }
+    public GameObject GetPowerPrefabs(int powerType, int id)
+    {
+        if (powerType == 0)
+            return (prefabsPowers1List[id]);
+        else
+            return (prefabsPowers2List[id]);
+    }
+
 
     [FoldoutGroup("GamePlay"), Tooltip("color players"), SerializeField]
     private List<Color> colorPlayer;
@@ -40,6 +57,7 @@ public class GameManager : MonoBehaviour
     
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
+
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
     private PlayerBallInit playerBallInit;
     public PlayerBallInit PlayerBallInit { get { return playerBallInit; } }
@@ -118,33 +136,69 @@ public class GameManager : MonoBehaviour
 
     #region Core
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id">l'id actuel de la ball</param>
+    /// <param name="loop">est-ce qu'on loop ou on clamp ?</param>
+    /// <returns></returns>
+    public int GiveMeGoodIdBall(int id, bool loop)
+    {
+        if (loop)
+        {
+            if (id < 0)
+                id = prefabsBallsList.Count - 1;
+            if (id >= prefabsBallsList.Count)
+                id = 0;
+        }
+        else
+        {
+            if (id < 0)
+                id = 0;
+            if (id >= prefabsBallsList.Count)
+                id = prefabsBallsList.Count - 1;
+        }
+        return (id);
+    }
+    /// <summary>
     /// selon l'id, renvoi le bon prefabs de ball à créé
     /// </summary>
     /// <returns></returns>
     public GameObject GiveMeBall(int id)
     {
-        if (id < 0 || id >= prefabsBallsList.Count)
-        {
-            Debug.Log("error id ball");
-            Debug.Break();
-            return (null);
-        }
+        id = GiveMeGoodIdBall(id, true);
+
         return (prefabsBallsList[id]);
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id">l'id actuel de la ball</param>
+    /// <param name="loop">est-ce qu'on loop ou on clamp ?</param>
+    /// <returns></returns>
+    public int GiveMeGoodIdPower(int id, int type)
+    {
+
+        if (id < 0)
+            id = GetSizePowerList(type) - 1;
+
+
+        if (id >= GetSizePowerList(type))
+            id = 0;
+
+        return (id);
+    }
+    /// <summary>
     /// selon l'id, renvoi le bon prefabs du pouvoir
     /// </summary>
     /// <returns></returns>
-    public GameObject GiveMePower(int id)
+    public GameObject GiveMePower(int id, int type)
     {
-        if (id < 0 || id >= prefabsPowersList.Count)
-        {
-            Debug.Log("error id power");
-            Debug.Break();
-            return (null);
-        }
-        return (prefabsPowersList[id]);
+
+        id = GiveMeGoodIdPower(id, type);
+
+        return (GetPowerPrefabs(id, type));
+
     }
     #endregion
 

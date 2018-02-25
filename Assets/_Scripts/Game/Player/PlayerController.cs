@@ -3,21 +3,6 @@ using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System;
 
-[Serializable]
-public struct PlayerBall
-{
-    [Tooltip("le type de ball (bleu, red...), selon la liste de prefabs du gameManager")]
-    public int idBallType;             //le type de ball (bleu, red...)
-    [Tooltip("les types de pouvoirs de la balle (x2 pouvoir), selon la liste de prefabs du gameManager")]
-    public int[] powers;    //pouvoirs de la balle gauche
-
-    PlayerBall(int idBall, int[] powersBall)
-    {
-        idBallType = idBall;
-        powers = powersBall;
-    }
-}
-
 /// <summary>
 /// PlayerController handle player movement
 /// <summary>

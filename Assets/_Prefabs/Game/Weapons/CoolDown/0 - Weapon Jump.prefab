@@ -549,6 +549,7 @@ MonoBehaviour:
   playerRef: {fileID: 0}
   ballRef: {fileID: 0}
   idWeapon: 0
+  weaponCoolDown: 1
   orderWeapon: 0
   forceImpulse: 70
   forceLinkImpulse: 20

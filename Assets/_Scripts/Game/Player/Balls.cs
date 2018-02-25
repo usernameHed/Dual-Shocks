@@ -182,7 +182,7 @@ public class Balls : MonoBehaviour, IKillable
             return;
         }
 
-        GameObject weaponObject = Instantiate(GameManager.GetSingleton.GiveMePower(idWeapon), transform.position, playerRef.FollowersList[idBallPlayer].rotation, transform);
+        GameObject weaponObject = Instantiate(GameManager.GetSingleton.GiveMePower(idWeapon, index), transform.position, playerRef.FollowersList[idBallPlayer].rotation, transform);
 
         weaponsList[index] = weaponObject.GetComponent<Weapon>();
         weaponsList[index].InitWeapon(playerRef, this, idBallPlayer); //ici init la ball avec les pouvoirs
@@ -194,7 +194,7 @@ public class Balls : MonoBehaviour, IKillable
     private bool isAllowedToCreateWeapon(int idWeaponToCreate, int indexWeapon)
     {
         //l'id est incorrect
-        if (idWeaponToCreate < 0 || idWeaponToCreate >= GameManager.GetSingleton.PrefabsPowerCount())
+        if (idWeaponToCreate < 0 || idWeaponToCreate >= GameManager.GetSingleton.GetSizePowerList(indexWeapon))
             return (false);
 
         //l'id du 2eme weapon est le même que le premier... ne rien faire !

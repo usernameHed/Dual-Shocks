@@ -42,7 +42,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1812299315256986
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,15 +259,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ccb325e7041b034ba2e364f7083e5dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clampDistance: 0.3
-  speed: 3
+  clampDistance: 0.4
+  speed: 4
   speedBack: 2
+  minSpeedToDivised: 2.5
+  margeChangeBall: 0.01
+  loopBallAndPower: 1
+  rope: {fileID: 1233881139134412}
+  setupManager: {fileID: 0}
+  enabledScript: 1
   idPlayer: 0
   ballsList:
   - {fileID: 1917450821410156}
   - {fileID: 1812299315256986}
   ropeScript: {fileID: 114225761815925612}
-  rope: {fileID: 1233881139134412}
+  coolDownBalls:
+  - updateFrequency: 1
+  - updateFrequency: 1
+  coolDownPowers1:
+  - updateFrequency: 1
+  - updateFrequency: 1
+  coolDownPowers2:
+  - updateFrequency: 1
+  - updateFrequency: 1
 --- !u!114 &114225761815925612
 MonoBehaviour:
   m_ObjectHideFlags: 1

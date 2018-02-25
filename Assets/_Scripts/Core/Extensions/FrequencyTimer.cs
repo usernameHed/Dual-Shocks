@@ -8,7 +8,7 @@ using UnityEngine;
 [System.Serializable]
 public class FrequencyTimer
 {
-	[SerializeField][Range(0, 10.0f)]
+	[SerializeField]
 	private float updateFrequency;
 
 	private float nextUpdate;

@@ -78,6 +78,20 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void InputGame()
+    {
+        if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape")
+            || PlayerConnected.GetSingleton.getPlayer(0).GetButtonDown("Back"))
+        {
+            Quit();
+        }
+        if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Restart")
+            || PlayerConnected.GetSingleton.getPlayer(0).GetButtonDown("Restart"))
+        {
+            Restart();
+        }
+    }
+
     /// <summary>
     /// restart le jeu
     /// </summary>
@@ -98,6 +112,9 @@ public class LevelManager : MonoBehaviour
     #endregion
 
     #region Unity ending functions
-
+    private void Update()
+    {
+        InputGame();
+    }
     #endregion
 }

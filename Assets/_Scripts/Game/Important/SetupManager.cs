@@ -6,15 +6,13 @@ using UnityEngine.UI;
 /// <summary>
 /// MenuManager Description
 /// </summary>
+[RequireComponent(typeof(DisplayInSetup))]
 public class SetupManager : MonoBehaviour
 {
     #region Attributes
     [FoldoutGroup("GamePlay"), OnValueChanged("ChangePhase", true), Tooltip("Debug"), SerializeField]
     private int[] idPhaseConnexion = new int[4];
-
-
-    [FoldoutGroup("Objetcs"), Tooltip("Debug"), SerializeField]
-    private List<Rope> rope;
+    public int[] IdPhaseConnexion { get { return (idPhaseConnexion); } }
 
     [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
     private string sceneToLoad = "3_Game";
@@ -22,6 +20,10 @@ public class SetupManager : MonoBehaviour
     private string scenePrevious = "1_Menu";
     [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
     private float speedTransition = 0.5f;
+
+    [FoldoutGroup("Debug"), Tooltip("Debug"), SerializeField]
+    private DisplayInSetup displayInSetup;
+    public DisplayInSetup DisplayInSetupScript { get { return displayInSetup; } }
 
     private PlayerConnected playerConnected;
 
@@ -42,6 +44,7 @@ public class SetupManager : MonoBehaviour
     public void InitSetup()
     {
         ChangePhase();
+        displayInSetup.InitDisplay();
     }
 
     /// <summary>
@@ -66,6 +69,7 @@ public class SetupManager : MonoBehaviour
                     if (!playerConnected.playerArrayConnected[i])
                         idPhaseConnexion[i] = 0;
 
+
                     break;
                 case 2:
                     Debug.Log("ici phase 2");
@@ -74,36 +78,80 @@ public class SetupManager : MonoBehaviour
 
                     break;
                 case 3:
-                    Debug.Log("ici phase 3");
                     if (!playerConnected.playerArrayConnected[i])
                         idPhaseConnexion[i] = 0;
+
+                    Debug.Log("ici phase 3");
 
                     break;
 
             }
         }
+        displayInSetup.ChangeDisplayInGame();
     }
 
-    /// <summary>
-    /// supprime les Link (les remet dans la pool !) pour la suite...
-    /// </summary>
-    private void CleanUp()
-    {
-        for (int i = 0; i < rope.Count; i++)
-        {
-            rope[i].ClearJoints();
-        }
-    }
     #endregion
 
     #region Core
+    /// <summary>
+    /// On lance le jeu ou pas ?
+    /// </summary>
+    private bool ReadyToPlay()
+    {
+        for (int i = 0; i < idPhaseConnexion.Length; i++)
+        {
+            if (idPhaseConnexion[i] > 0 && idPhaseConnexion[i] < 3)
+                return (false);
+        }
+
+        Play(); //ici play enfin !!!!!
+        return (true);
+    }
+
+    /// <summary>
+    /// input des 4 joueurs
+    /// </summary>
+    private void InputPlayer()
+    {
+        for (int i = 0; i < idPhaseConnexion.Length; i++)
+        {
+            if (PlayerConnected.GetSingleton.getPlayer(i).GetButtonDown("FireA") && idPhaseConnexion[i] >= 1 && idPhaseConnexion[i] < 4)
+            {
+                idPhaseConnexion[i] += 1;
+
+                if (idPhaseConnexion[i] == 4)
+                {
+                    idPhaseConnexion[i] = 3;
+
+                    if (ReadyToPlay())
+                        return;
+                }
+                ChangePhase();
+            }
+            if (PlayerConnected.GetSingleton.getPlayer(i).GetButtonDown("FireB") && idPhaseConnexion[i] > 0)
+            {
+                idPhaseConnexion[i] -= 1;
+                ChangePhase();
+            }
+        }
+    }
+
+    private void InputGame()
+    {
+        if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape")
+            || PlayerConnected.GetSingleton.getPlayer(0).GetButtonDown("Back"))
+        {
+            Quit();
+        }
+    }
+
     /// <summary>
     /// ici lance le jeu, il est chargé !
     /// </summary>
     [Button("Play")]
     public void Play()
     {
-        CleanUp();
+        displayInSetup.CleanUp();
         GameManager.GetSingleton.RestartGame(false);
         SceneChangeManager.GetSingleton.ActivateSceneWithFade(speedTransition);
     }
@@ -117,6 +165,10 @@ public class SetupManager : MonoBehaviour
     #endregion
 
     #region Unity ending functions
-
+    private void Update()
+    {
+        InputPlayer();
+        InputGame();
+    }
     #endregion
 }
