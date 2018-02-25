@@ -181,7 +181,7 @@ public class Balls : MonoBehaviour, IKillable
             Debug.Log("ici pas de weapon n°" + (index + 1));
             return;
         }
-
+        //TODO: yielda un truck inversé ici...
         GameObject weaponObject = Instantiate(GameManager.GetSingleton.GiveMePower(idWeapon, index), transform.position, playerRef.FollowersList[idBallPlayer].rotation, transform);
 
         weaponsList[index] = weaponObject.GetComponent<Weapon>();
@@ -194,12 +194,14 @@ public class Balls : MonoBehaviour, IKillable
     private bool isAllowedToCreateWeapon(int idWeaponToCreate, int indexWeapon)
     {
         //l'id est incorrect
-        if (idWeaponToCreate < 0 || idWeaponToCreate >= GameManager.GetSingleton.GetSizePowerList(indexWeapon))
+        if (idWeaponToCreate < 0 || idWeaponToCreate >= GameManager.GetSingleton.PrefabsPowerListCount(indexWeapon))
             return (false);
 
+        /*
         //l'id du 2eme weapon est le même que le premier... ne rien faire !
         if (indexWeapon == 1 && idWeaponToCreate == weaponsList[0].IdWeapon)
             return (false);
+         */
         return (true);
     }
 

@@ -1,38 +1,23 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
-
+using System;
+using Sirenix.Serialization;
 
 /// <summary>
 /// GameManager Description
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : SerializedMonoBehaviour
 {
     #region Attributes
 
     [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
     private List<GameObject> prefabsBallsList;
 
-    [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
-    private List<GameObject> prefabsPowers1List;
-    [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), SerializeField]
-    public List<GameObject> prefabsPowers2List;
-
-    public int GetSizePowerList(int powerType)
-    {
-        if (powerType == 0)
-            return (prefabsPowers1List.Count);
-        else
-            return (prefabsPowers2List.Count);
-    }
-    public GameObject GetPowerPrefabs(int powerType, int id)
-    {
-        if (powerType == 0)
-            return (prefabsPowers1List[id]);
-        else
-            return (prefabsPowers2List[id]);
-    }
-
+    [FoldoutGroup("GamePlay"), Tooltip("balls prefabs"), NonSerialized, OdinSerialize]
+    private List<List<GameObject>> prefabsPowersList;
+    public GameObject PrefabsPowersList(int x, int y) { return (prefabsPowersList[x][y]); }
+    public int PrefabsPowerListCount(int x) { return (prefabsPowersList[x].Count); }
 
     [FoldoutGroup("GamePlay"), Tooltip("color players"), SerializeField]
     private List<Color> colorPlayer;
@@ -180,10 +165,10 @@ public class GameManager : MonoBehaviour
     {
 
         if (id < 0)
-            id = GetSizePowerList(type) - 1;
+            id = PrefabsPowerListCount(type) - 1;
 
 
-        if (id >= GetSizePowerList(type))
+        if (id >= PrefabsPowerListCount(type))
             id = 0;
 
         return (id);
@@ -197,7 +182,7 @@ public class GameManager : MonoBehaviour
 
         id = GiveMeGoodIdPower(id, type);
 
-        return (GetPowerPrefabs(id, type));
+        return (PrefabsPowersList(type, id));
 
     }
     #endregion

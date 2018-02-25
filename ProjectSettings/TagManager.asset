@@ -7,6 +7,8 @@ TagManager:
   - Link
   - Ball
   - BallColliderLink
+  - DeathBulletEnemy
+  - Bonus
   layers:
   - Default
   - TransparentFX

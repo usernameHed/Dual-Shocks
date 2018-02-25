@@ -66,6 +66,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8d205dcc9e5f443ac03c9d0d5e5d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 1995181605325364, guid: 0a91f27065bc3bd4895794196fd60f77, type: 2}
+    - {fileID: 1995181605325364, guid: f5b58a9e978ca134db08eb29b9490842, type: 2}
+    - {fileID: 1995181605325364, guid: 8f2ad8b4f5540214aaaf0bed5520ef37, type: 2}
+    - {fileID: 1995181605325364, guid: 12328685f22970e479309138b7711eca, type: 2}
+    - {fileID: 1995181605325364, guid: 4461817b9a97b43488a3fef0e3470a3a, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: prefabsPowersList
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule]], mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   prefabsBallsList:
   - {fileID: 1696340403240580, guid: 964499ac770bb1347b59b6c9d43e1897, type: 2}
   - {fileID: 1696340403240580, guid: 03ce34dcf5af6d9419e380d659f19ab3, type: 2}
@@ -104,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a272754005a1ab4d991d25760a5a1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromLevel: 1
+  fromLevel: 0
   playerData:
   - idPlayer: 0
     ballInfo:
