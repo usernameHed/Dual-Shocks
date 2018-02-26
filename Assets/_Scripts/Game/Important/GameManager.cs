@@ -27,19 +27,12 @@ public class GameManager : SerializedMonoBehaviour
     private List<Material> materialPlayer;
     public List<Material> MaterialPlayer { get { return (materialPlayer); } }
 
-    [FoldoutGroup("Scenes"), Tooltip("liens du levelManager"), SerializeField]
-    private MenuManager menuManager;
-    public MenuManager MenuManagerScript { set { menuManager = value; InitMenulWhenLoaded(); } }
 
+    //////////////////////////////////////////////////////////////////////
     [FoldoutGroup("Scenes"), Tooltip("liens du levelManager"), SerializeField]
-    private SetupManager setupManager;
-    public SetupManager SetupManagerScript { set { setupManager = value; InitSetuplWhenLoaded(); } }
+    private SceneManagerLocal sceneManagerLocal;
+    public SceneManagerLocal SceneManagerLocal { set { sceneManagerLocal = value; InitNewScene(); } get { return (sceneManagerLocal); } }
 
-    [FoldoutGroup("Scenes"), Tooltip("liens du levelManager"), SerializeField]
-    private LevelManager levelManager;
-    public LevelManager LevelManager { set { levelManager = value; InitLevelWhenLoaded(); } }
-
-    
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
@@ -74,41 +67,25 @@ public class GameManager : SerializedMonoBehaviour
     }
 
     /// <summary>
-    /// est appelé quand le menu est chargé !
+    /// initialise les ILevelManagers (il y en a forcément 1 par niveau)
     /// </summary>
-    private void InitMenulWhenLoaded()
+    private void InitNewScene()
     {
-        Debug.Log("menu ready");
+        if (sceneManagerLocal.LevelManagerScript != null)
+            sceneManagerLocal.LevelManagerScript.InitScene();
     }
+
     /// <summary>
     /// appelé quand les joypad se co/deco.
     /// </summary>
     public void CallChangePhase()
     {
         playerBallInit.SetupGamePadActive();
-        if (setupManager)
-            setupManager.ChangePhase();
+
+        if (sceneManagerLocal.LevelManagerScript != null)
+            sceneManagerLocal.LevelManagerScript.CallGamePad();
     }
 
-    /// <summary>
-    /// est appelé quand le menu est chargé !
-    /// </summary>
-    private void InitSetuplWhenLoaded()
-    {
-        Debug.Log("setup ready");
-        setupManager.InitSetup();
-    }
-
-    /// <summary>
-    /// appelé lorsque le level viens de se charger
-    /// </summary>
-    private void InitLevelWhenLoaded()
-    {
-        ScoreManager.GetSingleton.ResetAll();   //reset les scores
-        playerBallInit.Setup();                 //SETUP les données de créations de joueurs (si besoin !);
-
-        levelManager.StartGame();               //commence le jeu (spawn etc);
-    }
     /// <summary>
     /// appelé lorsque, depuis le game, on restart la scene courante
     /// restart: si c'est true, alors on a restart, sinon, on fait juste un start...

@@ -23,6 +23,32 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
     #endregion
 
     #region Core
+    /// <summary>
+    /// gère les output aux players / balls..
+    /// </summary>
+    private void ReactionHandler(Collider other)
+    {
+        //est-ce que c'est une ball qui a touché ?
+        Balls ballScript = other.transform.parent.gameObject.GetComponent<Balls>();
+        if (ballScript)
+        {
+            ballScript.AddLink();
+        }
+
+        /*
+        //sinon, est-ce que c'est un link ?
+        Line line = other.transform.parent.parent.gameObject.GetComponent<Line>();
+        if (line)
+        {
+            line.PlayerControllerVariable.RopeScript.AddLink();
+        }
+        */
+    }
+
+    /// <summary>
+    /// gère les collisions
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (!enabledObject)
@@ -30,7 +56,7 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
 
         if (other.CompareTag("BallColliderLink"))
         {
-            Debug.Log("Ici ajotue 1 au player :" + other.transform.parent.gameObject.name);
+            ReactionHandler(other);
             Kill();
         }
     }

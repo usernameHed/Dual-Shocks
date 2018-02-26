@@ -101,6 +101,15 @@ public class Rope : MonoBehaviour
     }
 
     /// <summary>
+    /// ajoute un link, proche de la ball [index] voulu
+    /// </summary>
+    /// <param name="indexObject"></param>
+    public void AddLink(int indexObject)
+    {
+        Debug.Log("ici ajoute un link :" + indexObject);
+    }
+
+    /// <summary>
     /// clear la list des joints (et supprime les objets dedant)
     /// </summary>
     public void ClearJoints()

@@ -1323,6 +1323,7 @@ Transform:
   m_Children:
   - {fileID: 154326782}
   - {fileID: 1858274969}
+  - {fileID: 691961832}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3181,6 +3182,150 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 686457022}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &691961831
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 185330615}
+    m_Modifications:
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 1858274970}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"levelManger","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"sceneToLoad","length":2'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      value: '"path":"sceneToLoad.[0]","value":{"$id":0,"$type":"SceneManagerLocal+SceneInfo,
+        Assembly-CSharp","scene":"3","loadAtStart":true,"loadAfterXSecond":0,"fade":true,"fadeTime":1,"additive":false,"swapWhenLoaded":false}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
+      value: '"path":"sceneToLoad.[0].loadAfterXSecond","value":{"$id":0,"$type":"System.Single,
+        mscorlib",2}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      value: '"path":"sceneToLoad.[0].scene","value":{"$id":0,"$type":"System.String,
+        mscorlib","3_Game"}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      value: '"path":"sceneToLoad.[1]","value":{"$id":0,"$type":"SceneManagerLocal+SceneInfo,
+        Assembly-CSharp","scene":null,"loadAtStart":false,"loadAfterXSecond":0,"fade":false,"fadeTime":0,"additive":false,"swapWhenLoaded":false}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      value: '"path":"sceneToLoad.[1].additive","value":{"$id":0,"$type":"System.Boolean,
+        mscorlib",false}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
+      value: '"path":"sceneToLoad.[1].fade","value":{"$id":0,"$type":"System.Boolean,
+        mscorlib",true}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[8]
+      value: '"path":"sceneToLoad.[1].fadeTime","value":{"$id":0,"$type":"System.Single,
+        mscorlib",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[9]
+      value: '"path":"sceneToLoad.[1].loadAfterXSecond","value":{"$id":0,"$type":"System.Single,
+        mscorlib",0}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[10]
+      value: '"path":"sceneToLoad.[1].loadAtStart","value":{"$id":0,"$type":"System.Boolean,
+        mscorlib",true}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[11]
+      value: '"path":"sceneToLoad.[1].scene","value":{"$id":0,"$type":"System.String,
+        mscorlib","2_Setup"}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[12]
+      value: '"path":"sceneToLoad.[1].swapWhenLoaded","value":{"$id":0,"$type":"System.Boolean,
+        mscorlib",false}'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &691961832 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4917301629089308, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+    type: 2}
+  m_PrefabInternal: {fileID: 691961831}
 --- !u!1 &694712170
 GameObject:
   m_ObjectHideFlags: 0
@@ -3288,6 +3433,10 @@ Prefab:
     - target: {fileID: 4860898705374010, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
       propertyPath: m_RootOrder
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1054457720489558, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
@@ -9578,9 +9727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d0bca24ddd02e49aca5e55d719c225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: 3_Game
-  scenePrevious: 2_Setup
-  speedTransition: 1.5
   playersLocal:
   - {fileID: 982686572}
   - {fileID: 119747278}

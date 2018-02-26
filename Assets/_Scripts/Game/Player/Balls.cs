@@ -241,6 +241,13 @@ public class Balls : MonoBehaviour, IKillable
     #endregion
 
     #region Unity ending functions
+    /// <summary>
+    /// Appelé quand on touche un bonus, ajout un link !
+    /// </summary>
+    public void AddLink()
+    {
+        playerRef.RopeScript.AddLink(idBallPlayer);
+    }
 
     private void OnTriggerEnter(Collider other)
     {

@@ -7,19 +7,12 @@ using UnityEngine.UI;
 /// MenuManager Description
 /// </summary>
 [RequireComponent(typeof(DisplayInSetup))]
-public class SetupManager : MonoBehaviour
+public class SetupManager : MonoBehaviour, ILevelManager
 {
     #region Attributes
     [FoldoutGroup("GamePlay"), OnValueChanged("ChangePhase", true), Tooltip("Debug"), SerializeField]
     private int[] idPhaseConnexion = new int[4];
     public int[] IdPhaseConnexion { get { return (idPhaseConnexion); } }
-
-    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
-    private string sceneToLoad = "3_Game";
-    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
-    private string scenePrevious = "1_Menu";
-    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
-    private float speedTransition = 0.5f;
 
     [FoldoutGroup("Debug"), Tooltip("Debug"), SerializeField]
     private DisplayInSetup displayInSetup;
@@ -33,18 +26,25 @@ public class SetupManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.GetSingleton.SetupManagerScript = this;
-        SceneChangeManager.GetSingleton.StartLoading(sceneToLoad, false);
         playerConnected = PlayerConnected.GetSingleton;
     }
 
     /// <summary>
-    /// initialise les setups...
+    /// est appelé depuis le GameManager depuis l'interface
+    /// à l'initialisation...
     /// </summary>
-    public void InitSetup()
+    public void InitScene()
     {
         ChangePhase();
         displayInSetup.InitDisplay();
+    }
+    /// <summary>
+    /// est appelé depuis le GameManager depuis l'interface
+    /// est appelé quand il y a un changement de gamePad
+    /// </summary>
+    public void CallGamePad()
+    {
+        ChangePhase();
     }
 
     /// <summary>
@@ -149,18 +149,17 @@ public class SetupManager : MonoBehaviour
     /// ici lance le jeu, il est chargé !
     /// </summary>
     [Button("Play")]
-    public void Play()
+    private void Play()
     {
         displayInSetup.CleanUp();
-        GameManager.GetSingleton.RestartGame(false);
-        SceneChangeManager.GetSingleton.ActivateSceneWithFade(speedTransition);
+        GameManager.GetSingleton.RestartGame(false);    //notification spécial ... pas forcément utile
+        GameManager.GetSingleton.SceneManagerLocal.PlayNext();
     }
 
     [Button("Quit")]
-    public void Quit()
+    private void Quit()
     {
-        SceneChangeManager.GetSingleton.UnloadScene(sceneToLoad);
-        SceneChangeManager.GetSingleton.JumpToSceneWithFade(scenePrevious, speedTransition);
+        GameManager.GetSingleton.SceneManagerLocal.PlayPrevious();
     }
     #endregion
 

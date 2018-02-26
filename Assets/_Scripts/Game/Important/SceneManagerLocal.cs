@@ -1,0 +1,138 @@
+﻿using UnityEngine;
+using Sirenix.OdinInspector;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEditor;
+using System.Collections;
+using Sirenix.Serialization;
+using System;
+
+/// <summary>
+/// MenuManager Description
+/// </summary>
+public class SceneManagerLocal : SerializedMonoBehaviour
+{
+    [SerializeField]
+    private struct SceneInfo
+    {
+        [Space(10)]
+        [Header("Scene à charger")]
+        [Tooltip("Scene Name")]
+        public string scene;
+        [Tooltip("Charge la scène en mémoire dès le début ?")]
+        public bool loadAtStart;
+        [EnableIf("loadAtStart"), Tooltip("Si on charge au start, est-ce qu'on attend X seconde ou pas ? (default = 0)")]
+        public float loadAfterXSecond;
+        
+        [Header("effet de la transition")]
+        [Tooltip("Fade lors de la transition ?")]
+        public bool fade;
+        [EnableIf("fade"), Tooltip("Temps de fade")]
+        public float fadeTime;
+        [DisableIf("fade"), Tooltip("Load la scène en additif ?")]
+        public bool additive;
+        [Tooltip("Swap lorsque la scène est chargé ? Le changement marche en combinaison d'un fade, et d'une additive (fade puis swap complletement ok, additif puis ajoute l'additif au jeu ok)")]
+        public bool swapWhenLoaded;
+    }
+    #region Attributes
+    [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), NonSerialized, OdinSerialize]
+    private List<SceneInfo> sceneToLoad;
+
+    [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), NonSerialized, OdinSerialize]
+    private ILevelManager levelManger;
+    public ILevelManager LevelManagerScript { get { return (levelManger); } }
+    #endregion
+
+    #region Initialization
+
+    private void Start()
+    {
+        if (levelManger == null)
+        {
+            Debug.LogError("PAS DE I LEVEL MANAGER");
+            levelManger = GetComponent<ILevelManager>();
+            return;
+        }
+            
+
+        GameManager.GetSingleton.SceneManagerLocal = this;
+
+        InitSceneLoading();
+    }
+    #endregion
+
+    #region Core
+    /// <summary>
+    /// gère le lancement des chargements des scenes
+    /// </summary>
+    private void InitSceneLoading()
+    {
+        for (int i = 0; i < sceneToLoad.Count; i++)
+        {
+            if (sceneToLoad[i].loadAtStart)
+            {
+                if (sceneToLoad[i].loadAfterXSecond == 0)
+                    StartLoading(i);
+                else
+                    StartCoroutine(WaitAndStart(i, sceneToLoad[i].loadAfterXSecond));
+            }
+        }
+    }
+    private IEnumerator WaitAndStart(int index, float time)
+    {
+        yield return new WaitForSeconds(time);
+        StartLoading(index);
+    }
+
+    private void StartLoading(int index)
+    {
+        SceneManagerGlobal.GetSingleton.StartLoading(   sceneToLoad[index].scene,
+                                                        sceneToLoad[index].swapWhenLoaded,
+                                                        sceneToLoad[index].additive,
+                                                        sceneToLoad[index].fade,
+                                                        sceneToLoad[index].fadeTime);
+    }
+    /// <summary>
+    /// demande de charger une scène précise
+    /// (peut être appelé si c'est une scène qui ne se charge pas au démarrage)
+    /// </summary>
+    public void StartLoading(string scene)
+    {
+        for (int i = 0; i < sceneToLoad.Count; i++)
+        {
+            if (sceneToLoad[i].scene == scene)
+            {
+                StartLoading(i);
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// ici lance le jeu, il est chargé !
+    /// </summary>
+    [FoldoutGroup("Debug"), Button("Play")]
+    public void PlayNext()
+    {
+        SceneManagerGlobal.GetSingleton.ActivateScene(sceneToLoad[0].scene);    //hard code du next ?
+        //ici gère les unloads ?
+    }
+    [FoldoutGroup("Debug"), Button("Previous")]
+    public void PlayPrevious()
+    {
+        SceneManagerGlobal.GetSingleton.ActivateScene(sceneToLoad[1].scene);    //hard code du next ?
+        //ici gère les unloads ?
+    }
+
+    [FoldoutGroup("Debug"), Button("Quit")]
+    public void Quit()
+    {
+        SceneManagerGlobal.GetSingleton.QuitGame(true);
+    }
+
+    #endregion
+
+    #region Unity ending functions
+
+    #endregion
+}

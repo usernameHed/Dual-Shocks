@@ -7,16 +7,9 @@ using System.Collections.Generic;
 /// <summary>
 /// LevelManager Description
 /// </summary>
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour, ILevelManager
 {
     #region Attributes
-    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
-    private string sceneToLoad = "3_Game";
-    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
-    private string scenePrevious = "1_Menu";
-    [FoldoutGroup("Scene"), Tooltip("Debug"), SerializeField]
-    private float speedTransition = 0.5f;
-
     [FoldoutGroup("Objects"), Tooltip("list des players local du jeu !"), SerializeField]
     private List<GameObject> playersLocal;
     public List<GameObject> PlayersLocal { get { return playersLocal; } }
@@ -30,28 +23,26 @@ public class LevelManager : MonoBehaviour
 
     #region Initialization
 
-    private void Awake()
-    {
-        GameManager.GetSingleton.LevelManager = this;
-    }
-
     /// <summary>
-    /// appelé depuis le gameManager quand tout semble bon
+    /// est appelé depuis le GameManager depuis l'interface
+    /// à l'initialisation...
     /// </summary>
-    public void StartGame()
+    public void InitScene()
     {
+        ScoreManager.GetSingleton.ResetAll();   //reset les scores
+        GameManager.GetSingleton.PlayerBallInit.Setup();
+
         SpawnPlayer();
         displayInGame.InitDisplay();
         displayInGame.ChangeDisplayInGame();
-        Invoke("ReplayGame", 3f);   //reload le game après X secondes
     }
-
     /// <summary>
-    /// recharge la scene courante pour un meilleur restart !
+    /// est appelé depuis le GameManager depuis l'interface
+    /// est appelé quand il y a un changement de gamePad
     /// </summary>
-    private void ReplayGame()
+    public void CallGamePad()
     {
-        SceneChangeManager.GetSingleton.StartLoading(sceneToLoad, false);
+        
     }
     #endregion
 
@@ -99,14 +90,13 @@ public class LevelManager : MonoBehaviour
     public void Restart()
     {
         GameManager.GetSingleton.RestartGame(true);
-        SceneChangeManager.GetSingleton.ActivateSceneWithFade(speedTransition);
+        GameManager.GetSingleton.SceneManagerLocal.PlayNext();
     }
 
     [Button("Quit")]
     public void Quit()
     {
-        SceneChangeManager.GetSingleton.UnloadScene(sceneToLoad);
-        SceneChangeManager.GetSingleton.JumpToSceneWithFade(scenePrevious, speedTransition);
+        GameManager.GetSingleton.SceneManagerLocal.PlayPrevious();
     }
 
     #endregion

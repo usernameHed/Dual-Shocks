@@ -2,11 +2,12 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// MenuManager Description
 /// </summary>
-public class MenuManager : MonoBehaviour
+public class MenuManager : MonoBehaviour, ILevelManager
 {
     #region Attributes
     [FoldoutGroup("GamePlay"), Tooltip("Debug"), SerializeField]
@@ -15,36 +16,46 @@ public class MenuManager : MonoBehaviour
     [FoldoutGroup("Objects"), Tooltip("Debug"), SerializeField]
     private List<Button> buttonsMainMenu;
 
-    private bool enabledScript = true;
+    private bool enabledScript = false;
     #endregion
 
     #region Initialization
-
-    private void Start()
+    /// <summary>
+    /// est appelé depuis le GameManager depuis l'interface
+    /// à l'initialisation...
+    /// </summary>
+    public void InitScene()
     {
         enabledScript = true;
-        GameManager.GetSingleton.MenuManagerScript = this;
-        SceneChangeManager.GetSingleton.StartLoading(sceneToLoad, false);
     }
+    /// <summary>
+    /// est appelé depuis le GameManager depuis l'interface
+    /// est appelé quand il y a un changement de gamePad
+    /// </summary>
+    public void CallGamePad()
+    {
+        
+    }
+
     #endregion
 
     #region Core
     /// <summary>
     /// ici lance le jeu, il est chargé !
     /// </summary>
-    [Button("Play")]
+    [FoldoutGroup("Debug"), Button("Play")]
     public void Play()
     {
-        SceneChangeManager.GetSingleton.ActivateSceneWithFade();
+        GameManager.GetSingleton.SceneManagerLocal.PlayNext();
     }
 
-    [Button("Quit")]
+    [FoldoutGroup("Debug"), Button("Quit")]
     public void Quit()
     {
         enabledScript = false;
         buttonsMainMenu[1].Select();
-        
-        SceneChangeManager.GetSingleton.QuitFade();
+
+        SceneManagerGlobal.GetSingleton.QuitGame(true);
     }
 
     /// <summary>
