@@ -59,7 +59,7 @@ GameObject:
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1211959023729518
 GameObject:
   m_ObjectHideFlags: 1
@@ -439,11 +439,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ropeAnchors: {x: 0, y: 0, z: 0}
-  spring: 1000
-  damper: 50
-  min: 0
-  max: 0
-  linkCount: 20
+  spring: 500
+  damper: 0
+  min: 0.1
+  max: 0.3
+  linkCount: 10
   objectToConnect:
   - {fileID: 0}
   - {fileID: 0}
