@@ -26,6 +26,7 @@ public class DisplayInGame : MonoBehaviour
 
     [FoldoutGroup("Objects"), Tooltip("list spawn players"), SerializeField]
     private PlayerRef[] playerRocks = new PlayerRef[playerMax];
+    public PlayerRef[] PlayerRocks { get { return (playerRocks); } }
 
 
     private const int playerMax = 4;  //nombre de ball du joueur

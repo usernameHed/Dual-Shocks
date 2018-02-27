@@ -19,6 +19,9 @@ public class LevelManager : MonoBehaviour, ILevelManager
 
     [FoldoutGroup("Debug"), Tooltip("gère la GUI in games"), SerializeField]
     private DisplayInGame displayInGame;
+
+    [FoldoutGroup("Debug"), Tooltip("gere le temps avant de pouvoir faire Restart"), SerializeField]
+    private FrequencyTimer coolDownRestart;
     #endregion
 
     #region Initialization
@@ -64,7 +67,16 @@ public class LevelManager : MonoBehaviour, ILevelManager
             playerController.IdPlayer = playerBallInit.PlayerData[i].idPlayer;
             playerController.BallInfo = playerBallInit.PlayerData[i].ballInfo;
 
-            Debug.Log("ICI ) la position des spawn STP !!!");
+            
+            
+            bool activePlayer = playerBallInit.PlayerData[i].active;
+            if (activePlayer)
+            {
+                Debug.Log("ICI ) la position des spawn STP !!!");
+                playerController.FollowersList[0].position = displayInGame.PlayerRocks[i].spawnBall[0].position;
+                playerController.FollowersList[1].position = displayInGame.PlayerRocks[i].spawnBall[1].position;
+
+            }
             playersLocal[i].SetActive(playerBallInit.PlayerData[i].active);
         }
     }
@@ -89,6 +101,9 @@ public class LevelManager : MonoBehaviour, ILevelManager
     [Button("Restart")]
     public void Restart()
     {
+        if (!coolDownRestart.Ready())
+            return;
+
         GameManager.GetSingleton.RestartGame(true);
         GameManager.GetSingleton.SceneManagerLocal.PlayNext();
     }

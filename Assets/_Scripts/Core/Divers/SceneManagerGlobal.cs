@@ -124,6 +124,11 @@ public class SceneManagerGlobal : MonoBehaviour
     /// <param name="justActive">ici on est sur que la scène est chargé !</param>
     private void ActivateScene(int index, bool restartIfNotCharged = false, float time = 0.5f)
     {
+        if (index < 0 || index >= sceneCharging.Count)
+        {
+            Debug.Log("ici on n'aurai pas du faire ça...");
+            return;
+        }
         /*if (!sceneCharging[index].async.isDone)
         {
             Debug.Log("charging....");

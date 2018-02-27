@@ -131,6 +131,7 @@ public class PlayerController : MonoBehaviour, IKillable
         ballsList[index] = ballsObject.GetComponent<Balls>();
         ballsList[index].InitBall(this, index); //ici init la ball avec les pouvoirs
     }
+    
 
     #endregion
 
