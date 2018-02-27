@@ -67,6 +67,8 @@ public class SceneManagerGlobal : MonoBehaviour
     /// <param name="additive">est-ce qu'on ajoute la scène en additif ou pas ??</param>
     public void StartLoading(string scene, bool swapWhenLoaded = true, bool additive = false, bool fade = false, float speedFade = 1.0f)
     {
+        
+
         if ((additive && fade) || scene == "")
         {
             Debug.LogError("pas possible");
@@ -110,7 +112,8 @@ public class SceneManagerGlobal : MonoBehaviour
                 return;
             }
         }
-        Debug.Log("scene not found !");
+        Debug.Log("scene not found ! Load the scene en normal...");
+        JumpToScene(scene, fade, speedFade);
     }
 
 
@@ -128,6 +131,8 @@ public class SceneManagerGlobal : MonoBehaviour
                 StartCoroutine(WaitForActivateScene(index, time));
             return;
         }*/
+        Debug.Log("ici active normalement...");
+
         sceneCharging[index].async.allowSceneActivation = true;
         sceneCharging.RemoveAt(index);
     }
@@ -157,7 +162,7 @@ public class SceneManagerGlobal : MonoBehaviour
     private IEnumerator ActiveSceneWithFadeWait(int index, float speedFade)
     {
         float fadeTime = gameObject.GetComponent<Fading>().BeginFade(1, speedFade);
-        yield return new WaitForSeconds(fadeTime);
+        yield return new WaitForSeconds(fadeTime / 2);
         Debug.Log("passe ici ??");
         ActivateScene(index, true); //essay d'activer, si on n'y arrive pas on réésai !!!
     }
@@ -173,46 +178,34 @@ public class SceneManagerGlobal : MonoBehaviour
         SceneManager.UnloadSceneAsync(sceneCharging[index].scene);
         sceneCharging.RemoveAt(index);
     }
-
-
-
-
     /// <summary>
     /// est appelé si on doit annuler le chargement d'une scene !
     /// </summary>
     public void UnloadScene(string scene)
     {
+        for (int i = 0; i < sceneCharging.Count; i++)
+        {
+            if (sceneCharging[i].scene == scene)
+            {
+                sceneCharging.RemoveAt(i);
+            }
+        }
         SceneManager.UnloadSceneAsync(scene);
     }
 
-
-    //////////////////////////////////////////////////////////////////////////////// transition scenes normal
+    
     /// <summary>
     /// jump à une scène
     /// </summary>
     [ContextMenu("JumpToScene")]
-    public void JumpToScene(string scene = "", bool fade = false)
+    public void JumpToScene(string scene, bool fade = false, float fadeSpeed = 1.5f)
     {
-        if (scene == "")
+        if (!fade)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(scene);
             return;
         }
-        SceneManager.LoadScene(scene);
-    }
-
-    /// <summary>
-    /// ajoute une scène à celle courrante
-    /// </summary>
-    [ContextMenu("JumpAdditiveScene")]
-    public void JumpAdditiveScene(string scene = "Game")
-    {
-        SceneManager.LoadScene(scene, LoadSceneMode.Additive);
-    }
-    [ContextMenu("JumpToSceneWithFade")]
-    public void JumpToSceneWithFade(string scene, float speed = 1.5f)
-    {
-        StartCoroutine(JumpToSceneWithFadeWait(scene, speed));
+        StartCoroutine(JumpToSceneWithFadeWait(scene, fadeSpeed));
     }
     private IEnumerator JumpToSceneWithFadeWait(string scene, float speed)
     {
@@ -220,6 +213,18 @@ public class SceneManagerGlobal : MonoBehaviour
         yield return new WaitForSeconds(speed / 2);
         JumpToScene(scene);
     }
+
+    /// <summary>
+    /// ajoute une scène à celle courrante
+    /// </summary>
+    [ContextMenu("JumpAdditiveScene")]
+    public void JumpAdditiveScene(string scene)
+    {
+        SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+    }
+
+
+
 
     /// <summary>
     /// quit avec un fade !
@@ -236,7 +241,7 @@ public class SceneManagerGlobal : MonoBehaviour
     private IEnumerator QuitWithFade(float speed)
     {
         float fadeTime = gameObject.GetComponent<Fading>().BeginFade(1, speed);
-        yield return new WaitForSeconds(speed);
+        yield return new WaitForSeconds(speed / 2);
         Quit();
     }
 

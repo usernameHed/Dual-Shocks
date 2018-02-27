@@ -29,9 +29,9 @@ public class SceneManagerLocal : SerializedMonoBehaviour
         public bool fade;
         [EnableIf("fade"), Tooltip("Temps de fade")]
         public float fadeTime;
-        [DisableIf("fade"), Tooltip("Load la scène en additif ?")]
+        [EnableIf("loadAtStart"), DisableIf("fade"), Tooltip("Load la scène en additif ?")]
         public bool additive;
-        [Tooltip("Swap lorsque la scène est chargé ? Le changement marche en combinaison d'un fade, et d'une additive (fade puis swap complletement ok, additif puis ajoute l'additif au jeu ok)")]
+        [EnableIf("loadAtStart"), Tooltip("Swap lorsque la scène est chargé ? Le changement marche en combinaison d'un fade, et d'une additive (fade puis swap complletement ok, additif puis ajoute l'additif au jeu ok)")]
         public bool swapWhenLoaded;
     }
     #region Attributes
@@ -114,13 +114,18 @@ public class SceneManagerLocal : SerializedMonoBehaviour
     [FoldoutGroup("Debug"), Button("Play")]
     public void PlayNext()
     {
-        SceneManagerGlobal.GetSingleton.ActivateScene(sceneToLoad[0].scene);    //hard code du next ?
+        SceneManagerGlobal.GetSingleton.ActivateScene(
+            sceneToLoad[0].scene,
+            sceneToLoad[0].fade,
+            sceneToLoad[0].fadeTime);    //hard code du next ?
+
         //ici gère les unloads ?
     }
     [FoldoutGroup("Debug"), Button("Previous")]
     public void PlayPrevious()
     {
-        SceneManagerGlobal.GetSingleton.ActivateScene(sceneToLoad[1].scene);    //hard code du next ?
+        SceneManagerGlobal.GetSingleton.UnloadScene(sceneToLoad[0].scene);
+        SceneManagerGlobal.GetSingleton.JumpToScene(sceneToLoad[1].scene, sceneToLoad[1].fade, sceneToLoad[1].fadeTime);    //hard code du previous ?
         //ici gère les unloads ?
     }
 

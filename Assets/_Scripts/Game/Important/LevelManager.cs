@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
             playerController.IdPlayer = playerBallInit.PlayerData[i].idPlayer;
             playerController.BallInfo = playerBallInit.PlayerData[i].ballInfo;
 
-
+            Debug.Log("ICI ) la position des spawn STP !!!");
             playersLocal[i].SetActive(playerBallInit.PlayerData[i].active);
         }
     }
@@ -72,12 +72,12 @@ public class LevelManager : MonoBehaviour, ILevelManager
     private void InputGame()
     {
         if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape")
-            || PlayerConnected.GetSingleton.getPlayer(0).GetButtonDown("Back"))
+            || PlayerConnected.GetSingleton.getButtonDownFromAnyGamePad("Back"))
         {
             Quit();
         }
         if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Restart")
-            || PlayerConnected.GetSingleton.getPlayer(0).GetButtonDown("Restart"))
+            || PlayerConnected.GetSingleton.getButtonDownFromAnyGamePad("Restart"))
         {
             Restart();
         }

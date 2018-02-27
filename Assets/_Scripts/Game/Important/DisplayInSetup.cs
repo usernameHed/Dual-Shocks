@@ -37,6 +37,9 @@ public class DisplayInSetup : MonoBehaviour
     private List<Sprite> powerImage1;
     [FoldoutGroup("Objects"), Tooltip("list des icone de pouvoir 2"), SerializeField]
     private List<Sprite> powerImage2;
+    [FoldoutGroup("Objects"), Tooltip("image qui dis play"), SerializeField]
+    private GameObject play;
+    public GameObject Play { get { return (play); } }
 
 
     [FoldoutGroup("Debug"), Tooltip("Debug"), SerializeField]

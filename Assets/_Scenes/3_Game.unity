@@ -3230,7 +3230,7 @@ Prefab:
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
@@ -3299,62 +3299,68 @@ Prefab:
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
       propertyPath: serializationData.PrefabModifications.Array.data[3]
+      value: '"path":"sceneToLoad.[0].fadeTime","value":{"$id":0,"$type":"System.Single,
+        mscorlib",1.5}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
+        type: 2}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
       value: '"path":"sceneToLoad.[0].loadAfterXSecond","value":{"$id":0,"$type":"System.Single,
         mscorlib",2}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
       value: '"path":"sceneToLoad.[0].scene","value":{"$id":0,"$type":"System.String,
         mscorlib","3_Game"}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
       value: '"path":"sceneToLoad.[1]","value":{"$id":0,"$type":"SceneManagerLocal+SceneInfo,
         Assembly-CSharp","scene":null,"loadAtStart":false,"loadAfterXSecond":0,"fade":false,"fadeTime":0,"additive":false,"swapWhenLoaded":false}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
       value: '"path":"sceneToLoad.[1].additive","value":{"$id":0,"$type":"System.Boolean,
         mscorlib",false}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[7]
+      propertyPath: serializationData.PrefabModifications.Array.data[8]
       value: '"path":"sceneToLoad.[1].fade","value":{"$id":0,"$type":"System.Boolean,
         mscorlib",true}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[8]
+      propertyPath: serializationData.PrefabModifications.Array.data[9]
       value: '"path":"sceneToLoad.[1].fadeTime","value":{"$id":0,"$type":"System.Single,
-        mscorlib",1}'
+        mscorlib",1.5}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[9]
+      propertyPath: serializationData.PrefabModifications.Array.data[10]
       value: '"path":"sceneToLoad.[1].loadAfterXSecond","value":{"$id":0,"$type":"System.Single,
         mscorlib",0}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[10]
+      propertyPath: serializationData.PrefabModifications.Array.data[11]
       value: '"path":"sceneToLoad.[1].loadAtStart","value":{"$id":0,"$type":"System.Boolean,
-        mscorlib",true}'
+        mscorlib",false}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[11]
+      propertyPath: serializationData.PrefabModifications.Array.data[12]
       value: '"path":"sceneToLoad.[1].scene","value":{"$id":0,"$type":"System.String,
         mscorlib","2_Setup"}'
       objectReference: {fileID: 0}
     - target: {fileID: 114789515527150318, guid: 571bf6b0fd2320a4f83bedde99759a4f,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[12]
+      propertyPath: serializationData.PrefabModifications.Array.data[13]
       value: '"path":"sceneToLoad.[1].swapWhenLoaded","value":{"$id":0,"$type":"System.Boolean,
-        mscorlib",false}'
+        mscorlib",true}'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 571bf6b0fd2320a4f83bedde99759a4f, type: 2}
@@ -5982,18 +5988,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
         type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.ReferencedUnityObjects.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4160701584753488, guid: c935be67d020ee64b98f486d6aa0ff15, type: 2}
       propertyPath: m_LocalPosition.x
@@ -6033,6 +6029,21 @@ Prefab:
       value: 
       objectReference: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
         type: 2}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[1].active
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[2].active
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[3].active
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
         type: 2}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
@@ -6063,84 +6074,10 @@ Prefab:
       value: 
       objectReference: {fileID: 1995181605325364, guid: 4461817b9a97b43488a3fef0e3470a3a,
         type: 2}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"prefabsPowersList","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib]], mscorlib","$rlength":0,"$rcontent":[]}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[1]
-      value: '"path":"prefabsPowersList","length":2'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[2]
-      value: '"path":"prefabsPowersList.[0]","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib","$rlength":0,"$rcontent":[]}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[3]
-      value: '"path":"prefabsPowersList.[0]","length":3'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[4]
-      value: '"path":"prefabsPowersList.[0].[0]","value":$eref:0'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[5]
-      value: '"path":"prefabsPowersList.[0].[1]","value":$eref:1'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[6]
-      value: '"path":"prefabsPowersList.[0].[2]","value":$eref:2'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[7]
-      value: '"path":"prefabsPowersList.[1]","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib","$rlength":0,"$rcontent":[]}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[8]
-      value: '"path":"prefabsPowersList.[1]","length":2'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[9]
-      value: '"path":"prefabsPowersList.[1].[0]","value":$eref:3'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[10]
-      value: '"path":"prefabsPowersList.[1].[1]","value":$eref:4'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.SerializationNodes.Array.data[0].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.SerializationNodes.Array.data[0].Data
-      value: 0|System.Collections.Generic.List`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib]], mscorlib
-      objectReference: {fileID: 0}
     - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
         type: 2}
       propertyPath: playerData.Array.data[0].gamepadActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: playerData.Array.data[1].active
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
         type: 2}
@@ -7569,7 +7506,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
         type: 2}
-      propertyPath: levelManager
+      propertyPath: sceneManagerLocal
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114948016746452702, guid: c935be67d020ee64b98f486d6aa0ff15,
@@ -7579,7 +7516,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
         type: 2}
+      propertyPath: fromLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
       propertyPath: playerData.Array.data[1].gamepadActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[2].gamepadActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[3].gamepadActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

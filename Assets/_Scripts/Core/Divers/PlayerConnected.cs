@@ -138,6 +138,16 @@ public class PlayerConnected : MonoBehaviour
         }
         return (true);
     }
+    public int getNbPlayer()
+    {
+        int nb = 0;
+        for (int i = 0; i < playerArrayConnected.Length; i++)
+        {
+            if (playerArrayConnected[i])
+                nb++;
+        }
+        return (nb);
+    }
 
     /// <summary>
     /// get id of player
@@ -151,6 +161,20 @@ public class PlayerConnected : MonoBehaviour
             return (playersRewired[id]);
         Debug.LogError("problème d'id");
         return (null);
+    }
+    /// <summary>
+    /// renvoi vrai si n'importe quel gamePad/joueur active
+    /// </summary>
+    /// <param name="action"></param>
+    /// <returns></returns>
+    public bool getButtonDownFromAnyGamePad(string action)
+    {
+        for (int i = 0; i < playersRewired.Length; i++)
+        {
+            if (playersRewired[i].GetButtonDown(action))
+                return (true);
+        }
+        return (false);
     }
 
     /// <summary>

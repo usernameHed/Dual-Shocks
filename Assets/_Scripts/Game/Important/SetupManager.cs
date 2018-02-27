@@ -63,30 +63,29 @@ public class SetupManager : MonoBehaviour, ILevelManager
                     Debug.Log("ici phase 0");
                     if (playerConnected.playerArrayConnected[i])
                         idPhaseConnexion[i] = 1;
+
                     break;
                 case 1: //à partir d'ici, revient en phase 0 si les manette se déconnecte
                     Debug.Log("ici phase 1");
                     if (!playerConnected.playerArrayConnected[i])
                         idPhaseConnexion[i] = 0;
 
-
                     break;
                 case 2:
                     Debug.Log("ici phase 2");
                     if (!playerConnected.playerArrayConnected[i])
                         idPhaseConnexion[i] = 0;
-
                     break;
                 case 3:
                     if (!playerConnected.playerArrayConnected[i])
                         idPhaseConnexion[i] = 0;
 
                     Debug.Log("ici phase 3");
-
                     break;
 
             }
         }
+        IsReadyToPlay();
         displayInSetup.ChangeDisplayInGame();
     }
 
@@ -94,14 +93,50 @@ public class SetupManager : MonoBehaviour, ILevelManager
 
     #region Core
     /// <summary>
+    /// le jeux est-il prêt à être joué ?
+    /// </summary>
+    public bool IsReadyToPlay()
+    {
+        int players = 0;
+        for (int i = 0; i < idPhaseConnexion.Length; i++)
+        {
+            //si il y a un joueur de connecté, qui a passé la phase "press A", alors il joue obligatoirement
+            //si celui-ci n'est pas validé, il n'y a pas encore de jeu...
+            if (idPhaseConnexion[i] > 1 && idPhaseConnexion[i] < 3)
+            {
+                displayInSetup.Play.SetActive(false);
+                return (false);
+            }
+                
+            //active le joueur qui a validé
+            if (idPhaseConnexion[i] >= 3)
+            {
+                players++;
+            }
+        }
+        //s'il n'y a aucune joueur qui a validé, ne pas lancer !
+        if (players < 1)
+        {
+            displayInSetup.Play.SetActive(false);
+            return (false);
+        }
+        displayInSetup.Play.SetActive(true);
+        return (true);
+    }
+
+    /// <summary>
     /// On lance le jeu ou pas ?
     /// </summary>
     private bool ReadyToPlay()
     {
+        //si les joueurs ne sont pas encore prêt...
+        if (!IsReadyToPlay())
+            return (false);
+
+        //ici active les joueurs qui ont validé... et désactive les autres
         for (int i = 0; i < idPhaseConnexion.Length; i++)
         {
-            if (idPhaseConnexion[i] > 0 && idPhaseConnexion[i] < 3)
-                return (false);
+            GameManager.GetSingleton.PlayerBallInit.PlayerData[i].active = (idPhaseConnexion[i] >= 3);
         }
 
         Play(); //ici play enfin !!!!!
@@ -128,7 +163,12 @@ public class SetupManager : MonoBehaviour, ILevelManager
                 }
                 ChangePhase();
             }
-            if (PlayerConnected.GetSingleton.getPlayer(i).GetButtonDown("FireB") && idPhaseConnexion[i] > 0)
+            if (    (
+                    PlayerConnected.GetSingleton.getPlayer(i).GetButtonDown("FireB")
+                        ||
+                    (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.GetSingleton.getNbPlayer() == 1)
+                    )
+                        && idPhaseConnexion[i] > 0)
             {
                 idPhaseConnexion[i] -= 1;
                 ChangePhase();
@@ -138,8 +178,12 @@ public class SetupManager : MonoBehaviour, ILevelManager
 
     private void InputGame()
     {
-        if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape")
-            || PlayerConnected.GetSingleton.getPlayer(0).GetButtonDown("Back"))
+        //Si: on appui sur echape et qu'il y a 2+ player de connecté, on quit
+        //SI: on appui sur echap, qu'il n'y a qu'un joueur (clavier), et qu'il est en phase 0, 1, on quit
+        //SI: n'importe qui appuis sur Back avec le gamepad, on quit.
+        if ((PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.GetSingleton.getNbPlayer() > 1)
+            || (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.GetSingleton.getNbPlayer() == 1 && idPhaseConnexion[0] <= 1)
+            || PlayerConnected.GetSingleton.getButtonDownFromAnyGamePad("Back"))
         {
             Quit();
         }
