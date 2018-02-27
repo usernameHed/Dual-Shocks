@@ -246,7 +246,7 @@ public class Balls : MonoBehaviour, IKillable
     /// </summary>
     public void AddLink()
     {
-        playerRef.RopeScript.AddLink(idBallPlayer);
+        playerRef.RopeScript.AddLinkFromExtremity(idBallPlayer);
     }
 
     private void OnTriggerEnter(Collider other)

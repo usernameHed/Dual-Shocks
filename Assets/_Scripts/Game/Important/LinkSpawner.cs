@@ -28,21 +28,34 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
     /// </summary>
     private void ReactionHandler(Collider other)
     {
-        //est-ce que c'est une ball qui a touché ?
-        Balls ballScript = other.transform.parent.gameObject.GetComponent<Balls>();
-        if (ballScript)
+        if (other.CompareTag("Ball"))
         {
-            ballScript.AddLink();
+            //est-ce que c'est une ball qui a touché ?
+            Balls ballScript = other.transform.GetComponent<Balls>();
+            if (ballScript)
+            {
+                ballScript.AddLink();
+            }
         }
+        else if (other.CompareTag("Link"))
+        {
+            Link linkScript = other.GetComponent<Link>();
+            if (linkScript)
+            {
+                linkScript.RopeScript.AddLink(linkScript.IdFromRope);
+            }
+        }
+    }
 
-        /*
-        //sinon, est-ce que c'est un link ?
-        Line line = other.transform.parent.parent.gameObject.GetComponent<Line>();
-        if (line)
-        {
-            line.PlayerControllerVariable.RopeScript.AddLink();
-        }
-        */
+    /// <summary>
+    /// action du prefabs à la collision
+    /// </summary>
+    private void DoAction(Collider other)
+    {
+        ReactionHandler(other);
+        GameObject bonusParticle = ObjectsPooler.GetSingleton.SpawnFromPool("BonusTaken", transform.position, Quaternion.identity, null);
+        SoundManager.GetSingleton.playSound("Bonus" + transform.GetInstanceID().ToString());
+        Kill();
     }
 
     /// <summary>
@@ -54,10 +67,9 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
         if (!enabledObject)
             return;
 
-        if (other.CompareTag("BallColliderLink"))
+        if (other.CompareTag("Ball") || other.CompareTag("Link"))
         {
-            ReactionHandler(other);
-            Kill();
+            DoAction(other);
         }
     }
     #endregion

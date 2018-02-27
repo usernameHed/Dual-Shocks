@@ -78,22 +78,22 @@ public class WeaponDash : Weapon
 
         int startLoop = 0;
         int stopLoop = 0;
-        int numberLink = (linkToPush * rope.LinkList.Count) / 100;
+        int numberLink = (linkToPush * rope.LinkCircular.Count) / 100;
 
         //si la ball de référence est au début de la chaine, partir du bas vers le haut de la list !
-        if (rope.LinkList[0].GetInstanceID() == ballRef.gameObject.GetInstanceID())
+        if (rope.LinkCircular[0].Value.GetInstanceID() == ballRef.gameObject.GetInstanceID())
         {
-            stopLoop = Mathf.Min(numberLink, rope.LinkList.Count - 1);
+            stopLoop = Mathf.Min(numberLink, rope.LinkCircular.Count - 1);
             for (int i = 1; i < stopLoop; i++)
             {
-                ApplyForce(rope.LinkList[i].GetComponent<Rigidbody>(), forceLinkImpulse);
+                ApplyForce(rope.LinkCircular[i].Value.GetComponent<Rigidbody>(), forceLinkImpulse);
             }
         }
         //si la ball de référence est à la fin, partir du haut vers le bas
-        else if (rope.LinkList[rope.LinkList.Count - 1].GetInstanceID() == ballRef.gameObject.GetInstanceID())
+        else if (rope.LinkCircular[rope.LinkCircular.Count - 1].Value.GetInstanceID() == ballRef.gameObject.GetInstanceID())
         {
-            startLoop = rope.LinkList.Count - 2;
-            stopLoop = Mathf.Max(0, (rope.LinkList.Count - 1) - numberLink);
+            startLoop = rope.LinkCircular.Count - 2;
+            stopLoop = Mathf.Max(0, (rope.LinkCircular.Count - 1) - numberLink);
             for (int i = startLoop; i > stopLoop; i--)
             {
                 ApplyForce(ballRef.BallBody, forceLinkImpulse);

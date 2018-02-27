@@ -60,3 +60,7 @@ MonoBehaviour:
     prefab: {fileID: 1608521408533352, guid: b63ff764ccd4b294e9150c926d65c7d6, type: 2}
     size: 10
     shouldExpand: 0
+  - tag: BonusTaken
+    prefab: {fileID: 1252393073312354, guid: d7b2624c26da00e4ea5aa8df057d08b2, type: 2}
+    size: 10
+    shouldExpand: 0

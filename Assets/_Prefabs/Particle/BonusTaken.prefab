@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 199136857148241884}
   - component: {fileID: 198946106878046682}
   m_Layer: 0
-  m_Name: DeathBulletEnemy
+  m_Name: BonusTaken
   m_TagString: DeathBulletEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,7 +198,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.47058824, g: 0.6901961, b: 1, a: 1}
-      maxColor: {r: 1, g: 0, b: 0, a: 0.8235294}
+      maxColor: {r: 0.44117647, g: 0.44117647, b: 0.44117647, a: 0.8235294}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -3493,7 +3493,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.47058824, g: 0.6901961, b: 1, a: 1}
-      maxColor: {r: 1, g: 0, b: 0, a: 1}
+      maxColor: {r: 0.52205884, g: 0.52205884, b: 0.52205884, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

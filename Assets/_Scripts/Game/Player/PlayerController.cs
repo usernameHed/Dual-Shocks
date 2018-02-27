@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         ropeScript.InitObjects(ballsList[0].gameObject, ballsList[1].gameObject, Rope);
         ropeScript.InitPhysicRope();
+        ropeScript.ChangeColorLink(GameManager.GetSingleton.ColorPlayer[idPlayer]);
     }
 
     /// <summary>
