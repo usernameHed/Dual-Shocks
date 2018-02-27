@@ -138,13 +138,6 @@ MonoBehaviour:
   - {fileID: 1696340403240580, guid: 964499ac770bb1347b59b6c9d43e1897, type: 2}
   - {fileID: 1696340403240580, guid: 03ce34dcf5af6d9419e380d659f19ab3, type: 2}
   - {fileID: 1696340403240580, guid: 8bf45a00ac9fd7f4db1f2bf61b88d419, type: 2}
-  prefabsPowers1List:
-  - {fileID: 1995181605325364, guid: 0a91f27065bc3bd4895794196fd60f77, type: 2}
-  - {fileID: 1995181605325364, guid: f5b58a9e978ca134db08eb29b9490842, type: 2}
-  - {fileID: 1995181605325364, guid: 8f2ad8b4f5540214aaaf0bed5520ef37, type: 2}
-  prefabsPowers2List:
-  - {fileID: 1995181605325364, guid: 12328685f22970e479309138b7711eca, type: 2}
-  - {fileID: 1995181605325364, guid: 4461817b9a97b43488a3fef0e3470a3a, type: 2}
   colorPlayer:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0.98620677, g: 1, b: 0, a: 1}
@@ -155,9 +148,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 16d1e112e144920459836c8a018d90e8, type: 2}
   - {fileID: 2100000, guid: b1903be25bf8a3f4694b62832b656220, type: 2}
   - {fileID: 2100000, guid: 3f80951efa24cf743acd83071af8eba8, type: 2}
-  menuManager: {fileID: 0}
-  setupManager: {fileID: 0}
-  levelManager: {fileID: 0}
+  sceneManagerLocal: {fileID: 0}
   updateTimer:
     updateFrequency: 0
   playerBallInit: {fileID: 114892966174023146}
@@ -196,7 +187,7 @@ MonoBehaviour:
       powers: 0000000001000000
     - idBallType: 0
       powers: 0000000001000000
-    active: 0
+    active: 1
     gamepadActive: 0
   - idPlayer: 3
     ballInfo:
@@ -204,7 +195,7 @@ MonoBehaviour:
       powers: 0000000001000000
     - idBallType: 0
       powers: 0000000001000000
-    active: 0
+    active: 1
     gamepadActive: 0
 --- !u!114 &114948016746452702
 MonoBehaviour:

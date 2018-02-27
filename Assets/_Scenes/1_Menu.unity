@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2148,11 +2148,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1697105281}
     m_Modifications:
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4160701584753488, guid: c935be67d020ee64b98f486d6aa0ff15, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2191,16 +2186,6 @@ Prefab:
       value: 
       objectReference: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
         type: 2}
-    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: fromLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114626949772006554, guid: c935be67d020ee64b98f486d6aa0ff15,
-        type: 2}
-      propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"prefabsPowersList","length":0'
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c935be67d020ee64b98f486d6aa0ff15, type: 2}
   m_IsPrefabParent: 0

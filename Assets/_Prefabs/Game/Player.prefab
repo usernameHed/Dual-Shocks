@@ -440,7 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ropeAnchors: {x: 0, y: 0, z: 0}
   spring: 500
-  damper: 0
+  damper: 25
   min: 0.1
   max: 0.3
   linkCount: 10
