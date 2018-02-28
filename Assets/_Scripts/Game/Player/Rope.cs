@@ -38,17 +38,21 @@ public class Rope : MonoBehaviour
     //[FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     //private List<GameObject> linkList;
     //public List<GameObject> LinkList { get { return linkList; } }
-    
-
-    private CircularLinkedList<GameObject> listCircular = new CircularLinkedList<GameObject>();
-    public CircularLinkedList<GameObject> LinkCircular { get { return listCircular; } }
 
 
     [FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     private Color colorRope;
 
 
-    
+    [OnValueChanged("CreateFakeListForDebug")]
+    private CircularLinkedList<GameObject> listCircular = new CircularLinkedList<GameObject>();
+    public CircularLinkedList<GameObject> LinkCircular { get { return listCircular; } }
+
+    [Tooltip("points des link"), SerializeField]
+    private List<GameObject> listDebug;
+
+
+
 
     #endregion
 
@@ -88,8 +92,8 @@ public class Rope : MonoBehaviour
             //cherche la position que devrais prendre ce joints
             float maxMid = linkCount + 1;
 
-            float x1 = ( (((maxMid - 1.0f) - i) / maxMid) * objectToConnect[0].transform.position.x )
-                    + ( ((1.0f + i) / maxMid) * objectToConnect[1].transform.position.x );
+            float x1 = ((((maxMid - 1.0f) - i) / maxMid) * objectToConnect[0].transform.position.x)
+                    + (((1.0f + i) / maxMid) * objectToConnect[1].transform.position.x);
             float y1 = ((((maxMid - 1.0f) - i) / maxMid) * objectToConnect[0].transform.position.y)
                     + (((1.0f + i) / maxMid) * objectToConnect[1].transform.position.y);
             float z1 = ((((maxMid - 1.0f) - i) / maxMid) * objectToConnect[0].transform.position.z)
@@ -117,7 +121,11 @@ public class Rope : MonoBehaviour
         //connecte tout les liens ensemble avec des springs joints;
         ChangeValueSpring();
         ChangeColorLink(colorRope);  //change color
+
+        CreateFakeListForDebug();
     }
+
+
     /// <summary>
     /// une fois créé, setup le link
     /// </summary>
@@ -144,6 +152,9 @@ public class Rope : MonoBehaviour
         else
             AddLink(listCircular.Count - 1);
     }
+
+
+
     /// <summary>
     /// ici est appelé directement depuis l'un des link
     /// </summary>
@@ -154,8 +165,18 @@ public class Rope : MonoBehaviour
         LinkCountAdd();
 
         GameObject closestLink = listCircular[index].Value;
+
+        if (!closestLink)
+        {
+            listCircular.RemoveAllEmpty();
+            closestLink = listCircular[index].Value;
+        }
+
+
         GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", closestLink.transform.position, Quaternion.identity, parentLink);
-        
+
+        ChangeMeshRenrered(newLink.GetComponent<MeshRenderer>());
+
         //si l'index n'est pas le dernier (l'un des 2 gros objet), on peut le créé après
         if (index != listCircular.Count - 1)
         {
@@ -172,9 +193,12 @@ public class Rope : MonoBehaviour
             ChangeThisPring(index - 0);
             SetupLink(newLink, index - 0);
         }
-       
 
 
+
+
+
+        CreateFakeListForDebug();
     }
 
     /// <summary>
@@ -205,6 +229,12 @@ public class Rope : MonoBehaviour
             ChangeMeshRenrered(i);
         }
     }
+    private void ChangeMeshRenrered(MeshRenderer meshLink)
+    {
+        if (!meshLink)
+            return;
+        meshLink.material.color = colorRope;
+    }
     private void ChangeMeshRenrered(int index)
     {
         MeshRenderer meshLink = listCircular[index].Value.GetComponent<MeshRenderer>();
@@ -225,6 +255,13 @@ public class Rope : MonoBehaviour
     }
     private void ChangeThisPring(int index)
     {
+        if (!listCircular[index + 1].Value)
+        {
+            listCircular.RemoveAllEmpty();
+            return;
+        }
+
+
         SpringJoint joint = listCircular[index].Value.GetComponent<SpringJoint>();
         joint.connectedBody = listCircular[index + 1].Value.GetComponent<Rigidbody>();
         joint.minDistance = min;
@@ -240,5 +277,22 @@ public class Rope : MonoBehaviour
 
     #region Unity ending functions
 
-	#endregion
+    [Button("clearListOfNull")]
+    private void clearListOfNull()
+    {
+        listCircular.RemoveAllEmpty();
+        CreateFakeListForDebug();
+    }
+
+    private void CreateFakeListForDebug()
+    {
+        Debug.Log("ici reset...");
+        listDebug.Clear();
+        for (int i = 0; i < listCircular.Count; i++)
+        {
+            listDebug.Add(listCircular[i].Value);
+        }
+    }
+
+    #endregion
 }

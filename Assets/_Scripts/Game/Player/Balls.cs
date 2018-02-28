@@ -306,7 +306,6 @@ public class Balls : MonoBehaviour, IKillable
         if (weaponsList[1])
             weaponsList[1].Kill();
 
-        Debug.Log("TODO: disable le followerList !!");
         playerRef.FollowersList[IdBallPlayer].gameObject.SetActive(false);
 
 
@@ -322,6 +321,9 @@ public class Balls : MonoBehaviour, IKillable
 
         //créé un slowMotion
         TimeManager.GetSingleton.DoSlowMothion();
+
+        //di à la rope que son objet principal X est mort !
+        //playerRef.RopeScript.HandleDestruction(true, IdBallPlayer);
 
         Invoke("RealyDestroy", timeBeforeDie);
     }
