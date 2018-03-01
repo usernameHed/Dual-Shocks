@@ -307,7 +307,7 @@ public class Balls : MonoBehaviour, IKillable
             weaponsList[1].Kill();
 
         playerRef.FollowersList[IdBallPlayer].gameObject.SetActive(false);
-
+        playerRef.TestForDestroyLink(transform.position); //envoi l'info comme quoi une ball est en train de se faire détruire...
 
         //créé la particule
         Instantiate(prefabsExplode, transform.position, Quaternion.identity, null);
@@ -321,6 +321,9 @@ public class Balls : MonoBehaviour, IKillable
 
         //créé un slowMotion
         TimeManager.GetSingleton.DoSlowMothion();
+
+        //play un son de destruction
+        SoundManager.GetSingleton.playSound("Explode" + transform.GetInstanceID());
 
         //di à la rope que son objet principal X est mort !
         //playerRef.RopeScript.HandleDestruction(true, IdBallPlayer);

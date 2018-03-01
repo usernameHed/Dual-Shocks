@@ -26,6 +26,11 @@ public class LevelManager : MonoBehaviour, ILevelManager
 
     #region Initialization
 
+    private void Awake()
+    {
+        coolDownRestart.Ready();
+    }
+
     /// <summary>
     /// est appelé depuis le GameManager depuis l'interface
     /// à l'initialisation...

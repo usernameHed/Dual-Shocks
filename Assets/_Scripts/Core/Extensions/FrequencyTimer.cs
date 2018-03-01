@@ -11,7 +11,7 @@ public class FrequencyTimer
 	[SerializeField]
 	private float updateFrequency;
     [SerializeField]
-    private bool NotTheFirstTime = false;
+    private bool notTheFirstTime = false;
 
     private float nextUpdate;
 
@@ -24,9 +24,9 @@ public class FrequencyTimer
 	{
 		if (Time.fixedTime >= nextUpdate)
 		{
-            if (NotTheFirstTime)
+            if (notTheFirstTime)
             {
-                NotTheFirstTime = false;
+                notTheFirstTime = false;
                 nextUpdate = Time.fixedTime + updateFrequency;
                 return (false);
             }

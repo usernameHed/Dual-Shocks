@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour, IKillable
     private GameObject rope;
     public Transform Rope { get { return rope.transform; } }
 
-
     [FoldoutGroup("Debug"), Tooltip("id unique du joueur correspondant à sa manette"), SerializeField]
     private int idPlayer = 0;
     public int IdPlayer { set { idPlayer = value; } get { return idPlayer; } }
@@ -48,6 +47,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private const int SizeArrayId = 2;  //nombre de ball du joueur
 
     private int ballRemaining = SizeArrayId;
+    private bool enabledPlayer = false;
 
     #endregion
 
@@ -255,9 +255,21 @@ public class PlayerController : MonoBehaviour, IKillable
     public void BallDestroyed(int ball)
     {
         Debug.Log("ball destroyed: " + ball);
-        ballRemaining--;
         if (ballRemaining <= 0)
             Kill();
+    }
+    /// <summary>
+    /// est appelé pour voir si la dernière ball est en train d'être détruite...
+    /// position de l'explosion...
+    /// </summary>
+    public void TestForDestroyLink(Vector3 position)
+    {
+        ballRemaining--;
+        //s'il ne reste qu'une ball qui se fait actuellement détruire...
+        if (ballRemaining <= 0)
+        {
+            ropeScript.JustBreakUpLink(position);
+        }
     }
 
     #endregion
@@ -277,7 +289,12 @@ public class PlayerController : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
 	{
+        if (!enabledPlayer)
+            return;
 		Debug.Log ("Player dead !");
+        enabledPlayer = false;
+        rope.transform.SetParent(null);
+        ropeScript.Kill();
         Destroy(gameObject);
 	}
 }

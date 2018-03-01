@@ -5,17 +5,26 @@ using System.Collections.Generic;
 /// <summary>
 /// Rope Description
 /// </summary>
-public class Rope : MonoBehaviour
+public class Rope : MonoBehaviour, IKillable
 {
     #region Attributes
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Position de l'anchor pour les 2 balles"), SerializeField]
     private Vector3 ropeAnchors = Vector3.zero;
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'élastique"), SerializeField]
-    private float spring = 10;
+    private float[] spring = new float[2];
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
-    private float damper = 0.2f;
+    private float[] damper = new float[2];
+
+    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
+    private float[] massLink = new float[2];
+
+    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
+    private float[] dragLink = new float[2];
+
+    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
+    private bool useGravityLink = true;
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
     private float min = 0.5f;
@@ -29,6 +38,11 @@ public class Rope : MonoBehaviour
     [FoldoutGroup("Rope"), Tooltip("Maillons max"), SerializeField]
     private int linkCountMax = 30;
 
+    [FoldoutGroup("Rope"), Tooltip("force lors du breack de link"), SerializeField]
+    private float forceWhenExplode = 30f;
+
+    [FoldoutGroup("Rope"), Tooltip("force lors du breack de link"), SerializeField]
+    private float dragWhenExplode = 10f;
 
     [FoldoutGroup("Objects"), OnValueChanged("InitPhysicRope"), Tooltip("Les 2 objets à relié"), SerializeField]
     private GameObject[] objectToConnect = new GameObject[2];
@@ -52,7 +66,7 @@ public class Rope : MonoBehaviour
     private List<GameObject> listDebug;
 
 
-
+    private bool linkBreaked = false;
 
     #endregion
 
@@ -153,14 +167,36 @@ public class Rope : MonoBehaviour
             AddLink(listCircular.Count - 1);
     }
 
+    /// <summary>
+    /// est appelé pour BREAK les joints entre les link (sans détruire les link !)
+    /// </summary>
+    public void JustBreakUpLink(Vector3 positionBallExploded)
+    {
+        Debug.Log("BREAK link !");
+        linkBreaked = true;
+        for (int i = 0; i < listCircular.Count; i++)
+        {
+            if (!listCircular[i].Value)
+                continue;
 
+            if (listCircular[i].Value.GetComponent<SpringJoint>())
+                Destroy(listCircular[i].Value.GetComponent<SpringJoint>());
+            if (listCircular[i].Value)
+            {
+                Rigidbody rbLink = listCircular[i].Value.GetComponent<Rigidbody>();
+                rbLink.drag = dragWhenExplode;
+                //Vector3 dir = (positionBallExploded - rbLink.transform.position);
+                rbLink.AddForce(rbLink.velocity * forceWhenExplode, ForceMode.Impulse);
+            }
+        }
+    }
 
     /// <summary>
     /// ici est appelé directement depuis l'un des link
     /// </summary>
     public void AddLink(int index)
     {
-        if (linkCount == linkCountMax)
+        if (linkCount == linkCountMax || linkBreaked)
             return;
         LinkCountAdd();
 
@@ -196,7 +232,7 @@ public class Rope : MonoBehaviour
 
 
 
-
+        ChangeParamJointWhenAdding();
 
         CreateFakeListForDebug();
     }
@@ -244,6 +280,18 @@ public class Rope : MonoBehaviour
     }
 
     /// <summary>
+    /// ici gère le changements des parametres quand on ajoute (ou supprime ?) un link
+    /// </summary>
+    private void ChangeParamJointWhenAdding()
+    {
+        spring[0] += spring[1];
+        damper[0] += damper[1];
+        massLink[0] += massLink[1];
+        dragLink[0] += dragLink[1];
+        ChangeValueSpring();
+    }
+
+    /// <summary>
     /// remplie les infos dans les springs joints
     /// </summary>
     private void ChangeValueSpring()
@@ -264,15 +312,23 @@ public class Rope : MonoBehaviour
 
         SpringJoint joint = listCircular[index].Value.GetComponent<SpringJoint>();
         joint.connectedBody = listCircular[index + 1].Value.GetComponent<Rigidbody>();
+
+        Rigidbody linkBody = listCircular[index].Value.GetComponent<Rigidbody>();
+        linkBody.mass = massLink[0];
+        linkBody.drag = dragLink[0];
+        linkBody.useGravity = useGravityLink;
+
+
         joint.minDistance = min;
         joint.maxDistance = max;
         joint.anchor = ropeAnchors;
         joint.autoConfigureConnectedAnchor = false;
         joint.connectedAnchor = ropeAnchors;
-        joint.spring = spring;
-        joint.damper = damper;
+        joint.spring = spring[0];
+        joint.damper = damper[0];
         joint.enableCollision = false;
     }
+
     #endregion
 
     #region Unity ending functions
@@ -292,6 +348,13 @@ public class Rope : MonoBehaviour
         {
             listDebug.Add(listCircular[i].Value);
         }
+    }
+
+    [FoldoutGroup("Debug"), Button("Kill")]
+    public void Kill()
+    {
+        Debug.Log("Death Rope ! handle link bien sur");
+        //Destroy(gameObject);
     }
 
     #endregion
