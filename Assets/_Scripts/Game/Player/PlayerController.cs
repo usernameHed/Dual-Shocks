@@ -264,6 +264,7 @@ public class PlayerController : MonoBehaviour, IKillable
     /// </summary>
     public void TestForDestroyLink(Vector3 position)
     {
+        Debug.Log("ici plusieurs fois ??");
         ballRemaining--;
         //s'il ne reste qu'une ball qui se fait actuellement détruire...
         if (ballRemaining <= 0)

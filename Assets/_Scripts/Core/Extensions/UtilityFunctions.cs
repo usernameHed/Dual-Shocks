@@ -28,6 +28,15 @@ public static class UtilityFunctions
     }
 
     /// <summary>
+    /// get random number between 2;
+    /// </summary>
+    public static int GetRandomNumber(int minimum, int maximum)
+    {
+        System.Random random = new System.Random();
+        return random.Next() * (maximum - minimum) + minimum;
+    }
+
+    /// <summary>
     /// Test si l'objet est dans la range d'un autre
     /// (pour visualiser la range dans l'éditeur, attacher le script DrawSolidArc
     ///  avec les valeur fovRange et fovAngle sur l'objet "first")

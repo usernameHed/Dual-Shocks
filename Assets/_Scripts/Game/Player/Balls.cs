@@ -79,6 +79,7 @@ public class Balls : MonoBehaviour, IKillable
     public int IdBallPlayer { get { return idBallPlayer; } }   //l'id (0 ou 1) de la balle par rapport au joueur (balle de gauche ou droite ?)
     private bool activated = false; //la ball est-elle activé ?
     private PlayerController playerRef;
+    public PlayerController PlayerRef { get { return (playerRef); } }
 
     private float additionnalSpeed = 0;
     /*public float AdditionnalSpeed
@@ -297,6 +298,9 @@ public class Balls : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
     {
+        if (!activated)
+            return;
+
         Debug.Log("ici la mort !");
         activated = false;
 

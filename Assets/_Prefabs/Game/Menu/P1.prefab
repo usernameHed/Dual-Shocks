@@ -275,13 +275,19 @@ MonoBehaviour:
   ropeScript: {fileID: 114225761815925612}
   coolDownBalls:
   - updateFrequency: 1
+    notTheFirstTime: 0
   - updateFrequency: 1
+    notTheFirstTime: 0
   coolDownPowers1:
-  - updateFrequency: 1
-  - updateFrequency: 1
+  - updateFrequency: 0
+    notTheFirstTime: 0
+  - updateFrequency: 0
+    notTheFirstTime: 0
   coolDownPowers2:
-  - updateFrequency: 1
-  - updateFrequency: 1
+  - updateFrequency: 0.2
+    notTheFirstTime: 0
+  - updateFrequency: 0.2
+    notTheFirstTime: 0
 --- !u!114 &114225761815925612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -294,16 +300,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ropeAnchors: {x: 0, y: 0, z: 0}
-  spring: 1000
-  damper: 50
+  spring:
+  - 500
+  - 0
+  damper:
+  - 50
+  - 0
+  massLink:
+  - 1
+  - 0
+  dragLink:
+  - 0
+  - 0
+  useGravityLink: 1
   min: 0
   max: 0
   linkCount: 20
+  linkCountMax: 30
+  forceWhenExplode: 30
+  dragWhenExplode: 10
+  timeToBecomeHarmLess: 1.5
+  rationRandom: 0.1
   objectToConnect:
   - {fileID: 1917450821410156}
   - {fileID: 1812299315256986}
   parentLink: {fileID: 4166582634673038}
-  linkList: []
+  colorRope: {r: 0, g: 0, b: 0, a: 0}
+  listDebug: []
 --- !u!135 &135305182081686970
 SphereCollider:
   m_ObjectHideFlags: 1

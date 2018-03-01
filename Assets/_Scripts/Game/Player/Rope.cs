@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Collections;
 
 /// <summary>
 /// Rope Description
@@ -38,15 +39,17 @@ public class Rope : MonoBehaviour, IKillable
     [FoldoutGroup("Rope"), Tooltip("Maillons max"), SerializeField]
     private int linkCountMax = 30;
 
-    [FoldoutGroup("Rope"), Tooltip("force lors du breack de link"), SerializeField]
+    [FoldoutGroup("Death"), Tooltip("force lors du breack de link"), SerializeField]
     private float forceWhenExplode = 30f;
 
-    [FoldoutGroup("Rope"), Tooltip("Ajout du drag à la ball"), SerializeField]
+    [FoldoutGroup("Death"), Tooltip("Ajout du drag à la ball"), SerializeField]
     private float dragWhenExplode = 10f;
 
-    [FoldoutGroup("Rope"), Tooltip("temps avant destructions"), SerializeField]
-    private float timeToKillWhenExplode = 1.5f;
+    [FoldoutGroup("Death"), Tooltip("temps avant destructions"), SerializeField]
+    private float timeToBecomeHarmLess = 1.5f;
 
+    [FoldoutGroup("Death"), Tooltip("temps avant destructions"), SerializeField]
+    private float rationRandom = 0.1f;
 
     [FoldoutGroup("Objects"), OnValueChanged("InitPhysicRope"), Tooltip("Les 2 objets à relié"), SerializeField]
     private GameObject[] objectToConnect = new GameObject[2];
@@ -193,6 +196,42 @@ public class Rope : MonoBehaviour, IKillable
                 rbLink.AddForce(rbLink.velocity * forceWhenExplode, ForceMode.Impulse);
             }
         }
+        StartCoroutine(WaitUntilBecomeHarmLess());
+    }
+    private IEnumerator WaitUntilBecomeHarmLess()
+    {
+        yield return new WaitForSeconds(timeToBecomeHarmLess);
+
+        int countList = listCircular.Count;
+        int[] deck = new int[countList];
+
+        for (int i = 0; i < countList; i++)
+        {
+            int j = Random.Range(0, i + 1);
+
+            deck[i] = deck[j];
+            deck[j] = 0 + i;
+        }
+
+        for (int i = 0; i < deck.Length; i++)
+        {
+            yield return new WaitForSeconds(rationRandom);
+            
+            //get le link du deck random
+            GameObject link = listCircular[deck[i]].Value;
+
+            if (!link)
+                continue;
+
+            //créé un effet de particule
+            GameObject desactiveLink = ObjectsPooler.GetSingleton.SpawnFromPool("DesactiveLink", link.transform.position, Quaternion.identity, ObjectsPooler.GetSingleton.transform);
+            link.GetComponent<MeshRenderer>().enabled = false;
+            link.GetComponent<Collider>().enabled = false;
+            //GameObject bubble = ObjectsPooler.GetSingleton.SpawnFromPool("Bubble", link.transform.position, Quaternion.identity, GameManager.GetSingleton.SceneManagerLocal.transform);
+
+        }
+
+        Kill(); //détruit la rope !
     }
 
     /// <summary>
@@ -214,6 +253,10 @@ public class Rope : MonoBehaviour, IKillable
 
 
         GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", closestLink.transform.position, Quaternion.identity, parentLink);
+        SpringJoint jointLink = newLink.GetComponent<SpringJoint>();
+        if (!jointLink)
+            newLink.AddComponent<SpringJoint>();
+
 
         ChangeMeshRenrered(newLink.GetComponent<MeshRenderer>());
 
@@ -300,24 +343,26 @@ public class Rope : MonoBehaviour, IKillable
     /// </summary>
     private void ChangeValueSpring()
     {
-        for (int i = 0; i < linkCount + 1; i++)
+        for (int i = 0; i < listCircular.Count; i++)
         {
             ChangeThisPring(i);
         }
     }
     private void ChangeThisPring(int index)
     {
-        if (!listCircular[index + 1].Value)
+        if (index + 1 >= listCircular.Count || !listCircular[index + 1].Value || !listCircular[index].Value)
         {
             listCircular.RemoveAllEmpty();
             return;
         }
-
-
-        SpringJoint joint = listCircular[index].Value.GetComponent<SpringJoint>();
-        joint.connectedBody = listCircular[index + 1].Value.GetComponent<Rigidbody>();
-
         Rigidbody linkBody = listCircular[index].Value.GetComponent<Rigidbody>();
+        Rigidbody next = listCircular[index + 1].Value.GetComponent<Rigidbody>();
+        SpringJoint joint = listCircular[index].Value.GetComponent<SpringJoint>();
+
+        if (!linkBody || !next || !joint)
+            return;
+        joint.connectedBody = next;
+
         linkBody.mass = massLink[0];
         linkBody.drag = dragLink[0];
         linkBody.useGravity = useGravityLink;
@@ -346,7 +391,8 @@ public class Rope : MonoBehaviour, IKillable
 
     private void CreateFakeListForDebug()
     {
-        Debug.Log("ici reset...");
+        Debug.Log("ici reset... PLUS !");
+        return;
         listDebug.Clear();
         for (int i = 0; i < listCircular.Count; i++)
         {
@@ -358,7 +404,8 @@ public class Rope : MonoBehaviour, IKillable
     public void Kill()
     {
         Debug.Log("Death Rope ! handle link bien sur");
-        //Destroy(gameObject);
+        ClearJoints();
+        Destroy(gameObject);
     }
 
     #endregion

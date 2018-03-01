@@ -458,7 +458,10 @@ MonoBehaviour:
   linkCountMax: 30
   forceWhenExplode: 10
   dragWhenExplode: 20
-  timeToKillWhenExplode: 1.5
+  timeToBecomeHarmLess: 1.5
+  rationRandom: 0.1
+  colorDesactive: {r: 1, g: 1, b: 1, a: 1}
+  layerToReturn: Default
   objectToConnect:
   - {fileID: 0}
   - {fileID: 0}

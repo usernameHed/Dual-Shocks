@@ -780,11 +780,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 242580406}
---- !u!1 &246923433 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1812299315256986, guid: bbbf1951ba171694689207840645be74,
-    type: 2}
-  m_PrefabInternal: {fileID: 1080914625}
 --- !u!1 &251751516
 GameObject:
   m_ObjectHideFlags: 0
@@ -3299,11 +3294,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 448714372}
     m_Modifications:
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4303340149742350, guid: bbbf1951ba171694689207840645be74, type: 2}
       propertyPath: m_LocalPosition.x
       value: -5.13
@@ -3345,136 +3335,6 @@ Prefab:
       propertyPath: setupManager
       value: 
       objectReference: {fileID: 1585036265}
-    - target: {fileID: 114047155580806062, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: coolDownPowers1.Array.data[0].updateFrequency
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114047155580806062, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: coolDownPowers1.Array.data[1].updateFrequency
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114047155580806062, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: coolDownPowers2.Array.data[0].updateFrequency
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114047155580806062, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: coolDownPowers2.Array.data[1].updateFrequency
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[0]
-      value: 
-      objectReference: {fileID: 1555408341}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[4]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[5]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[6]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[7]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[8]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[9]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[10]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[11]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[12]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[13]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[14]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[15]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[16]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[17]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[18]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[19]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[20]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114225761815925612, guid: bbbf1951ba171694689207840645be74,
-        type: 2}
-      propertyPath: linkList.Array.data[21]
-      value: 
-      objectReference: {fileID: 246923433}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbbf1951ba171694689207840645be74, type: 2}
   m_IsPrefabParent: 0
@@ -5424,11 +5284,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1555408341 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1917450821410156, guid: bbbf1951ba171694689207840645be74,
-    type: 2}
-  m_PrefabInternal: {fileID: 1080914625}
 --- !u!1 &1557014378
 GameObject:
   m_ObjectHideFlags: 0

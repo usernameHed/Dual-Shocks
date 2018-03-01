@@ -123,7 +123,7 @@ public sealed class CircularLinkedList<T> : ICollection<T>, IEnumerable<T>
         get
         {
             if (index >= count || index < 0)
-                throw new ArgumentOutOfRangeException("index");
+                return null;
             else
             {
                 Node<T> node = this.head;
