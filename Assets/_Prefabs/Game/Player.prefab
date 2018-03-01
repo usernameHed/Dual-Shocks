@@ -456,7 +456,9 @@ MonoBehaviour:
   max: 0.3
   linkCount: 10
   linkCountMax: 30
-  forceWhenExplode: 2
+  forceWhenExplode: 10
+  dragWhenExplode: 20
+  timeToKillWhenExplode: 1.5
   objectToConnect:
   - {fileID: 0}
   - {fileID: 0}

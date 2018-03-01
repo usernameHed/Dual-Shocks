@@ -320,7 +320,6 @@ public sealed class CircularLinkedList<T> : ICollection<T>, IEnumerable<T>
 
         for (int i = 0; i < count; i++)
         {
-            
             if (EqualityComparer<T>.Default.Equals(node.Value, default(T)))
             {
                 RemoveNode(node);

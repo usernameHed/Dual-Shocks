@@ -41,8 +41,12 @@ public class Rope : MonoBehaviour, IKillable
     [FoldoutGroup("Rope"), Tooltip("force lors du breack de link"), SerializeField]
     private float forceWhenExplode = 30f;
 
-    [FoldoutGroup("Rope"), Tooltip("force lors du breack de link"), SerializeField]
+    [FoldoutGroup("Rope"), Tooltip("Ajout du drag à la ball"), SerializeField]
     private float dragWhenExplode = 10f;
+
+    [FoldoutGroup("Rope"), Tooltip("temps avant destructions"), SerializeField]
+    private float timeToKillWhenExplode = 1.5f;
+
 
     [FoldoutGroup("Objects"), OnValueChanged("InitPhysicRope"), Tooltip("Les 2 objets à relié"), SerializeField]
     private GameObject[] objectToConnect = new GameObject[2];
