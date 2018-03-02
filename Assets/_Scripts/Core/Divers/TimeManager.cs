@@ -10,8 +10,9 @@ public class TimeManager : MonoBehaviour
     [FoldoutGroup("GamePlay"), Tooltip("slowDonwFactor"), SerializeField]
     private float slowDonwFactor = 0.05f;             //le type de ball (bleu, red...)
     [FoldoutGroup("GamePlay"), Tooltip("slowDonwFactor"), SerializeField]
-    private float slowDonwLenght = 2f;             //le type de ball (bleu, red...)
+    private float slowDownLenght = 2f;             //le type de ball (bleu, red...)
 
+    private static float originalFixedDeltaTime;
 
     private static TimeManager instance;
     public static TimeManager GetSingleton
@@ -36,22 +37,49 @@ public class TimeManager : MonoBehaviour
     {
         SetSingleton();
     }
+
+    private void Start()
+    {
+        //This Prevents slow motion in Game Editor.
+        originalFixedDeltaTime = Time.fixedDeltaTime;
+
+    }
     #endregion
 
     #region Core
+
+    private void UpdateTimeScale()
+    {
+        if (Time.timeScale < 1)
+        {
+            Time.timeScale += (1f / slowDownLenght) * Time.unscaledDeltaTime;//Get Back to normal everyframe
+            Time.fixedDeltaTime = Time.timeScale * originalFixedDeltaTime;//Adjust Physics - Get Back to normal everyframe by the same factor as TimeScale
+        }
+        else
+        {
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = originalFixedDeltaTime;
+        }
+
+    }
+
     public void DoSlowMothion()
     {
-        return;
         Time.timeScale = slowDonwFactor;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
+        //Adjust Physics - Slowdown by the same factor as TimeScale
+        Time.fixedDeltaTime = Time.timeScale * originalFixedDeltaTime;
+
+        //Time.timeScale = slowDonwFactor;
+        //Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
     #endregion
 
     #region Unity ending functions
     private void Update()
     {
-        Time.timeScale += (1f / slowDonwLenght) * Time.unscaledDeltaTime;
-        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+        UpdateTimeScale();
+        //Time.timeScale += (1f / slowDonwLenght) * Time.unscaledDeltaTime;
+        //Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
     }
     #endregion
 }
