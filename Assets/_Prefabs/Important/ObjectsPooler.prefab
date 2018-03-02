@@ -58,17 +58,17 @@ MonoBehaviour:
     shouldExpand: 1
   - tag: LinkSpawner
     prefab: {fileID: 1608521408533352, guid: b63ff764ccd4b294e9150c926d65c7d6, type: 2}
-    size: 10
-    shouldExpand: 0
+    size: 20
+    shouldExpand: 1
   - tag: BonusTaken
     prefab: {fileID: 1252393073312354, guid: d7b2624c26da00e4ea5aa8df057d08b2, type: 2}
-    size: 10
-    shouldExpand: 0
-  - tag: DesactiveLink
-    prefab: {fileID: 1643204372404494, guid: 8ba0e978a7edf8844b12967c9704e2bc, type: 2}
-    size: 70
-    shouldExpand: 0
+    size: 20
+    shouldExpand: 1
   - tag: BonusText
     prefab: {fileID: 1252393073312354, guid: e2f4d14e25f44924e82bb3a2dd52e2d1, type: 2}
     size: 10
-    shouldExpand: 0
+    shouldExpand: 1
+  - tag: DesactiveLink
+    prefab: {fileID: 1643204372404494, guid: 8ba0e978a7edf8844b12967c9704e2bc, type: 2}
+    size: 70
+    shouldExpand: 1

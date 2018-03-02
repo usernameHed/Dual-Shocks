@@ -832,11 +832,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faebbdf52187f024598c8f742f8dfd3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  borderMin: 0.1
-  borderMax: 0.9
+  borderMin: 0
+  borderMax: 1
   updateTimer:
     updateFrequency: 0
-    NotTheFirstTime: 0
+    notTheFirstTime: 0
 --- !u!114 &114860671979244486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -863,7 +863,7 @@ MonoBehaviour:
   weaponsList: []
   updateTimer:
     updateFrequency: 0
-    NotTheFirstTime: 0
+    notTheFirstTime: 0
 --- !u!114 &114934967086933620
 MonoBehaviour:
   m_ObjectHideFlags: 1

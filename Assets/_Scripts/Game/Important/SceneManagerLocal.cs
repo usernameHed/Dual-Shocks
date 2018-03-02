@@ -37,7 +37,9 @@ public class SceneManagerLocal : SerializedMonoBehaviour
     [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), NonSerialized, OdinSerialize]
     private List<SceneInfo> sceneToLoad;
 
-    [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), NonSerialized, OdinSerialize]
+    [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), SerializeField]
+    private GameObject levelMangerInterfacce;
+
     private ILevelManager levelManger;
     public ILevelManager LevelManagerScript { get { return (levelManger); } }
     #endregion
@@ -48,9 +50,10 @@ public class SceneManagerLocal : SerializedMonoBehaviour
     {
         if (levelManger == null)
         {
-            Debug.LogError("PAS DE I LEVEL MANAGER");
-            levelManger = GetComponent<ILevelManager>();
-            return;
+            Debug.Log("PAS DE I LEVEL MANAGER");
+            levelManger = levelMangerInterfacce.GetComponent<ILevelManager>();
+            if (levelManger == null)
+                Debug.LogError("FUCK");
         }
             
 

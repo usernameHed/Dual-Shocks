@@ -41,6 +41,7 @@ public class TimeManager : MonoBehaviour
     #region Core
     public void DoSlowMothion()
     {
+        return;
         Time.timeScale = slowDonwFactor;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }

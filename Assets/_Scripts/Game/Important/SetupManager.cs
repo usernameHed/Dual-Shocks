@@ -6,7 +6,6 @@ using UnityEngine.UI;
 /// <summary>
 /// MenuManager Description
 /// </summary>
-[RequireComponent(typeof(DisplayInSetup))]
 public class SetupManager : MonoBehaviour, ILevelManager
 {
     #region Attributes

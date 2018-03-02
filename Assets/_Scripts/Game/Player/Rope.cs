@@ -64,6 +64,9 @@ public class Rope : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     private Color colorRope;
 
+    [FoldoutGroup("Debug"), Tooltip("FUUUUUUUUUUUU"), SerializeField]
+    private GameObject prefabsLink;
+
 
     [OnValueChanged("CreateFakeListForDebug")]
     private CircularLinkedList<GameObject> listCircular = new CircularLinkedList<GameObject>();
@@ -124,7 +127,9 @@ public class Rope : MonoBehaviour, IKillable
 
             //créé un joint, à une position quelquonque, en parent: la où se trouve les balls du player
             //GameObject newLink = Instantiate(prefabLink, posJoint, Quaternion.identity, playerController.Rope);
-            GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, Quaternion.identity, parentLink);
+GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, Quaternion.identity, parentLink);
+//GameObject newLink = Instantiate(prefabsLink, posJoint, Quaternion.identity, parentLink);
+
             SetupLink(newLink, i);
             //linkList.Add(newLink);
             listCircular.AddLast(newLink);
@@ -156,7 +161,14 @@ public class Rope : MonoBehaviour, IKillable
         linkScript.RopeScript = this;
         linkScript.IdFromRope = index;
 
-        Debug.Log("color la link");
+        if (!newLink.GetComponent<SpringJoint>())
+            newLink.AddComponent<SpringJoint>();
+
+        newLink.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        newLink.GetComponent<MeshRenderer>().enabled = true;
+        newLink.GetComponent<Collider>().enabled = true;
+
+
         //ChangeMeshRenrered(0); //ou max -1 ?
     }
 
@@ -264,17 +276,22 @@ public class Rope : MonoBehaviour, IKillable
         if (index != listCircular.Count - 1)
         {
             listCircular.AddAfter(listCircular[index], newLink);
+
+            SetupLink(newLink, index + 1);
+
             ChangeThisPring(index);
             ChangeThisPring(index + 1);
-            SetupLink(newLink, index + 1);
+            
         }
         else
         {
             Debug.Log("ICI on ajoute sur le dernier ???");
             listCircular.AddBefore(listCircular[index], newLink);
+
+            SetupLink(newLink, index - 0);
             ChangeThisPring(index - 1);
             ChangeThisPring(index - 0);
-            SetupLink(newLink, index - 0);
+            
         }
 
 
@@ -296,6 +313,7 @@ public class Rope : MonoBehaviour, IKillable
                 continue;
             linkTmp.transform.SetParent(ObjectsPooler.GetSingleton.transform);
             linkTmp.SetActive(false);
+//Destroy(linkTmp);
             //Destroy(linkList[i]);
         }
         listCircular.Clear();

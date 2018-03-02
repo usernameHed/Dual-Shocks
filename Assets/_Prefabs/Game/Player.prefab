@@ -460,13 +460,13 @@ MonoBehaviour:
   dragWhenExplode: 20
   timeToBecomeHarmLess: 1.5
   rationRandom: 0.1
-  colorDesactive: {r: 1, g: 1, b: 1, a: 1}
-  layerToReturn: Default
   objectToConnect:
   - {fileID: 0}
   - {fileID: 0}
   parentLink: {fileID: 0}
   colorRope: {r: 0, g: 0, b: 0, a: 0}
+  prefabsLink: {fileID: 1608521408533352, guid: c0c03b57f4c7a448884569172a68f988,
+    type: 2}
   listDebug: []
 --- !u!120 &120605678903995888
 LineRenderer:

@@ -67,6 +67,7 @@ public class ObjectsPooler : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("init pool");
         SetSingleton();
         InitPool();
     }

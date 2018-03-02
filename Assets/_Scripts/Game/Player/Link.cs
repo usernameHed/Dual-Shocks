@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
+using System;
 
 /// <summary>
 /// Link Description
@@ -15,6 +16,11 @@ public class Link : MonoBehaviour
     private Rope rope;
     public Rope RopeScript { get { return (rope); } set { rope = value; } }
 
+    internal void AddComponent<T>()
+    {
+        throw new NotImplementedException();
+    }
+
     #endregion
 
     #region Initialization
@@ -28,5 +34,5 @@ public class Link : MonoBehaviour
     #region Unity ending functions
 
 
-	#endregion
+    #endregion
 }

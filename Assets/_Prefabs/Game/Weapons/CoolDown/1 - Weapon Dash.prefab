@@ -263,11 +263,11 @@ MonoBehaviour:
   idWeapon: 1
   weaponCoolDown: 1
   orderWeapon: 0
-  forceImpulse: 100
+  forceImpulse: 200
   forceLinkImpulse: 40
   linkToPush: 38
   teleport: 1
-  forwardDist: 3
+  forwardDist: 4
   timeToCallTeleport: 0.1
 --- !u!114 &114519891297572570
 MonoBehaviour:

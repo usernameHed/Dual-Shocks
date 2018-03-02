@@ -16,6 +16,8 @@ public class MenuManager : MonoBehaviour, ILevelManager
     [FoldoutGroup("Objects"), Tooltip("Debug"), SerializeField]
     private List<Button> buttonsMainMenu;
 
+
+
     private bool enabledScript = false;
     #endregion
 
@@ -40,12 +42,14 @@ public class MenuManager : MonoBehaviour, ILevelManager
     #endregion
 
     #region Core
+
     /// <summary>
     /// ici lance le jeu, il est chargé !
     /// </summary>
     [FoldoutGroup("Debug"), Button("Play")]
     public void Play()
     {
+        Debug.Log("play ici menu");
         GameManager.GetSingleton.SceneManagerLocal.PlayNext();
     }
 
@@ -56,6 +60,15 @@ public class MenuManager : MonoBehaviour, ILevelManager
         buttonsMainMenu[1].Select();
 
         SceneManagerGlobal.GetSingleton.QuitGame(true);
+    }
+
+    private void InputMenu()
+    {
+        if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape")
+           || PlayerConnected.GetSingleton.getButtonDownFromAnyGamePad("Back"))
+        {
+            Quit();
+        }
     }
 
     /// <summary>
@@ -78,6 +91,7 @@ public class MenuManager : MonoBehaviour, ILevelManager
     {
         if (!enabledScript)
             return;
+        InputMenu();
         DebugMouseCLick();
     }
     #endregion
