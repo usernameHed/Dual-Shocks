@@ -80,20 +80,7 @@ public class Balls : MonoBehaviour, IKillable
     private bool activated = false; //la ball est-elle activé ?
     private PlayerController playerRef;
     public PlayerController PlayerRef { get { return (playerRef); } }
-
-    private float additionnalSpeed = 0;
-    /*public float AdditionnalSpeed
-    {
-        set
-        {
-            if (value >= 0)
-                additionnalSpeed = value;
-        }
-        get
-        {
-            return additionnalSpeed;
-        }
-    }*/
+    private bool kinematicAtStart = true;   //la ball est kinematic au début
 
     #endregion
 
@@ -112,7 +99,7 @@ public class Balls : MonoBehaviour, IKillable
         HasMoved = false;
         Power1 = false;
         Power2 = 0f;
-        
+
         ballBody = gameObject.GetComponent<Rigidbody>();
         playerRef = player;
         idBallPlayer = id;
@@ -226,7 +213,12 @@ public class Balls : MonoBehaviour, IKillable
     {
         if (HasMoved)
         {
-            ballBody.AddForce(HorizMove * (moveSpeed + additionnalSpeed) * Time.deltaTime, 0.0f, VertiMove * (moveSpeed + additionnalSpeed) * Time.deltaTime, ForceMode.Impulse);
+            if (kinematicAtStart)
+            {
+                kinematicAtStart = false;
+                ballBody.isKinematic = kinematicAtStart;
+            }
+            ballBody.AddForce(HorizMove * (moveSpeed) * Time.deltaTime, 0.0f, VertiMove * (moveSpeed) * Time.deltaTime, ForceMode.Impulse);
         }
 
         if (Power1 && weaponsList[0])

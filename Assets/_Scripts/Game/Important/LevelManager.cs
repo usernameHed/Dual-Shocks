@@ -75,14 +75,15 @@ public class LevelManager : MonoBehaviour, ILevelManager
             
             
             bool activePlayer = playerBallInit.PlayerData[i].active;
-            if (activePlayer)
+            playerController.SpawnBallPos(displayInGame.PlayerRocks[i].spawnBall[0], displayInGame.PlayerRocks[i].spawnBall[1]);
+            /*if (activePlayer)
             {
                 Debug.Log("ICI ) la position des spawn STP !!!");
                 playerController.FollowersList[0].position = displayInGame.PlayerRocks[i].spawnBall[0].position;
                 playerController.FollowersList[1].position = displayInGame.PlayerRocks[i].spawnBall[1].position;
 
-            }
-            playersLocal[i].SetActive(playerBallInit.PlayerData[i].active);
+            }*/
+            playersLocal[i].SetActive(activePlayer);
         }
     }
 

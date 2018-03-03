@@ -54,8 +54,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 0}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -67,13 +66,13 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: SceneManagerLocal+SceneInfo, Assembly-CSharp
     - Name: scene
       Entry: 1
-      Data: 2_Setup
+      Data: 3_Game
     - Name: loadAtStart
       Entry: 5
       Data: true
@@ -85,7 +84,34 @@ MonoBehaviour:
       Data: true
     - Name: fadeTime
       Entry: 4
-      Data: 1
+      Data: 1.5
+    - Name: additive
+      Entry: 5
+      Data: false
+    - Name: swapWhenLoaded
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: SceneManagerLocal+SceneInfo, Assembly-CSharp
+    - Name: scene
+      Entry: 1
+      Data: 2_Setup
+    - Name: loadAtStart
+      Entry: 5
+      Data: false
+    - Name: loadAfterXSecond
+      Entry: 4
+      Data: 0
+    - Name: fade
+      Entry: 5
+      Data: true
+    - Name: fadeTime
+      Entry: 4
+      Data: 1.5
     - Name: additive
       Entry: 5
       Data: false
@@ -101,6 +127,4 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: levelManger
-      Entry: 10
-      Data: 0
+  levelMangerInterfacce: {fileID: 0}

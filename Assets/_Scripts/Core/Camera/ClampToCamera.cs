@@ -12,7 +12,6 @@ public class ClampToCamera : MonoBehaviour
     [FoldoutGroup("GamePlay"), Tooltip("Clamp la position du player aux borders de la caméra"), SerializeField]
     private float borderMax = 0.9f;
 
-
     [Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
@@ -20,9 +19,10 @@ public class ClampToCamera : MonoBehaviour
 
     #region Initialization
 
-    private void Start()
+    private void Awake()
     {
-		// Start function
+        updateTimer.InitFrequency();
+        updateTimer.Ready();
     }
     #endregion
 
@@ -43,7 +43,8 @@ public class ClampToCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ClampPlayer();
+        if (updateTimer.Ready())
+            ClampPlayer();
     }
 
     #endregion

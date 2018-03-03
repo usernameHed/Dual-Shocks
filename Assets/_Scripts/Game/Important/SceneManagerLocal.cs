@@ -50,10 +50,11 @@ public class SceneManagerLocal : SerializedMonoBehaviour
     {
         if (levelManger == null)
         {
-            Debug.Log("PAS DE I LEVEL MANAGER");
+            if (!levelMangerInterfacce)
+                Debug.LogError("PAS DE LEVEL MANAGER");
             levelManger = levelMangerInterfacce.GetComponent<ILevelManager>();
             if (levelManger == null)
-                Debug.LogError("FUCK");
+                Debug.LogError("PAS DE III LEVEL MANAGER");
         }
             
 

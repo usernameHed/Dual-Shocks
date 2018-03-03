@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour, IKillable
     private List<Balls> ballsList;
     public List<Balls> BallsList { get { return ballsList; } }
 
+    [FoldoutGroup("Debug"), Tooltip("List des balls créé"), SerializeField]
+    private Transform[] spawnBall = new Transform[2];
+    public Transform[] SpawnBall { get { return spawnBall; } }
+    
+
     [FoldoutGroup("Debug"), Tooltip("playerController"), SerializeField]
     private Rope ropeScript;
     public Rope RopeScript { get { return ropeScript; } }
@@ -69,8 +74,19 @@ public class PlayerController : MonoBehaviour, IKillable
         ChangeBalls();
 
         ballRemaining = SizeArrayId;
-        //Invoke("initRope", 1.0f);
+        
         initRope();
+    }
+
+    /// <summary>
+    /// est appelé pour init les position des spawn au début
+    /// </summary>
+    public void SpawnBallPos(Transform pos1, Transform pos2)
+    {
+        spawnBall[0] = pos1;
+        spawnBall[1] = pos2;
+        followersList[0].position = spawnBall[0].position;
+        followersList[1].position = spawnBall[1].position;
     }
 
     private void ClearListBall()
@@ -128,7 +144,9 @@ public class PlayerController : MonoBehaviour, IKillable
     }
     private void CreateBall(int index)
     {
-        GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[index].idBallType), followersList[index].position, followersList[index].rotation, parentBalls);
+        GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[index].idBallType), spawnBall[index].position, Quaternion.identity/*followersList[index].rotation*/, parentBalls);
+
+
         ballsList[index] = ballsObject.GetComponent<Balls>();
         ballsList[index].InitBall(this, index); //ici init la ball avec les pouvoirs
     }
@@ -213,8 +231,14 @@ public class PlayerController : MonoBehaviour, IKillable
             Vector3 pos = ballsList[i].gameObject.transform.position;
             followersList[i].position = pos;    //set position of balls
 
+
             if (ballsList[i].HasMoved)  //set rotation
+            {
+                
+
                 followersList[i].rotation = QuaternionExt.DirObject(followersList[i].rotation, ballsList[i].HorizMove, -ballsList[i].VertiMove, turnRateFollowers * ballsList[i].RatioTurnRateFocus);
+            }
+
         }
     }
 
@@ -231,8 +255,8 @@ public class PlayerController : MonoBehaviour, IKillable
 
 	private void FixedUpdate()
 	{
-        
-	}
+
+    }
 
     /// <summary>
     /// après les mouvements physique, set la position des followers

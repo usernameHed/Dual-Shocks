@@ -64,8 +64,8 @@ public class Rope : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     private Color colorRope;
 
-    [FoldoutGroup("Debug"), Tooltip("FUUUUUUUUUUUU"), SerializeField]
-    private GameObject prefabsLink;
+    //[FoldoutGroup("Debug"), Tooltip("FUUUUUUUUUUUU"), SerializeField]
+    //private GameObject prefabsLink;
 
 
     [OnValueChanged("CreateFakeListForDebug")]
@@ -167,7 +167,6 @@ GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, 
         newLink.GetComponent<Rigidbody>().velocity = Vector3.zero;
         newLink.GetComponent<MeshRenderer>().enabled = true;
         newLink.GetComponent<Collider>().enabled = true;
-
 
         //ChangeMeshRenrered(0); //ou max -1 ?
     }
