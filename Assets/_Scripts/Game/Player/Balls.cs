@@ -207,6 +207,15 @@ public class Balls : MonoBehaviour, IKillable
     }
 
     /// <summary>
+    /// dès qu'on commence a bouger, on enlève la kinematie
+    /// </summary>
+    public void UnsetKinematic()
+    {
+        kinematicAtStart = false;
+        ballBody.isKinematic = kinematicAtStart;
+    }
+
+    /// <summary>
     /// déplace et tir
     /// </summary>
     private void MovePlayer()
@@ -214,10 +223,7 @@ public class Balls : MonoBehaviour, IKillable
         if (HasMoved)
         {
             if (kinematicAtStart)
-            {
-                kinematicAtStart = false;
-                ballBody.isKinematic = kinematicAtStart;
-            }
+                playerRef.UnsetKinematic();
             ballBody.AddForce(HorizMove * (moveSpeed) * Time.deltaTime, 0.0f, VertiMove * (moveSpeed) * Time.deltaTime, ForceMode.Impulse);
         }
 

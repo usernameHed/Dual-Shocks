@@ -209,6 +209,15 @@ public class PlayerController : MonoBehaviour, IKillable
     }
 
     /// <summary>
+    /// Dès qu'on a bougé, enlever la kinematie des 2 balls
+    /// </summary>
+    public void UnsetKinematic()
+    {
+        ballsList[0].UnsetKinematic();
+        ballsList[1].UnsetKinematic();
+    }
+
+    /// <summary>
     /// change position of follower according to balls
     /// - first: input player on update
     /// - then: balls move on fixedUpdate (physics)
