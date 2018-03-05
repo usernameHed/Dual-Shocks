@@ -44,7 +44,7 @@ public class DisplayInGame : MonoBehaviour
     /// </summary>
     public void InitDisplay()
     {
-        data = ScoreManager.GetSingleton.Data;
+        data = ScoreManager.Instance.Data;
         for (int i = 0; i < playerRocks.Length; i++)
         {
             playerRocks[i].active = true;   //ici active ou non selon si le player est connecté
@@ -64,7 +64,6 @@ public class DisplayInGame : MonoBehaviour
                 playerRocks[i].textScore.text = data.ScorePlayer[i].ToString();
             }
         }
-
     }
     #endregion
 

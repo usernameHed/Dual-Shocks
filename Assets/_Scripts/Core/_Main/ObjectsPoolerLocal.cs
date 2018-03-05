@@ -5,8 +5,10 @@ using UnityEngine;
 /// <summary>
 /// ObjectsPooler Description
 /// </summary>
-public class ObjectsPoolerLocal : MonoBehaviour
+public class ObjectsPoolerLocal : ISingleton<ObjectsPoolerLocal>
 {
+    protected ObjectsPoolerLocal() { } // guarantee this will be always a singleton only - can't use the constructor!
+
     #region Attributes
     [System.Serializable]
     public class Pool
@@ -22,30 +24,12 @@ public class ObjectsPoolerLocal : MonoBehaviour
 
     private Dictionary<GameData.Prefabs, List<GameObject>> poolDictionary;
 
-    private static ObjectsPoolerLocal instance;
-    public static ObjectsPoolerLocal GetSingleton
-    {
-        get { return instance; }
-    }
     #endregion
 
     #region Initialization
-
-    /// <summary>
-    /// Init 
-    /// </summary>
-    public void SetSingleton()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
-
     private void Awake()
     {
         Debug.Log("init pool");
-        SetSingleton();
         InitPool();
     }
 

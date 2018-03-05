@@ -44,9 +44,11 @@ public class LevelManager : MonoBehaviour, ILevelManager
     /// </summary>
     public void InitScene()
     {
+        EventManager.TriggerEvent(GameData.Event.RoundStart);
+
         Debug.Log("ici reset les scores... (seulement quand on fait un nouveau round ??)");
-        ScoreManager.GetSingleton.ResetAll();   //reset les scores
-        GameManager.GetSingleton.PlayerBallInit.Setup();
+        ScoreManager.Instance.ResetAll();   //reset les scores
+        //GameManager.GetSingleton.PlayerBallInit.Setup();
 
         SpawnPlayer();
         displayInGame.InitDisplay();
@@ -94,13 +96,13 @@ public class LevelManager : MonoBehaviour, ILevelManager
 
     private void InputGame()
     {
-        if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape")
-            || PlayerConnected.GetSingleton.getButtonDownFromAnyGamePad("Back"))
+        if (PlayerConnected.Instance.getPlayer(-1).GetButtonDown("Escape")
+            || PlayerConnected.Instance.getButtonDownFromAnyGamePad("Back"))
         {
             Quit();
         }
-        if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Restart")
-            || PlayerConnected.GetSingleton.getButtonDownFromAnyGamePad("Restart"))
+        if (PlayerConnected.Instance.getPlayer(-1).GetButtonDown("Restart")
+            || PlayerConnected.Instance.getButtonDownFromAnyGamePad("Restart"))
         {
             Restart();
         }

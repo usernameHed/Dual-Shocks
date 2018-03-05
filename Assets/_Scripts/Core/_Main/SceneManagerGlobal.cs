@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 
-public class SceneManagerGlobal : MonoBehaviour
+public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
 {
+    protected SceneManagerGlobal() { } // guarantee this will be always a singleton only - can't use the constructor!
+
     #region Attributes
 
     private struct SceneCharging
@@ -15,44 +17,14 @@ public class SceneManagerGlobal : MonoBehaviour
         public bool isAdditive;
         public bool swapWhenFinishUpload;
     }
-    /// <summary>
-    /// variable 
-    /// </summary>
-    //[FoldoutGroup("Debug"), Tooltip("Scene to load at start"), SerializeField]
+
     private List<SceneCharging> sceneCharging = new List<SceneCharging>();
-    //private AsyncOperation async;                   //gestion de quitter de manière asynchrone
-
-
-
-    private static SceneManagerGlobal instance;
-    public static SceneManagerGlobal GetSingleton
-    {
-        get { return instance; }
-    }
 
     private bool closing = false;
 
     #endregion
 
     #region Initialization
-    /// <summary>
-    /// test si on met le script en UNIQUE
-    /// </summary>
-    public void SetSingleton()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
-
-    /// <summary>
-    /// Initialisation
-    /// </summary>
-    private void Awake()                                                    //initialisation referencce
-    {
-        SetSingleton();
-    }
 
     #endregion
 
@@ -129,13 +101,7 @@ public class SceneManagerGlobal : MonoBehaviour
             Debug.Log("ici on n'aurai pas du faire ça...");
             return;
         }
-        /*if (!sceneCharging[index].async.isDone)
-        {
-            Debug.Log("charging....");
-            if (restartIfNotCharged)
-                StartCoroutine(WaitForActivateScene(index, time));
-            return;
-        }*/
+
         Debug.Log("ici active normalement...");
 
         sceneCharging[index].async.allowSceneActivation = true;

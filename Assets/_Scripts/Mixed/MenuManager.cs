@@ -57,13 +57,13 @@ public class MenuManager : MonoBehaviour, ILevelManager
         enabledScript = false;
         buttonsMainMenu[1].Select();
 
-        SceneManagerGlobal.GetSingleton.QuitGame(true);
+        SceneManagerGlobal.Instance.QuitGame(true);
     }
 
     private void InputMenu()
     {
-        if (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape")
-           || PlayerConnected.GetSingleton.getButtonDownFromAnyGamePad("Back"))
+        if (PlayerConnected.Instance.getPlayer(-1).GetButtonDown("Escape")
+           || PlayerConnected.Instance.getButtonDownFromAnyGamePad("Back"))
         {
             Quit();
         }

@@ -91,7 +91,7 @@ public class SceneManagerLocal : MonoBehaviour
 
     private void StartLoading(int index)
     {
-        SceneManagerGlobal.GetSingleton.StartLoading(   sceneToLoad[index].scene,
+        SceneManagerGlobal.Instance.StartLoading(   sceneToLoad[index].scene,
                                                         sceneToLoad[index].swapWhenLoaded,
                                                         sceneToLoad[index].additive,
                                                         sceneToLoad[index].fade,
@@ -119,7 +119,7 @@ public class SceneManagerLocal : MonoBehaviour
     [FoldoutGroup("Debug"), Button("Play")]
     public void PlayNext()
     {
-        SceneManagerGlobal.GetSingleton.ActivateScene(
+        SceneManagerGlobal.Instance.ActivateScene(
             sceneToLoad[0].scene,
             sceneToLoad[0].fade,
             sceneToLoad[0].fadeTime);    //hard code du next ?
@@ -129,15 +129,15 @@ public class SceneManagerLocal : MonoBehaviour
     [FoldoutGroup("Debug"), Button("Previous")]
     public void PlayPrevious()
     {
-        SceneManagerGlobal.GetSingleton.UnloadScene(sceneToLoad[0].scene);
-        SceneManagerGlobal.GetSingleton.JumpToScene(sceneToLoad[1].scene, sceneToLoad[1].fade, sceneToLoad[1].fadeTime);    //hard code du previous ?
+        SceneManagerGlobal.Instance.UnloadScene(sceneToLoad[0].scene);
+        SceneManagerGlobal.Instance.JumpToScene(sceneToLoad[1].scene, sceneToLoad[1].fade, sceneToLoad[1].fadeTime);    //hard code du previous ?
         //ici gère les unloads ?
     }
 
     [FoldoutGroup("Debug"), Button("Quit")]
     public void Quit()
     {
-        SceneManagerGlobal.GetSingleton.QuitGame(true);
+        SceneManagerGlobal.Instance.QuitGame(true);
     }
 
     #endregion

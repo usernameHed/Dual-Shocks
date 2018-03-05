@@ -151,6 +151,8 @@ MonoBehaviour:
   sceneManagerLocal: {fileID: 0}
   updateTimer:
     updateFrequency: 0
+    notTheFirstTime: 0
+    waitOnlyOnce: 0
   playerBallInit: {fileID: 114892966174023146}
 --- !u!114 &114892966174023146
 MonoBehaviour:
@@ -163,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a272754005a1ab4d991d25760a5a1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fromLevel: 1
+  fromLevel: 0
   playerData:
   - idPlayer: 0
     ballInfo:

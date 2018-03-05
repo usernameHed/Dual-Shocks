@@ -12,9 +12,10 @@ public static class GameData
 
     public enum Event
     {
-        PlayerDeath,
-        GameOver,
-        GamePadConnectionChange,
+        RoundStart,     //appelé par LevelManager quand le round commence
+        PlayerDeath,    //est appelé a chaque playerDeath
+        GameOver,       //est appelé quand on trigger un gameOver
+        GamePadConnectionChange,    //est appelé a chaque co/deco de manette
     };
 
     public enum Prefabs

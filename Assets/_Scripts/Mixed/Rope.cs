@@ -79,6 +79,7 @@ public class Rope : MonoBehaviour, IKillable
 
 
     private bool linkBreaked = false;
+    private bool enabledScript = true;
 
     #endregion
 
@@ -100,6 +101,7 @@ public class Rope : MonoBehaviour, IKillable
     /// </summary>
     public void InitPhysicRope()
     {
+        enabledScript = true;
         ClearJoints();  //clear les joints précédents
 
         //cree un sprintjoint sur la première ball si il n'y en a pas déja
@@ -123,7 +125,7 @@ public class Rope : MonoBehaviour, IKillable
                     + (((1.0f + i) / maxMid) * objectToConnect[1].transform.position.z);
 
             Vector3 posJoint = new Vector3(x1, y1, z1);
-            GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool(GameData.Prefabs.Link, posJoint, Quaternion.identity, parentLink);
+            GameObject newLink = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.Link, posJoint, Quaternion.identity, parentLink);
 
             SetupLink(newLink, i);
             listCircular.AddLast(newLink);
@@ -215,7 +217,7 @@ public class Rope : MonoBehaviour, IKillable
                 continue;
 
             //créé un effet de particule
-            GameObject desactiveLink = ObjectsPoolerLocal.GetSingleton.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPoolerLocal.GetSingleton.transform);
+            GameObject desactiveLink = ObjectsPoolerLocal.Instance.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPoolerLocal.Instance.transform);
             link.GetComponent<MeshRenderer>().enabled = false;
             link.GetComponent<Collider>().enabled = false;
         }
@@ -241,7 +243,7 @@ public class Rope : MonoBehaviour, IKillable
         }
 
 
-        GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool(GameData.Prefabs.Link, closestLink.transform.position, Quaternion.identity, parentLink);
+        GameObject newLink = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.Link, closestLink.transform.position, Quaternion.identity, parentLink);
         SpringJoint jointLink = newLink.transform.GetOrAddComponent<SpringJoint>();
 
         ChangeMeshRenrered(newLink.GetComponent<MeshRenderer>());
@@ -275,12 +277,13 @@ public class Rope : MonoBehaviour, IKillable
     /// </summary>
     public void ClearJoints()
     {
+        Debug.Log("Clear la rope !!");
         for (int i = 0; i < listCircular.Count; i++)
         {
             GameObject linkTmp = listCircular[i].Value;
             if (!linkTmp || !linkTmp.GetComponent<Link>())
                 continue;
-            linkTmp.transform.SetParent(ObjectsPooler.GetSingleton.transform);
+            linkTmp.transform.SetParent(ObjectsPooler.Instance.transform);
             linkTmp.SetActive(false);
         }
         listCircular.Clear();
@@ -392,6 +395,9 @@ public class Rope : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
     {
+        if (!enabledScript)
+            return;
+        enabledScript = false;
         Debug.Log("Death Rope ! handle link bien sur");
         ClearJoints();
         gameObject.SetActive(false);

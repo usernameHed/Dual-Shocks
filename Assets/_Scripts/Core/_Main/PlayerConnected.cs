@@ -7,8 +7,10 @@ using Sirenix.OdinInspector;
 /// <summary>
 
 
-public class PlayerConnected : MonoBehaviour
+public class PlayerConnected : ISingleton<PlayerConnected>
 {
+    protected PlayerConnected() { } // guarantee this will be always a singleton only - can't use the constructor!
+
     #region variable
 
     [FoldoutGroup("Vibration"), Tooltip("Active les vibrations")]  public bool enabledVibration = true;
@@ -25,23 +27,7 @@ public class PlayerConnected : MonoBehaviour
     private Player[] playersRewired;                 //tableau des class player (rewired)
     private float timeToGo;
 
-    private static PlayerConnected instance;
-    public static PlayerConnected GetSingleton
-    {
-        get { return instance; }
-    }
     #endregion
-
-    /// <summary>
-    /// test si on met le script en UNIQUE
-    /// </summary>
-    public void SetSingleton()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
 
     #region  initialisation
     /// <summary>
@@ -49,8 +35,6 @@ public class PlayerConnected : MonoBehaviour
     /// </summary>
     private void Awake()                                                    //initialisation referencce
     {
-        SetSingleton();                                                  //set le script en unique ?
-
         playerArrayConnected = new bool[playerNumber];                           //initialise 
         playersRewired = new Player[playerNumber];
         initPlayerRewired();                                                //initialise les event rewired
@@ -202,7 +186,6 @@ public class PlayerConnected : MonoBehaviour
         Debug.Log("A controller was connected! Name = " + args.name + " Id = " + args.controllerId + " Type = " + args.controllerType);
         updatePlayerController(args.controllerId, true);
 
-        //GameManager.GetSingleton.CallChangePhase();
         EventManager.TriggerEvent(GameData.Event.GamePadConnectionChange, true, args.controllerId);
     }
 
@@ -215,7 +198,6 @@ public class PlayerConnected : MonoBehaviour
         updatePlayerController(args.controllerId, false);
         setKeyboardForPlayerOne();
 
-        //GameManager.GetSingleton.CallChangePhase();
         EventManager.TriggerEvent(GameData.Event.GamePadConnectionChange, false, args.controllerId);
     }
 

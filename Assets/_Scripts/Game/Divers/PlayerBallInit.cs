@@ -53,7 +53,10 @@ public class PlayerBallInit : MonoBehaviour
     #endregion
 
     #region Initialization
-
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.RoundStart, Setup);
+    }
 
     #endregion
 
@@ -63,6 +66,7 @@ public class PlayerBallInit : MonoBehaviour
     /// </summary>
     public void Setup()
     {
+        Debug.Log("Ici Setup les données des  players.. (gamePads...)");
         if (!fromLevel)
             SetPlayerActiveWithGamePadConnexion();
         SetupGamePadActive();
@@ -73,9 +77,9 @@ public class PlayerBallInit : MonoBehaviour
     /// </summary>
     public void SetupGamePadActive()
     {
-        for (int i = 0; i < PlayerConnected.GetSingleton.playerArrayConnected.Length; i++)
+        for (int i = 0; i < PlayerConnected.Instance.playerArrayConnected.Length; i++)
         {
-            playerData[i].gamepadActive = PlayerConnected.GetSingleton.playerArrayConnected[i];
+            playerData[i].gamepadActive = PlayerConnected.Instance.playerArrayConnected[i];
         }
     }
 
@@ -86,14 +90,17 @@ public class PlayerBallInit : MonoBehaviour
     /// </summary>
     private void SetPlayerActiveWithGamePadConnexion()
     {
-        for (int i = 0; i < PlayerConnected.GetSingleton.playerArrayConnected.Length; i++)
+        for (int i = 0; i < PlayerConnected.Instance.playerArrayConnected.Length; i++)
         {
-            playerData[i].active = PlayerConnected.GetSingleton.playerArrayConnected[i];
+            playerData[i].active = PlayerConnected.Instance.playerArrayConnected[i];
         }
     }
     #endregion
 
     #region Unity ending functions
-
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.RoundStart, Setup);
+    }
     #endregion
 }

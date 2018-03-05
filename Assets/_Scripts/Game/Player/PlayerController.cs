@@ -202,11 +202,11 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         for (int i = 0; i < ballsList.Count; i++)
         {
-            ballsList[i].HorizMove = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis("Move Horizontal" + ((i == 0) ? "" : " Right") );
-            ballsList[i].VertiMove = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis("Move Vertical" + ((i == 0) ? "" : " Right"));
+            ballsList[i].HorizMove = PlayerConnected.Instance.getPlayer(idPlayer).GetAxis("Move Horizontal" + ((i == 0) ? "" : " Right") );
+            ballsList[i].VertiMove = PlayerConnected.Instance.getPlayer(idPlayer).GetAxis("Move Vertical" + ((i == 0) ? "" : " Right"));
 
-            ballsList[i].Power1 = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetButtonDown( ((i == 0) ? "Left" : "Right") + "Trigger1");
-            ballsList[i].Power2 = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis( ((i == 0) ? "Left" : "Right") + "Trigger2");
+            ballsList[i].Power1 = PlayerConnected.Instance.getPlayer(idPlayer).GetButtonDown( ((i == 0) ? "Left" : "Right") + "Trigger1");
+            ballsList[i].Power2 = PlayerConnected.Instance.getPlayer(idPlayer).GetAxis( ((i == 0) ? "Left" : "Right") + "Trigger2");
 
             if (ballsList[i].HorizMove != 0 || ballsList[i].VertiMove != 0)
                 ballsList[i].HasMoved = true;
@@ -339,6 +339,8 @@ public class PlayerController : MonoBehaviour, IKillable
 	{
         if (!enabledPlayer)
             return;
+        RopeScript.Kill();
+
 		Debug.Log ("Player dead !");
         enabledPlayer = false;
         

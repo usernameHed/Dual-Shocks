@@ -7,37 +7,18 @@ using UnityEngine.UI;
 /// <summary>
 /// ScoreManager Description
 /// </summary>
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : ISingleton<ScoreManager>
 {
+    protected ScoreManager() { } // guarantee this will be always a singleton only - can't use the constructor!
+
     #region Attributes
     [FoldoutGroup("Debug"), Tooltip("Sauvegarde du joueur"), SerializeField]
     private PlayerData data = new PlayerData();
     public PlayerData Data { get { return data; } }
 
-
-    private static ScoreManager instance;
-    public static ScoreManager GetSingleton
-    {
-        get { return instance; }
-    }
     #endregion
 
     #region Initialization
-    /// <summary>
-    /// test si on met le script en UNIQUE
-    /// </summary>
-    public void SetSingleton()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
-
-    private void Awake()
-    {
-        SetSingleton();
-    }
 
     /// <summary>
     /// lors du start: load les données, sinon, sauvegarder !

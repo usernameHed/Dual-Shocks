@@ -18,8 +18,10 @@ public class DataEventManager
 /// <summary>
 /// EventManager Description
 /// </summary>
-public class EventManager : MonoBehaviour
+public class EventManager : ISingleton<EventManager>
 {
+    //protected EventManager() { } // guarantee this will be always a singleton only - can't use the constructor!
+
     #region Attributes
 
     private class UnityEventInt : UnityEvent<int>  {    }
@@ -35,7 +37,7 @@ public class EventManager : MonoBehaviour
     private Dictionary<GameData.Event, UnityEventBoolInt> eventDictionaryBoolInt;
     private Dictionary<GameData.Event, UnityEventData> eventDictionaryData;
 
-    private static EventManager instance;
+    /*private static EventManager instance;
     public static EventManager Instance
     {
         get
@@ -56,10 +58,15 @@ public class EventManager : MonoBehaviour
 
             return instance;
         }
-    }
+    }*/
     #endregion
 
     #region Initialization
+    private void Awake()
+    {
+        Init();
+    }
+
     /// <summary>
     /// test si on met le script en UNIQUE
     /// </summary>
@@ -91,6 +98,9 @@ public class EventManager : MonoBehaviour
     /// </summary>
     public static void StartListening(GameData.Event eventName, UnityAction listener)
     {
+        if (!Instance)
+            return;
+
         UnityEvent thisEvent = null;
         if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
@@ -105,6 +115,9 @@ public class EventManager : MonoBehaviour
     }
     public static void StartListening(GameData.Event eventName, UnityAction<int> listener)
     {
+        if (!Instance)
+            return;
+
         UnityEventInt thisEvent = null;
         if (Instance.eventDictionaryInt.TryGetValue(eventName, out thisEvent))
         {
@@ -119,6 +132,9 @@ public class EventManager : MonoBehaviour
     }
     public static void StartListening(GameData.Event eventName, UnityAction<int, int> listener)
     {
+        if (!Instance)
+            return;
+
         UnityEvent2Int thisEvent = null;
         if (Instance.eventDictionary2Int.TryGetValue(eventName, out thisEvent))
         {
@@ -133,6 +149,9 @@ public class EventManager : MonoBehaviour
     }
     public static void StartListening(GameData.Event eventName, UnityAction<bool, int> listener)
     {
+        if (!Instance)
+            return;
+
         UnityEventBoolInt thisEvent = null;
         if (Instance.eventDictionaryBoolInt.TryGetValue(eventName, out thisEvent))
         {
@@ -147,6 +166,9 @@ public class EventManager : MonoBehaviour
     }
     public static void StartListening(GameData.Event eventName, UnityAction<bool> listener)
     {
+        if (!Instance)
+            return;
+
         UnityEventBool thisEvent = null;
         if (Instance.eventDictionaryBool.TryGetValue(eventName, out thisEvent))
         {
@@ -161,6 +183,9 @@ public class EventManager : MonoBehaviour
     }
     public static void StartListening(GameData.Event eventName, UnityAction<DataEventManager> listener)
     {
+        if (!Instance)
+            return;
+
         UnityEventData thisEvent = null;
         if (Instance.eventDictionaryData.TryGetValue(eventName, out thisEvent))
         {
@@ -179,7 +204,7 @@ public class EventManager : MonoBehaviour
     /// </summary>
     public static void StopListening(GameData.Event eventName, UnityAction listener)
     {
-        if (instance == null)   //au cas ou on a déja supprimé l'eventManager
+        if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
             return;
         UnityEvent thisEvent = null;
         //si on veut unregister et que la clé existe dans le dico..
@@ -190,7 +215,7 @@ public class EventManager : MonoBehaviour
     }
     public static void StopListening(GameData.Event eventName, UnityAction<int> listener)
     {
-        if (instance == null)   //au cas ou on a déja supprimé l'eventManager
+        if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
             return;
         UnityEventInt thisEvent = null;
         //si on veut unregister et que la clé existe dans le dico..
@@ -201,7 +226,7 @@ public class EventManager : MonoBehaviour
     }
     public static void StopListening(GameData.Event eventName, UnityAction<int, int> listener)
     {
-        if (instance == null)   //au cas ou on a déja supprimé l'eventManager
+        if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
             return;
         UnityEvent2Int thisEvent = null;
         //si on veut unregister et que la clé existe dans le dico..
@@ -212,7 +237,7 @@ public class EventManager : MonoBehaviour
     }
     public static void StopListening(GameData.Event eventName, UnityAction<bool, int> listener)
     {
-        if (instance == null)   //au cas ou on a déja supprimé l'eventManager
+        if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
             return;
         UnityEventBoolInt thisEvent = null;
         //si on veut unregister et que la clé existe dans le dico..
@@ -223,7 +248,7 @@ public class EventManager : MonoBehaviour
     }
     public static void StopListening(GameData.Event eventName, UnityAction<bool> listener)
     {
-        if (instance == null)   //au cas ou on a déja supprimé l'eventManager
+        if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
             return;
         UnityEventBool thisEvent = null;
         //si on veut unregister et que la clé existe dans le dico..
@@ -234,7 +259,7 @@ public class EventManager : MonoBehaviour
     }
     public static void StopListening(GameData.Event eventName, UnityAction<DataEventManager> listener)
     {
-        if (instance == null)   //au cas ou on a déja supprimé l'eventManager
+        if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
             return;
         UnityEventData thisEvent = null;
         //si on veut unregister et que la clé existe dans le dico..
@@ -249,6 +274,8 @@ public class EventManager : MonoBehaviour
     /// </summary>
     public static void TriggerEvent(GameData.Event eventName)
     {
+        if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
+            return;
         UnityEvent thisEvent = null;
         if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
