@@ -47,9 +47,11 @@ public class Rope : MonoBehaviour, IKillable
 
     [FoldoutGroup("Death"), Tooltip("temps avant destructions"), SerializeField]
     private float timeToBecomeHarmLess = 1.5f;
+    public float TimeToBecomeHarmLess { get { return timeToBecomeHarmLess; } }
 
     [FoldoutGroup("Death"), Tooltip("temps avant destructions"), SerializeField]
     private float rationRandom = 0.1f;
+    public float RationRandom { get { return rationRandom; } }
 
     [FoldoutGroup("Objects"), OnValueChanged("InitPhysicRope"), Tooltip("Les 2 objets à relié"), SerializeField]
     private GameObject[] objectToConnect = new GameObject[2];
@@ -124,25 +126,17 @@ public class Rope : MonoBehaviour, IKillable
                     + (((1.0f + i) / maxMid) * objectToConnect[1].transform.position.z);
 
             Vector3 posJoint = new Vector3(x1, y1, z1);
-
-            //créé un joint, à une position quelquonque, en parent: la où se trouve les balls du player
-            //GameObject newLink = Instantiate(prefabLink, posJoint, Quaternion.identity, playerController.Rope);
-GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, Quaternion.identity, parentLink);
-//GameObject newLink = Instantiate(prefabsLink, posJoint, Quaternion.identity, parentLink);
+            GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool(GameData.Prefabs.Link, posJoint, Quaternion.identity, parentLink);
 
             SetupLink(newLink, i);
-            //linkList.Add(newLink);
             listCircular.AddLast(newLink);
         }
         //détruit le springJoint de la dernière ball si il y a
         if (objectToConnect[1].GetComponent<SpringJoint>())
             Destroy(objectToConnect[1].GetComponent<SpringJoint>());
 
-        //linkList.Add(objectToConnect[1]);
-        listCircular.AddLast(objectToConnect[1]);
 
-        //set la ball numéro 2 en dernier dans la liste hiérarchie
-        //playerController.BallsList[1].transform.SetAsLastSibling();
+        listCircular.AddLast(objectToConnect[1]);
 
         //connecte tout les liens ensemble avec des springs joints;
         ChangeValueSpring();
@@ -164,11 +158,6 @@ GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, 
         if (!newLink.GetComponent<SpringJoint>())
             newLink.AddComponent<SpringJoint>();
 
-        newLink.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        newLink.GetComponent<MeshRenderer>().enabled = true;
-        newLink.GetComponent<Collider>().enabled = true;
-
-        //ChangeMeshRenrered(0); //ou max -1 ?
     }
 
     /// <summary>
@@ -235,7 +224,7 @@ GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, 
                 continue;
 
             //créé un effet de particule
-            GameObject desactiveLink = ObjectsPooler.GetSingleton.SpawnFromPool("DesactiveLink", link.transform.position, Quaternion.identity, ObjectsPooler.GetSingleton.transform);
+            GameObject desactiveLink = ObjectsPoolerLocal.GetSingleton.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPoolerLocal.GetSingleton.transform);
             link.GetComponent<MeshRenderer>().enabled = false;
             link.GetComponent<Collider>().enabled = false;
             //GameObject bubble = ObjectsPooler.GetSingleton.SpawnFromPool("Bubble", link.transform.position, Quaternion.identity, GameManager.GetSingleton.SceneManagerLocal.transform);
@@ -263,7 +252,7 @@ GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, 
         }
 
 
-        GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", closestLink.transform.position, Quaternion.identity, parentLink);
+        GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool(GameData.Prefabs.Link, closestLink.transform.position, Quaternion.identity, parentLink);
         SpringJoint jointLink = newLink.GetComponent<SpringJoint>();
         if (!jointLink)
             newLink.AddComponent<SpringJoint>();
@@ -422,7 +411,7 @@ GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool("Link", posJoint, 
     {
         Debug.Log("Death Rope ! handle link bien sur");
         ClearJoints();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     #endregion

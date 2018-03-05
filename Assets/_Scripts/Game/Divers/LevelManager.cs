@@ -22,9 +22,16 @@ public class LevelManager : MonoBehaviour, ILevelManager
 
     [FoldoutGroup("Debug"), Tooltip("gere le temps avant de pouvoir faire Restart"), SerializeField]
     private FrequencyTimer coolDownRestart;
+
+    private int playerAlive = 0;
     #endregion
 
     #region Initialization
+
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.PlayerDeath, PlayerDeath);
+    }
 
     private void Awake()
     {
@@ -37,6 +44,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     /// </summary>
     public void InitScene()
     {
+        Debug.Log("ici reset les scores... (seulement quand on fait un nouveau round ??)");
         ScoreManager.GetSingleton.ResetAll();   //reset les scores
         GameManager.GetSingleton.PlayerBallInit.Setup();
 
@@ -76,13 +84,10 @@ public class LevelManager : MonoBehaviour, ILevelManager
             
             bool activePlayer = playerBallInit.PlayerData[i].active;
             playerController.SpawnBallPos(displayInGame.PlayerRocks[i].spawnBall[0], displayInGame.PlayerRocks[i].spawnBall[1]);
-            /*if (activePlayer)
+            if (activePlayer)
             {
-                Debug.Log("ICI ) la position des spawn STP !!!");
-                playerController.FollowersList[0].position = displayInGame.PlayerRocks[i].spawnBall[0].position;
-                playerController.FollowersList[1].position = displayInGame.PlayerRocks[i].spawnBall[1].position;
-
-            }*/
+                playerAlive++;
+            }
             playersLocal[i].SetActive(activePlayer);
         }
     }
@@ -99,6 +104,31 @@ public class LevelManager : MonoBehaviour, ILevelManager
         {
             Restart();
         }
+    }
+
+    [SerializeField]
+    private void PlayerDeath(int idPlayer)
+    {
+        Debug.Log("un player est mort !");
+        playerAlive--;
+        if (IsGameOver())
+        {
+            Debug.Log("ici c'est la fin du jeu !!! Setup les rounds");
+        }
+
+    }
+
+    /// <summary>
+    /// est appelé par les joueurs à leurs mort...
+    /// </summary>
+    private bool IsGameOver()
+    {
+        if (playerAlive <= 1)
+        {
+            EventManager.TriggerEvent(GameData.Event.GameOver);
+            return (true);
+        }
+        return (false);
     }
 
     /// <summary>
@@ -126,6 +156,11 @@ public class LevelManager : MonoBehaviour, ILevelManager
     private void Update()
     {
         InputGame();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.PlayerDeath, PlayerDeath);
     }
     #endregion
 }

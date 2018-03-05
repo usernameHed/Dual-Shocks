@@ -3,26 +3,15 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 /// <summary>
-/// list d'objets poolé au démarage !
-/// </summary>
-/*[System.Serializable]
-public class ObjectPoolItem
-{
-    public GameObject objectToPool;
-    public int pooledAmount = 20;
-    public bool shouldExpand = false;
-}*/
-
-/// <summary>
 /// ObjectsPooler Description
 /// </summary>
-public class ObjectsPooler : MonoBehaviour
+public class ObjectsPoolerLocal : MonoBehaviour
 {
     #region Attributes
     [System.Serializable]
     public class Pool
     {
-        public string tag;
+        public GameData.Prefabs tag;
         public GameObject prefab;
         public int size;
         public bool shouldExpand = false;
@@ -31,25 +20,13 @@ public class ObjectsPooler : MonoBehaviour
     [FoldoutGroup("GamePlay"), Tooltip("new pool"), SerializeField]
     private List<Pool> pools;
 
-    private Dictionary<string, List<GameObject>> poolDictionary;
+    private Dictionary<GameData.Prefabs, List<GameObject>> poolDictionary;
 
-
-
-
-
-    private static ObjectsPooler instance;
-    public static ObjectsPooler GetSingleton
+    private static ObjectsPoolerLocal instance;
+    public static ObjectsPoolerLocal GetSingleton
     {
         get { return instance; }
     }
-
-    
-    /*
-
-    public List<ObjectPoolItem> itemsToPool;
-
-    private List<GameObject> pooledObjects; //list de TOUT les objets...
-    */
     #endregion
 
     #region Initialization
@@ -77,7 +54,7 @@ public class ObjectsPooler : MonoBehaviour
     /// </summary>
     private void InitPool()
     {
-        poolDictionary = new Dictionary<string, List<GameObject>>();
+        poolDictionary = new Dictionary<GameData.Prefabs, List<GameObject>>();
 
         foreach(Pool pool  in pools)
         {
@@ -98,7 +75,7 @@ public class ObjectsPooler : MonoBehaviour
     /// <summary>
     /// access object from pool
     /// </summary>
-    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation, Transform parent)
+    public GameObject SpawnFromPool(GameData.Prefabs tag, Vector3 position, Quaternion rotation, Transform parent)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
@@ -170,77 +147,5 @@ public class ObjectsPooler : MonoBehaviour
 
         return (null);
     }
-
-    /*
-    /// <summary>
-    /// on a un objet actif... on fait quoi ? on en créé un autre ?
-    /// </summary>
-    /// <param name="tag"></param>
-    private bool ErrorExpand(string tag)
-    {
-        if (!poolDictionary.ContainsKey(tag))
-        {
-            Debug.Log("pool with tag: " + tag + "doesn't exist");
-            return (false);
-        }
-        foreach (Pool pool in pools)
-        {
-            if (pool.tag == tag)
-            {
-                if (pool.shouldExpand)
-                {
-                    //ici créé un objet dans la queue !
-                    Queue<GameObject> objectPool = poolDictionary[tag];
-                    GameObject obj = Instantiate(pool.prefab, transform);
-                    obj.SetActive(false);
-                    objectPool.Enqueue(obj);
-                    poolDictionary[tag] = objectPool;
-                    return (true);
-                }
-                else
-                    return (false);
-            }
-        }
-
-        return (true);
-    }
-    */
-
-    /*
-    /// <summary>
-    /// retourn un objet actuellement désactivé
-    /// </summary>
-    /// <returns></returns>
-    public GameObject GetPooledObject(string tag)
-    {
-        for (int i = 0; i < pooledObjects.Count; i++)
-        {
-            if (!pooledObjects[i].activeInHierarchy && pooledObjects[i].tag == tag)
-            {
-                pooledObjects[i].SetActive(true);
-                return pooledObjects[i];
-            }
-        }
-
-
-        foreach (ObjectPoolItem item in itemsToPool)
-        {
-            if (item.objectToPool.tag == tag)
-            {
-                if (item.shouldExpand)
-                {
-                    GameObject obj = Instantiate(item.objectToPool, transform) as GameObject;
-                    if (!obj.activeSelf)
-                        obj.SetActive(true);
-                    pooledObjects.Add(obj);
-                    return (obj);
-                }
-            }
-        }
-        return (null);
-    }
-    */
-    ////////////////////////////////////////////////////////////// Unity functions
-
     #endregion
 }

@@ -61,6 +61,11 @@ public class GameManager : SerializedMonoBehaviour
             Destroy(gameObject);
     }
 
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.GamePadConnectionChange, CallChangePhase);
+    }
+
     private void Awake()
     {
         SetSingleton();
@@ -78,7 +83,7 @@ public class GameManager : SerializedMonoBehaviour
     /// <summary>
     /// appelé quand les joypad se co/deco.
     /// </summary>
-    public void CallChangePhase()
+    public void CallChangePhase(bool active, int id)
     {
         playerBallInit.SetupGamePadActive();
 
@@ -175,5 +180,9 @@ public class GameManager : SerializedMonoBehaviour
         }
     }
 
-	#endregion
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.GamePadConnectionChange, CallChangePhase);
+    }
+    #endregion
 }

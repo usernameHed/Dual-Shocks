@@ -202,7 +202,8 @@ public class PlayerConnected : MonoBehaviour
         Debug.Log("A controller was connected! Name = " + args.name + " Id = " + args.controllerId + " Type = " + args.controllerType);
         updatePlayerController(args.controllerId, true);
 
-        GameManager.GetSingleton.CallChangePhase();
+        //GameManager.GetSingleton.CallChangePhase();
+        EventManager.TriggerEvent(GameData.Event.GamePadConnectionChange, true, args.controllerId);
     }
 
     /// <summary>
@@ -214,7 +215,8 @@ public class PlayerConnected : MonoBehaviour
         updatePlayerController(args.controllerId, false);
         setKeyboardForPlayerOne();
 
-        GameManager.GetSingleton.CallChangePhase();
+        //GameManager.GetSingleton.CallChangePhase();
+        EventManager.TriggerEvent(GameData.Event.GamePadConnectionChange, false, args.controllerId);
     }
 
     void OnDestroy()

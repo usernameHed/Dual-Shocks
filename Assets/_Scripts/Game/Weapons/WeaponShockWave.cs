@@ -91,7 +91,7 @@ public class WeaponShockWave : Weapon
                 //ici on a un link
 
                 //ne rien faire si ce link est amis et !pushFriendLink
-                if (!pushFriendLink && playerRef.isContainingThisLink(toPush.gameObject))
+                if (!pushFriendLink && playerRef.IsContainingThisLink(toPush.gameObject))
                     continue;
 
                 //ici on a un link enemi (ou allié si pushFriendLink est vrai)

@@ -9,9 +9,10 @@ using System;
 /// <summary>
 /// MenuManager Description
 /// </summary>
-public class SceneManagerLocal : SerializedMonoBehaviour
+public class SceneManagerLocal : MonoBehaviour
 {
-    [SerializeField]
+    //[SerializeField]
+    [Serializable]
     private struct SceneInfo
     {
         [Space(10)]
@@ -33,8 +34,9 @@ public class SceneManagerLocal : SerializedMonoBehaviour
         [EnableIf("loadAtStart"), Tooltip("Swap lorsque la scène est chargé ? Le changement marche en combinaison d'un fade, et d'une additive (fade puis swap complletement ok, additif puis ajoute l'additif au jeu ok)")]
         public bool swapWhenLoaded;
     }
+
     #region Attributes
-    [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), NonSerialized, OdinSerialize]
+    [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), SerializeField]
     private List<SceneInfo> sceneToLoad;
 
     [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), SerializeField]

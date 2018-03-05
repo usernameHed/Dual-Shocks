@@ -52,7 +52,8 @@ public class PlayerController : MonoBehaviour, IKillable
     private const int SizeArrayId = 2;  //nombre de ball du joueur
 
     private int ballRemaining = SizeArrayId;
-    private bool enabledPlayer = false;
+    private bool enabledPlayer = true;
+    private bool stopAction = false;
 
     #endregion
 
@@ -60,6 +61,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     private void OnEnable()
 	{
+        EventManager.StartListening(GameData.Event.GameOver, StopAction);
         InitPlayer();
 	}
 
@@ -68,6 +70,11 @@ public class PlayerController : MonoBehaviour, IKillable
     /// </summary>
     private void InitPlayer()
     {
+        enabledPlayer = true;
+        stopAction = false;
+        ropeScript.gameObject.SetActive(true);
+        ActiveFollower(true);
+
         //ici reset la liste si il n'y en a pas 2
         if (ballsList.Count != 2)
             ClearListBall();    //debug si il n'y a pas 2 emplacements vide pour les balls
@@ -75,7 +82,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
         ballRemaining = SizeArrayId;
         
-        initRope();
+        InitRope();
     }
 
     /// <summary>
@@ -102,7 +109,7 @@ public class PlayerController : MonoBehaviour, IKillable
         ballsList.Add(null);
     }
 
-    private void initRope()
+    private void InitRope()
     {
         ropeScript.InitObjects(ballsList[0].gameObject, ballsList[1].gameObject, Rope);
         ropeScript.InitPhysicRope();
@@ -175,7 +182,7 @@ public class PlayerController : MonoBehaviour, IKillable
     /// test si le link passé en paramettre est contenue dans la rope du player
     /// </summary>
     /// <param name="link">Link est l'objet link à tester</param>
-    public bool isContainingThisLink(GameObject link)
+    public bool IsContainingThisLink(GameObject link)
     {
         Line rope = link.transform.parent.GetComponent<Line>();
         if (!rope)
@@ -251,46 +258,15 @@ public class PlayerController : MonoBehaviour, IKillable
         }
     }
 
-    #endregion
-
-    #region Unity ending functions
     /// <summary>
-    /// input du joueur
+    /// active les bon followers
     /// </summary>
-    private void Update()
-	{
-        InputPlayer();
-    }
-
-	private void FixedUpdate()
-	{
-
-    }
-
-    /// <summary>
-    /// après les mouvements physique, set la position des followers
-    /// </summary>
-    private void LateUpdate()
+    private void ActiveFollower(bool active)
     {
-        ChangePosFollower();
-
-        /*if (!followersList[0].gameObject.activeInHierarchy
-            && !followersList[1].gameObject.activeInHierarchy)
-        {
-            Kill();
-        }*/
+        followersList[0].gameObject.SetActive(active);
+        followersList[1].gameObject.SetActive(active);
     }
 
-    /// <summary>
-    /// appelé lorsqu'une ball est en train de se faire détruire...
-    /// </summary>
-    /// <param name="ball"></param>
-    public void BallDestroyed(int ball)
-    {
-        Debug.Log("ball destroyed: " + ball);
-        if (ballRemaining <= 0)
-            Kill();
-    }
     /// <summary>
     /// est appelé pour voir si la dernière ball est en train d'être détruite...
     /// position de l'explosion...
@@ -302,8 +278,46 @@ public class PlayerController : MonoBehaviour, IKillable
         //s'il ne reste qu'une ball qui se fait actuellement détruire...
         if (ballRemaining <= 0)
         {
+            //rope.transform.SetParent(null);
+            //ropeScript.Kill();
+            Debug.Log("ici call kill & break");
+            Invoke("Kill", ropeScript.TimeToBecomeHarmLess + (ropeScript.RationRandom * (ropeScript.LinkCircular.Count + 1)));
             ropeScript.JustBreakUpLink(position);
         }
+    }
+
+    /// <summary>
+    /// stop les action du player...
+    /// </summary>
+    private void StopAction()
+    {
+        stopAction = true;
+        Debug.Log("stop action du joueur");
+    }
+
+    #endregion
+
+    #region Unity ending functions
+    /// <summary>
+    /// input du joueur
+    /// </summary>
+    private void Update()
+	{
+        if (!stopAction)
+            InputPlayer();
+    }
+
+    /// <summary>
+    /// après les mouvements physique, set la position des followers
+    /// </summary>
+    private void LateUpdate()
+    {
+        ChangePosFollower();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.GameOver, StopAction);
     }
 
     #endregion
@@ -327,8 +341,10 @@ public class PlayerController : MonoBehaviour, IKillable
             return;
 		Debug.Log ("Player dead !");
         enabledPlayer = false;
-        rope.transform.SetParent(null);
-        ropeScript.Kill();
-        Destroy(gameObject);
-	}
+        
+
+        Debug.Log("ici envoi du trigger...");
+        EventManager.TriggerEvent(GameData.Event.PlayerDeath, idPlayer);
+        gameObject.SetActive(false);
+    }
 }

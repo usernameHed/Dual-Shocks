@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using System.Collections;
 
 /// <summary>
 /// Manage camera
@@ -10,39 +12,49 @@ public class CameraController : MonoBehaviour
 {
     #region Attributes
 
-	// Time before next camera move
-    [SerializeField]
-	private float smoothTime = 0.2f;
+    // Time before next camera move
+    [FoldoutGroup("GamePlay"), Tooltip("Le smooth de la caméra"), SerializeField]
+    private float smoothTime = 0.2f;
 
-	[SerializeField]
-	private float minZoom = 4.0f;
+    [FoldoutGroup("GamePlay"), Tooltip("le zoom minimum de la camera"), SerializeField]
+    private float minZoom = 4.0f;
 
-	[SerializeField]
-	private float maxZoom = 15.0f;
+    [FoldoutGroup("GamePlay"), Tooltip("le zoom maximum de la camera (default)"), SerializeField]
+    private float maxZoom = 15.0f;
 
-	// Zoom applied with only one target
-	[SerializeField]
-	private float defaultZoom = 6.0f;
+    // Zoom applied with only one target
+    [FoldoutGroup("GamePlay"), Tooltip("Zoom appliqué lorsqu'il y a une seul target"), SerializeField]
+    private float defaultZoom = 6.0f;
 
-	// Target approximation threshold
-	[SerializeField]
-	private float focusThreshold = 0f;
+    // Target approximation threshold
+    [FoldoutGroup("GamePlay"), Tooltip("Approximation: la caméra est-elle sur sa cible ?"), SerializeField]
+    private float focusThreshold = 0f;
 
-	// Border margin before unzoom
-	[SerializeField]
-	private float borderMargin = 4f;
+    
+    [FoldoutGroup("GamePlay"), Tooltip("Border margin before unzoom"), SerializeField]
+    private float borderMargin = 4f;
 
-	//Fallback target if target list is empty
-	[SerializeField, Space(10)]
-	private Transform fallBackTarget;
-    [SerializeField, Space(10)]
+    //Fallback target if target list is empty
+    [FoldoutGroup("GamePlay"), Space(10), Tooltip("objet que la caméra doit focus s'il n'y a plus de target"), SerializeField]
+    private Transform fallBackTarget;
+
+    [FoldoutGroup("GamePlay"), Space(10), Tooltip("En combien de temps la caméra se décide à focus le fallBack lors du game over......"), SerializeField]
+    private float timeBeforeFallBack = 1f;
+
+    [FoldoutGroup("GamePlay"), Space(10), Tooltip("En combien de temps la caméra se décide à focus le fallBack lors du game over......"), SerializeField]
+    private float smoothTimeWhenFallBack = 1f;
+
+
+    [FoldoutGroup("GamePlay"), Space(10), Tooltip("position du listener dans la scene"), SerializeField]
     private Transform fmodListener;
 
     //Target list
-    [SerializeField, Space(10), Header("Debug")]
+    [FoldoutGroup("Debug"), Tooltip("list de target"), SerializeField]
 	private List<CameraTarget> targetList = new List<CameraTarget>();
+    [FoldoutGroup("Debug"), Tooltip("Des que c'est vrai, la camera focus la cameraTarget quand elle n'a plus de cible"), SerializeField]
+    private bool fallBack = false;
 
-	[SerializeField]
+    [SerializeField]
 	private FrequencyTimer updateTimer;
 
 	private Vector3 currentVelocity;
@@ -54,14 +66,46 @@ public class CameraController : MonoBehaviour
 	}
 
     private Vector3 posLisener;
+    private float holdSmooth = 0;
+
+    #endregion
+
+    #region Init
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.GameOver, GameOver);
+    }
+
+    private void Start()
+    {
+        InitCamera();
+    }
+
+    private void InitCamera()
+    {
+        posLisener = new Vector3(0, 0, 0);
+        if (holdSmooth == 0)
+            holdSmooth = smoothTime;
+        else
+            smoothTime = holdSmooth;
+    }
 
     #endregion
 
     #region Core
-
-    private void Start()
+    /// <summary>
+    /// fonction appelé lorsque la partie est fini
+    /// </summary>
+    private void GameOver()
     {
-        posLisener = new Vector3(0, 0, 0);
+        Invoke("FallBack", timeBeforeFallBack);
+    }
+
+    private void FallBack()
+    {
+        fallBack = true;
+        smoothTime = smoothTimeWhenFallBack;
+        Debug.Log("la camera bouge au fallback !");
     }
 
     /// <summary>
@@ -102,7 +146,7 @@ public class CameraController : MonoBehaviour
             if (!targetList[i])
                 targetList.RemoveAt(i);
         }
-        freezeCamera = (targetList.Count == 0 && !fallBackTarget);
+        SetFreez();
     }
 
     /// <summary>
@@ -168,7 +212,7 @@ public class CameraController : MonoBehaviour
         // If no targets, select fallback focus
         if (targetList.Count == 0)
         {
-            if (fallBackTarget)
+            if (fallBackTarget && fallBack)
             {
                 averagePos = fallBackTarget.position;
             }
@@ -204,12 +248,24 @@ public class CameraController : MonoBehaviour
 		return x > averageTargetPosition.x - focusThreshold && x < averageTargetPosition.x + focusThreshold && y > averageTargetPosition.y - focusThreshold && y < averageTargetPosition.y + focusThreshold;
     }
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////// Unity functions
+    /// <summary>
+    /// setup le freez de la camera...
+    /// </summary>
+    private void SetFreez()
+    {
+        freezeCamera = targetList.Count == 0 && ((fallBackTarget && !fallBack) || fallBackTarget == null);
+    }
 
+    #endregion
+
+    #region unity ending
     private void Update()
     {
-		freezeCamera = targetList.Count == 0 && fallBackTarget == null;
-        
+        //freezeCamera = targetList.Count == 0 && fallBackTarget == null;
+        SetFreez();
+
+        //if (targetList.Count == 0 && ((fallBackTarget && !fallBack) || fallBackTarget == null))
+        //  freezeCamera = true;
 
         if (updateTimer.Ready())
         {
@@ -246,5 +302,9 @@ public class CameraController : MonoBehaviour
         fmodListener.position = posLisener;
     }
 
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.GameOver, GameOver);
+    }
     #endregion
 }

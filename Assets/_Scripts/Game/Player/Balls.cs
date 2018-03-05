@@ -253,10 +253,12 @@ public class Balls : MonoBehaviour, IKillable
         if (!activated) //si la ball n'est pas activé, ne rien faire
             return;
 
-        if (other.tag == "Link")
+        Debug.Log("entering: " + other.name);
+
+        if (other.CompareTag("Link"))
         {
-            Line line = other.transform.parent.GetComponent<Line>();
-            if (line && line.PlayerControllerVariable != playerRef)
+            Link link = other.gameObject.GetComponent<Link>();
+            if (link && link.RopeScript && link.RopeScript != playerRef.RopeScript)
             {
                 Kill();
             }
@@ -290,7 +292,7 @@ public class Balls : MonoBehaviour, IKillable
     private void RealyDestroy()
     {
         Destroy(gameObject);
-        playerRef.BallDestroyed(IdBallPlayer);
+        //playerRef.BallDestroyed(IdBallPlayer);
     }
 
     [FoldoutGroup("Debug"), Button("Kill")]

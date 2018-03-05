@@ -9,30 +9,30 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1989275242273058}
+  m_RootGameObject: {fileID: 1461230878235836}
   m_IsPrefabParent: 1
---- !u!1 &1989275242273058
+--- !u!1 &1461230878235836
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4108228121169972}
-  - component: {fileID: 114255083976191310}
+  - component: {fileID: 4281824190501736}
+  - component: {fileID: 114444405226197814}
   m_Layer: 0
-  m_Name: ObjectsPooler
+  m_Name: ObjectPoolerLocal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4108228121169972
+--- !u!4 &4281824190501736
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1989275242273058}
+  m_GameObject: {fileID: 1461230878235836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,31 +40,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114255083976191310
+--- !u!114 &114444405226197814
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1989275242273058}
+  m_GameObject: {fileID: 1461230878235836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c6dbf5774bea124e8b6136842b04280, type: 3}
+  m_Script: {fileID: 11500000, guid: 48fccf9d0b405864caf9f83b135d502c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pools:
-  - tag: 0
-    prefab: {fileID: 1608521408533352, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
-    size: 125
-    shouldExpand: 1
-  - tag: 1
-    prefab: {fileID: 1608521408533352, guid: b63ff764ccd4b294e9150c926d65c7d6, type: 2}
-    size: 20
-    shouldExpand: 1
-  - tag: 2
-    prefab: {fileID: 1252393073312354, guid: d7b2624c26da00e4ea5aa8df057d08b2, type: 2}
-    size: 20
-    shouldExpand: 1
-  - tag: 3
-    prefab: {fileID: 1252393073312354, guid: e2f4d14e25f44924e82bb3a2dd52e2d1, type: 2}
-    size: 10
+  - tag: 4
+    prefab: {fileID: 1643204372404494, guid: 8ba0e978a7edf8844b12967c9704e2bc, type: 2}
+    size: 70
     shouldExpand: 1

@@ -5,7 +5,7 @@ using System;
 /// <summary>
 /// Link Description
 /// </summary>
-public class Link : MonoBehaviour
+public class Link : MonoBehaviour, IPooledObject
 {
     #region Attributes
     [FoldoutGroup("GamePlay"), Tooltip("Force de l'élastique"), SerializeField]
@@ -16,11 +16,6 @@ public class Link : MonoBehaviour
     private Rope rope;
     public Rope RopeScript { get { return (rope); } set { rope = value; } }
 
-    internal void AddComponent<T>()
-    {
-        throw new NotImplementedException();
-    }
-
     #endregion
 
     #region Initialization
@@ -28,7 +23,15 @@ public class Link : MonoBehaviour
     #endregion
 
     #region Core
-
+    /// <summary>
+    /// appelé lors du spawn du link !
+    /// </summary>
+    public void OnObjectSpawn()
+    {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<MeshRenderer>().enabled = true;
+        GetComponent<Collider>().enabled = true;
+    }
     #endregion
 
     #region Unity ending functions

@@ -10,8 +10,6 @@ using System;
 public class MenuManager : MonoBehaviour, ILevelManager
 {
     #region Attributes
-    [FoldoutGroup("GamePlay"), Tooltip("Debug"), SerializeField]
-    private string sceneToLoad = "2_Setup";
 
     [FoldoutGroup("Objects"), Tooltip("Debug"), SerializeField]
     private List<Button> buttonsMainMenu;

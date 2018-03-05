@@ -48,6 +48,7 @@ public abstract class Weapon : MonoBehaviour, IKillable
         orderWeapon = orderOfWeapon;
 
         display.transform.SetParent(playerRef.FollowersList[orderWeapon].transform);
+        display.transform.position = playerRef.FollowersList[orderWeapon].transform.position;
 
         InitParticularWeapon();    //initialise le weapon particulier
     }
