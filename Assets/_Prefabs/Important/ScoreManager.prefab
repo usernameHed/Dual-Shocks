@@ -54,4 +54,4 @@ MonoBehaviour:
   data:
     currentRound: 0
     scorePlayer: 00000000000000000000000000000000
-    maxRound: 3
+    maxRound: 9

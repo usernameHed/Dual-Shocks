@@ -129,11 +129,11 @@ public class PlayerControllerMenu : MonoBehaviour
     {
         for (int i = 0; i < ballsList.Count; i++)
         {
-            horizMove[i] = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis("Move Horizontal" + ((i == 0) ? "" : " Right") );
-            vertiMove[i] = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis("Move Vertical" + ((i == 0) ? "" : " Right"));
+            horizMove[i] = PlayerConnected.Instance.getPlayer(idPlayer).GetAxis("Move Horizontal" + ((i == 0) ? "" : " Right") );
+            vertiMove[i] = PlayerConnected.Instance.getPlayer(idPlayer).GetAxis("Move Vertical" + ((i == 0) ? "" : " Right"));
 
-            power1[i] = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetButtonDown( ((i == 0) ? "Left" : "Right") + "Trigger1");
-            power2[i] = PlayerConnected.GetSingleton.getPlayer(idPlayer).GetAxis( ((i == 0) ? "Left" : "Right") + "Trigger2");
+            power1[i] = PlayerConnected.Instance.getPlayer(idPlayer).GetButtonDown( ((i == 0) ? "Left" : "Right") + "Trigger1");
+            power2[i] = PlayerConnected.Instance.getPlayer(idPlayer).GetAxis( ((i == 0) ? "Left" : "Right") + "Trigger2");
 
             if (horizMove[i] != 0 || vertiMove[i] != 0)
                 hasMoved[i] = true;

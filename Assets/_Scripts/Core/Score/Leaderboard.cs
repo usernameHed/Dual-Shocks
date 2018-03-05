@@ -11,8 +11,10 @@ using Sirenix.OdinInspector;
 /// Leaderboard.GetSingleton.AddNewHighscore("Noob", 7);
 /// </summary>
 [ShowOdinSerializedPropertiesInInspector]
-public class Leaderboard : MonoBehaviour
+public class Leaderboard : ISingleton<Leaderboard>
 {
+    protected Leaderboard() { } // guarantee this will be always a singleton only - can't use the constructor!
+
     #region Attributes
     const string privateCode = "Zuy6exDtzECGsloaUcXDAQvaxU7J93vES2Aq8I-c2QPQ";
     const string publicCode = "5a5b77e939992b09e430621e";
@@ -21,30 +23,12 @@ public class Leaderboard : MonoBehaviour
     public Highscore[] highscoresList;
     public bool uploadedScore = false;
 
-    //private LeaderboardDisplay leaderboardDisplay;
-    private static Leaderboard instance;
-    public static Leaderboard GetSingleton
-    {
-        get { return instance; }
-    }
     #endregion
 
     #region Initialization
-    /// <summary>
-    /// test si on met le script en UNIQUE
-    /// </summary>
-    public void SetSingleton()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
 
     private void Awake()
     {
-        SetSingleton();
-
         DownloadHighscores();
     }
     
@@ -62,7 +46,7 @@ public class Leaderboard : MonoBehaviour
     /// </summary>
     public void AddNewHighscore(string username, int score)
     {
-        instance.StartCoroutine(instance.UploadNewHighscore(username, score));
+        Instance.StartCoroutine(Instance.UploadNewHighscore(username, score));
     }
 
     IEnumerator UploadNewHighscore(string username, int score)

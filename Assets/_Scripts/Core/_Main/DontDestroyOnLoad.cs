@@ -3,30 +3,18 @@
 /// <summary>
 /// DontDestroyOnLoad Description
 /// </summary>
-public class DontDestroyOnLoad : MonoBehaviour
+public class DontDestroyOnLoad : ISingleton<DontDestroyOnLoad>
 {
-    #region Attributes
+    protected DontDestroyOnLoad() { } // guarantee this will be always a singleton only - can't use the constructor!
 
-    private static DontDestroyOnLoad instance;
-    public static DontDestroyOnLoad GetSingleton
-    {
-        get { return instance; }
-    }
+    #region Attributes
 
     #endregion
 
     #region Initialization
-    public void SetSingleton()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
 
     private void Awake()
     {
-        SetSingleton();
         DontDestroyOnLoad(this);
     }
     #endregion

@@ -327,7 +327,7 @@ public class Balls : MonoBehaviour, IKillable
         renderBall.enabled = false;
 
         //créé un slowMotion
-        TimeManager.GetSingleton.DoSlowMothion();
+        TimeManager.Instance.DoSlowMothion();
 
         //play un son de destruction
         SoundManager.GetSingleton.playSound("Explode" + transform.GetInstanceID());

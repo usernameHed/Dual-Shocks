@@ -25,7 +25,7 @@ public class SetupManager : MonoBehaviour, ILevelManager
 
     private void Start()
     {
-        playerConnected = PlayerConnected.GetSingleton;
+        playerConnected = PlayerConnected.Instance;
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class SetupManager : MonoBehaviour, ILevelManager
     public void ChangePhase()
     {
         if (!playerConnected)
-            playerConnected = PlayerConnected.GetSingleton;
+            playerConnected = PlayerConnected.Instance;
 
         for (int i = 0; i < idPhaseConnexion.Length; i++)
         {
@@ -149,7 +149,7 @@ public class SetupManager : MonoBehaviour, ILevelManager
     {
         for (int i = 0; i < idPhaseConnexion.Length; i++)
         {
-            if (PlayerConnected.GetSingleton.getPlayer(i).GetButtonDown("FireA") && idPhaseConnexion[i] >= 1 && idPhaseConnexion[i] < 4)
+            if (PlayerConnected.Instance.getPlayer(i).GetButtonDown("FireA") && idPhaseConnexion[i] >= 1 && idPhaseConnexion[i] < 4)
             {
                 idPhaseConnexion[i] += 1;
 
@@ -163,9 +163,9 @@ public class SetupManager : MonoBehaviour, ILevelManager
                 ChangePhase();
             }
             if (    (
-                    PlayerConnected.GetSingleton.getPlayer(i).GetButtonDown("FireB")
+                    PlayerConnected.Instance.getPlayer(i).GetButtonDown("FireB")
                         ||
-                    (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.GetSingleton.getNbPlayer() == 1)
+                    (PlayerConnected.Instance.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.Instance.getNbPlayer() == 1)
                     )
                         && idPhaseConnexion[i] > 0)
             {
@@ -180,9 +180,9 @@ public class SetupManager : MonoBehaviour, ILevelManager
         //Si: on appui sur echape et qu'il y a 2+ player de connecté, on quit
         //SI: on appui sur echap, qu'il n'y a qu'un joueur (clavier), et qu'il est en phase 0, 1, on quit
         //SI: n'importe qui appuis sur Back avec le gamepad, on quit.
-        if ((PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.GetSingleton.getNbPlayer() > 1)
-            || (PlayerConnected.GetSingleton.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.GetSingleton.getNbPlayer() == 1 && idPhaseConnexion[0] <= 1)
-            || PlayerConnected.GetSingleton.getButtonDownFromAnyGamePad("Back"))
+        if ((PlayerConnected.Instance.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.Instance.getNbPlayer() > 1)
+            || (PlayerConnected.Instance.getPlayer(-1).GetButtonDown("Escape") && PlayerConnected.Instance.getNbPlayer() == 1 && idPhaseConnexion[0] <= 1)
+            || PlayerConnected.Instance.getButtonDownFromAnyGamePad("Back"))
         {
             Quit();
         }

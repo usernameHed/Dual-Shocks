@@ -4,8 +4,10 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// TimeManager Description
 /// </summary>
-public class TimeManager : MonoBehaviour
+public class TimeManager : ISingleton<TimeManager>
 {
+    protected TimeManager() { } // guarantee this will be always a singleton only - can't use the constructor!
+
     #region Attributes
     [FoldoutGroup("GamePlay"), Tooltip("slowDonwFactor"), SerializeField]
     private float slowDonwFactor = 0.05f;             //le type de ball (bleu, red...)
@@ -14,29 +16,9 @@ public class TimeManager : MonoBehaviour
 
     private static float originalFixedDeltaTime;
 
-    private static TimeManager instance;
-    public static TimeManager GetSingleton
-    {
-        get { return instance; }
-    }
     #endregion
 
     #region Initialization
-    /// <summary>
-    /// test si on met le script en UNIQUE
-    /// </summary>
-    public void SetSingleton()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
-
-    private void Awake()
-    {
-        SetSingleton();
-    }
 
     private void Start()
     {
