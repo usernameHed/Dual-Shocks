@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 114213270439083154}
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   EditorEvents:
   - {fileID: 114319511154578158}
   - {fileID: 114022968047004624}
@@ -28,9 +28,9 @@ MonoBehaviour:
   - {fileID: 114559486882426758}
   - {fileID: 114620880523928852}
   - {fileID: 114006163182152486}
-  MasterBankRef: {fileID: 114901043945066566}
+  MasterBankRef: {fileID: 114988923398986042}
   StringsBankRef: {fileID: 114213270439083154}
-  stringsBankWriteTime: 636555190350000000
+  stringsBankWriteTime: 636544700126671787
   cacheVersion: 2
 --- !u!114 &114006163182152486
 MonoBehaviour:
@@ -46,7 +46,7 @@ MonoBehaviour:
   Path: event:/SFX/ShockWave
   guid: 5a228e829fa73f4fb0b20c036ff0e817
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -102,7 +102,7 @@ MonoBehaviour:
   Path: event:/SFX/Fire
   guid: d1cfbac4abf08e47bc95f090ee924070
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 1
   Is3D: 1
   IsOneShot: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   Path: event:/SFX/SpiksOff
   guid: d66650871eb3e144ac74fd7c191176b1
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -251,6 +251,21 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 387
+--- !u!114 &114175508265700638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: EndLoop
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114177942385958016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,8 +298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Path: Assets/StreamingAssets/ReadyToGo/Build/Desktop/Master Bank.strings.bank
-  lastModified: 636555190350000000
+  Path: Assets/StreamingAssets/ReadyToGo\Build\Desktop\Master Bank.strings.bank
+  lastModified: 636544700126671787
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -390,7 +405,7 @@ MonoBehaviour:
   Path: event:/SFX/Jump
   guid: 8fcb095d85f7374ab61919903f43719b
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -412,7 +427,7 @@ MonoBehaviour:
   Path: event:/SFX/Bonus
   guid: 22591e1ccdf83a409d68151e1bf7b49e
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -566,7 +581,7 @@ MonoBehaviour:
   Path: event:/SFX/Swouch
   guid: c5dcb96d2a76f14593766089b67cca2a
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -588,7 +603,7 @@ MonoBehaviour:
   Path: event:/SFX/SpiksOn
   guid: 85dc08524e727942a614f8bb37443583
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -668,7 +683,7 @@ MonoBehaviour:
   Path: event:/Music/BackgroundMusic
   guid: f0ddf0f136ac5048847a7e2e373f0eb1
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -709,12 +724,12 @@ MonoBehaviour:
   Path: event:/SFX/Thrower
   guid: acc2c7f89304724f8ec0cbc324080fa6
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 1
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 114016370348598406}
+  - {fileID: 114175508265700638}
   MinDistance: 1
   MaxDistance: 20
   Length: 5806
@@ -753,7 +768,7 @@ MonoBehaviour:
   Path: event:/SFX/Menu Clic
   guid: 2ba6eb071db993488fffb2dd65561e37
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -775,7 +790,7 @@ MonoBehaviour:
   Path: event:/SFX/Swouch2
   guid: 75dcac2a686b3940ac1358dc7998071c
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -840,7 +855,7 @@ MonoBehaviour:
   Path: event:/SFX/Bounce
   guid: 12e9e75fd93d6346945c2185fd872506
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -945,7 +960,7 @@ MonoBehaviour:
   Path: event:/SFX/Explode
   guid: 2e1544250c351d48af656c102717367d
   Banks:
-  - {fileID: 114901043945066566}
+  - {fileID: 114988923398986042}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1011,4 +1026,23 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 1413408
+  Exists: 1
+--- !u!114 &114988923398986042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: D:\Cloud\WORK\JMIN\GIT\Dual Shocks\Assets\StreamingAssets\ReadyToGo\Build\Desktop\Master
+    Bank.bank
+  lastModified: 636544700126656822
+  LoadResult: 0
+  FileSizes:
+  - Name: Desktop
+    Value: 1738848
   Exists: 1

@@ -104,6 +104,7 @@ public class CameraController : MonoBehaviour
     private void FallBack()
     {
         fallBack = true;
+        ClearTarget();
         smoothTime = smoothTimeWhenFallBack;
         Debug.Log("la camera bouge au fallback !");
     }

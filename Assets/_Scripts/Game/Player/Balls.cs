@@ -253,8 +253,6 @@ public class Balls : MonoBehaviour, IKillable
         if (!activated) //si la ball n'est pas activé, ne rien faire
             return;
 
-        Debug.Log("entering: " + other.name);
-
         if (other.CompareTag("Link"))
         {
             Link link = other.gameObject.GetComponent<Link>();

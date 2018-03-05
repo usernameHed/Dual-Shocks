@@ -15,18 +15,33 @@ public class ClampToCamera : MonoBehaviour
     [Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
+    private bool enabledScript = true;
+
     #endregion
 
     #region Initialization
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.GameOver, StopAction);
+    }
 
     private void Awake()
     {
+        enabledScript = true;
         updateTimer.InitFrequency();
         updateTimer.Ready();
     }
     #endregion
 
     #region Core
+    /// <summary>
+    /// stop les action du player...
+    /// </summary>
+    private void StopAction()
+    {
+        enabledScript = false;
+        Debug.Log("stop action du joueur");
+    }
     /// <summary>
     /// clamp la position du player dans la caméra !
     /// </summary>
@@ -43,8 +58,13 @@ public class ClampToCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (updateTimer.Ready())
+        if (updateTimer.Ready() && enabledScript)
             ClampPlayer();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.GameOver, StopAction);
     }
 
     #endregion
