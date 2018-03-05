@@ -273,6 +273,27 @@ public class Rope : MonoBehaviour, IKillable
     }
 
     /// <summary>
+    /// à noter qu'il ne sagit pas de l'index dans le tableau, mais l'index noté dans le script Link.
+    /// </summary>
+    /// <param name="index"></param>
+    public void DeleteLink(int index)
+    {
+        for (int i = 0; i < listCircular.Count; i++)
+        {
+            if (!listCircular[i].Value)
+                continue;
+            Link link = listCircular[i].Value.GetComponent<Link>();
+            if (link && link.IdFromRope == index)
+            {
+                listCircular.Remove(link.gameObject);
+                ChangeThisPring(i - 1);
+                link.Kill();
+                return;
+            }
+        }
+    }
+
+    /// <summary>
     /// clear la list des joints (et supprime les objets dedant)
     /// </summary>
     public void ClearJoints()
@@ -283,8 +304,7 @@ public class Rope : MonoBehaviour, IKillable
             GameObject linkTmp = listCircular[i].Value;
             if (!linkTmp || !linkTmp.GetComponent<Link>())
                 continue;
-            linkTmp.transform.SetParent(ObjectsPooler.Instance.transform);
-            linkTmp.SetActive(false);
+            linkTmp.GetComponent<Link>().Kill();
         }
         listCircular.Clear();
     }
@@ -384,7 +404,7 @@ public class Rope : MonoBehaviour, IKillable
     private void CreateFakeListForDebug()
     {
         Debug.Log("ici reset... PLUS !");
-        return;
+        //return;
         listDebug.Clear();
         for (int i = 0; i < listCircular.Count; i++)
         {

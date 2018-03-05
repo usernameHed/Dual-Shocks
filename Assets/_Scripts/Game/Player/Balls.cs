@@ -263,6 +263,7 @@ public class Balls : MonoBehaviour, IKillable
             Link link = other.gameObject.GetComponent<Link>();
             if (link && link.RopeScript && link.RopeScript != playerRef.RopeScript)
             {
+                link.TryToKill();
                 Kill();
             }
         }
