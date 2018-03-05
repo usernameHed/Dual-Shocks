@@ -103,10 +103,7 @@ public class Rope : MonoBehaviour, IKillable
         ClearJoints();  //clear les joints précédents
 
         //cree un sprintjoint sur la première ball si il n'y en a pas déja
-        if (!objectToConnect[0].GetComponent<SpringJoint>())
-            objectToConnect[0].AddComponent<SpringJoint>();
-
-        //linkList.Add(objectToConnect[0]); //ajoute la première balle (premier joint)
+        objectToConnect[0].transform.GetOrAddComponent<SpringJoint>();
         listCircular.AddLast(objectToConnect[0]);
 
         //cree les balls intermédiaire à la bonne position par rapport aux 2 balls
@@ -132,10 +129,7 @@ public class Rope : MonoBehaviour, IKillable
             listCircular.AddLast(newLink);
         }
         //détruit le springJoint de la dernière ball si il y a
-        if (objectToConnect[1].GetComponent<SpringJoint>())
-            Destroy(objectToConnect[1].GetComponent<SpringJoint>());
-
-
+        objectToConnect[1].transform.DestroyComponent<SpringJoint>();
         listCircular.AddLast(objectToConnect[1]);
 
         //connecte tout les liens ensemble avec des springs joints;
@@ -155,9 +149,7 @@ public class Rope : MonoBehaviour, IKillable
         linkScript.RopeScript = this;
         linkScript.IdFromRope = index;
 
-        if (!newLink.GetComponent<SpringJoint>())
-            newLink.AddComponent<SpringJoint>();
-
+        newLink.transform.GetOrAddComponent<SpringJoint>();
     }
 
     /// <summary>
@@ -186,13 +178,12 @@ public class Rope : MonoBehaviour, IKillable
             if (!listCircular[i].Value)
                 continue;
 
-            if (listCircular[i].Value.GetComponent<SpringJoint>())
-                Destroy(listCircular[i].Value.GetComponent<SpringJoint>());
+            listCircular[i].Value.transform.DestroyComponent<SpringJoint>();
+
             if (listCircular[i].Value)
             {
                 Rigidbody rbLink = listCircular[i].Value.GetComponent<Rigidbody>();
                 rbLink.drag = dragWhenExplode;
-                //Vector3 dir = (positionBallExploded - rbLink.transform.position);
                 rbLink.AddForce(rbLink.velocity * forceWhenExplode, ForceMode.Impulse);
             }
         }
@@ -227,8 +218,6 @@ public class Rope : MonoBehaviour, IKillable
             GameObject desactiveLink = ObjectsPoolerLocal.GetSingleton.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPoolerLocal.GetSingleton.transform);
             link.GetComponent<MeshRenderer>().enabled = false;
             link.GetComponent<Collider>().enabled = false;
-            //GameObject bubble = ObjectsPooler.GetSingleton.SpawnFromPool("Bubble", link.transform.position, Quaternion.identity, GameManager.GetSingleton.SceneManagerLocal.transform);
-
         }
 
         Kill(); //détruit la rope !
@@ -253,10 +242,7 @@ public class Rope : MonoBehaviour, IKillable
 
 
         GameObject newLink = ObjectsPooler.GetSingleton.SpawnFromPool(GameData.Prefabs.Link, closestLink.transform.position, Quaternion.identity, parentLink);
-        SpringJoint jointLink = newLink.GetComponent<SpringJoint>();
-        if (!jointLink)
-            newLink.AddComponent<SpringJoint>();
-
+        SpringJoint jointLink = newLink.transform.GetOrAddComponent<SpringJoint>();
 
         ChangeMeshRenrered(newLink.GetComponent<MeshRenderer>());
 
@@ -279,13 +265,8 @@ public class Rope : MonoBehaviour, IKillable
             SetupLink(newLink, index - 0);
             ChangeThisPring(index - 1);
             ChangeThisPring(index - 0);
-            
         }
-
-
-
         ChangeParamJointWhenAdding();
-
         CreateFakeListForDebug();
     }
 
@@ -297,12 +278,10 @@ public class Rope : MonoBehaviour, IKillable
         for (int i = 0; i < listCircular.Count; i++)
         {
             GameObject linkTmp = listCircular[i].Value;
-            if (!linkTmp /*|| linkList[i].GetComponent<Balls>()*/ || !linkTmp.CompareTag("Link"))
+            if (!linkTmp || !linkTmp.GetComponent<Link>())
                 continue;
             linkTmp.transform.SetParent(ObjectsPooler.GetSingleton.transform);
             linkTmp.SetActive(false);
-//Destroy(linkTmp);
-            //Destroy(linkList[i]);
         }
         listCircular.Clear();
     }
@@ -366,7 +345,11 @@ public class Rope : MonoBehaviour, IKillable
         SpringJoint joint = listCircular[index].Value.GetComponent<SpringJoint>();
 
         if (!linkBody || !next || !joint)
+        {
+            Debug.Log("problèem ici ??");
             return;
+        }
+            
         joint.connectedBody = next;
 
         linkBody.mass = massLink[0];

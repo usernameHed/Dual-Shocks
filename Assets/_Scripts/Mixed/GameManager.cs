@@ -176,7 +176,7 @@ public class GameManager : SerializedMonoBehaviour
         //optimisation des fps
         if (updateTimer.Ready())
         {
-
+            
         }
     }
 

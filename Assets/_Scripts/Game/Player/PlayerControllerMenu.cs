@@ -210,8 +210,8 @@ public class PlayerControllerMenu : MonoBehaviour
                 Vector3 pos = ballsList[i].transform.position;
                 pos.x = Mathf.Clamp(pos.x, initialPos[i].x - clampDistance, initialPos[i].x + clampDistance);
                 pos.y = Mathf.Clamp(pos.y, initialPos[i].y - clampDistance, initialPos[i].y + clampDistance);
-                
-                ballsList[i].transform.position = pos;
+                ballsList[i].transform.SetXY(pos.x, pos.y);
+                //ballsList[i].transform.position = pos;
             }
 
         }

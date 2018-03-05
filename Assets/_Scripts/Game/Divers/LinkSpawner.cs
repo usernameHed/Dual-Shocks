@@ -39,10 +39,11 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
         }
         else if (other.CompareTag("Link"))
         {
+            Rope rope = other.gameObject.GetComponentInParents<Rope>();
             Link linkScript = other.GetComponent<Link>();
-            if (linkScript)
+            if (rope && linkScript)
             {
-                linkScript.RopeScript.AddLink(linkScript.IdFromRope);
+                rope.AddLink(linkScript.IdFromRope);
             }
         }
     }

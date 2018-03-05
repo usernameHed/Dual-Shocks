@@ -107,10 +107,5 @@ public static class UtilityFunctions
         //ici on est pas dans l'angle...
         return (false);
     }
-
-    //setup un layerMask en enlevant certain layer...
-    //int layerMask = ~((1 << LayerMask.NameToLayer("Walls")) | (1 << LayerMask.NameToLayer("Lock")) | (1 << LayerMask.NameToLayer("Ignore Raycast")) );
-
-    //new Color(255 / 255.0f, 4 / 255.0f, 4 / 255.0f, 255 / 255.0f);
     #endregion
 }

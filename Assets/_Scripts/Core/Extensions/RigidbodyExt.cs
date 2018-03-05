@@ -18,10 +18,20 @@ public static class RigidbodyExt
 		body.AddForce(accel, forceMode);
 	}
 
-	/// <summary>
-	/// Return kinectic energy of a body
-	/// </summary>
-	public static float KineticEnergy(this Rigidbody rb)
+    /// <summary>
+    /// Changes the direction of a rigidbody without changing its speed.
+    /// </summary>
+    /// <param name="rigidbody">Rigidbody.</param>
+    /// <param name="direction">New direction.</param>
+    public static void ChangeDirection(this Rigidbody rigidbody, Vector3 direction)
+    {
+        rigidbody.velocity = direction * rigidbody.velocity.magnitude;
+    }
+
+    /// <summary>
+    /// Return kinectic energy of a body
+    /// </summary>
+    public static float KineticEnergy(this Rigidbody rb)
 	{
 		// mass in kg
 		// velocity in meters per second

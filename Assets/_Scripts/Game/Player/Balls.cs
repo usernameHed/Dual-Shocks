@@ -248,6 +248,11 @@ public class Balls : MonoBehaviour, IKillable
         playerRef.RopeScript.AddLinkFromExtremity(idBallPlayer);
     }
 
+    public Rope GetRope()
+    {
+        return (playerRef.RopeScript);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!activated) //si la ball n'est pas activé, ne rien faire
