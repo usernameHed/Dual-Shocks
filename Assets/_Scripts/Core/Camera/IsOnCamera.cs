@@ -16,11 +16,14 @@ public class IsOnCamera : MonoBehaviour
 
 	public bool isOnScreen = false;
 	private Renderer objectRenderer;
+    private Camera cam;
 
-	#region Initialization
-	private void Awake()
+
+    #region Initialization
+    private void Awake()
 	{
-		objectRenderer = GetComponent<Renderer> ();
+        cam = Camera.main;
+        objectRenderer = GetComponent<Renderer> ();
 	}
 	#endregion
 
@@ -31,13 +34,13 @@ public class IsOnCamera : MonoBehaviour
 	/// <summary>
 	bool CheckOnCamera()
 	{
-		if (!Camera.main)
+		if (!cam)
 		{
 			return false;
 		}
 
-		Vector3 bottomCorner = Camera.main.WorldToViewportPoint(gameObject.transform.position - objectRenderer.bounds.extents);
-		Vector3 topCorner = Camera.main.WorldToViewportPoint(gameObject.transform.position + objectRenderer.bounds.extents);
+		Vector3 bottomCorner = cam.WorldToViewportPoint(gameObject.transform.position - objectRenderer.bounds.extents);
+		Vector3 topCorner = cam.WorldToViewportPoint(gameObject.transform.position + objectRenderer.bounds.extents);
 
 		return topCorner.x >= -xMargin && bottomCorner.x <= 1 + xMargin && topCorner.y >= -yMargin && bottomCorner.y <= 1 + yMargin;
 	}

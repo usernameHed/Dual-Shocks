@@ -13,6 +13,7 @@ public class CameraTarget : MonoBehaviour
 	[SerializeField]
 	private bool onDisableRemove = true;
 
+    [SerializeField]
     private CameraController cameraController;
 
     #endregion
@@ -28,7 +29,7 @@ public class CameraTarget : MonoBehaviour
 
     public void AddTarget()
 	{
-		Camera.main.gameObject.GetComponent<CameraController> ().AddTarget (this);
+        cameraController.AddTarget (this);
 	}
 
 	public void RemoveTarget()

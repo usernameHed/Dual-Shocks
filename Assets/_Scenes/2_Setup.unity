@@ -4408,20 +4408,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad:
-  - scene: 3_Game
-    loadAtStart: 1
-    loadAfterXSecond: 0
-    fade: 1
-    fadeTime: 1.5
-    additive: 0
-    swapWhenLoaded: 0
-  - scene: 1_Menu
+  - active: 1
+    scene: 3_Game
     loadAtStart: 0
     loadAfterXSecond: 0
     fade: 1
     fadeTime: 1.5
     additive: 0
     swapWhenLoaded: 0
+    sceneToChargeAfterAdditive: 
+  - active: 1
+    scene: 1_Menu
+    loadAtStart: 0
+    loadAfterXSecond: 0
+    fade: 1
+    fadeTime: 1.5
+    additive: 0
+    swapWhenLoaded: 0
+    sceneToChargeAfterAdditive: 
+  - active: 1
+    scene: Level 1
+    loadAtStart: 1
+    loadAfterXSecond: 2
+    fade: 0
+    fadeTime: 0
+    additive: 1
+    swapWhenLoaded: 1
+    sceneToChargeAfterAdditive: 3_Game
   levelMangerInterfacce: {fileID: 1585036263}
 --- !u!1 &1283627846
 GameObject:

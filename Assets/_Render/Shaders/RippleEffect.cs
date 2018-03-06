@@ -32,6 +32,7 @@ public class RippleEffect : MonoBehaviour
 
     public float dropInterval = 0.5f;
 
+    [SerializeField]
     private Camera cam;
 
     [SerializeField]
@@ -72,9 +73,6 @@ public class RippleEffect : MonoBehaviour
 
     void UpdateShaderParameters()
     {
-        if (!cam)
-            cam = Camera.main;
-
         material.SetVector("_Drop1", droplets[0].MakeShaderParameter(cam.aspect));
         material.SetVector("_Drop2", droplets[1].MakeShaderParameter(cam.aspect));
         material.SetVector("_Drop3", droplets[2].MakeShaderParameter(cam.aspect));
@@ -86,7 +84,6 @@ public class RippleEffect : MonoBehaviour
 
     void Awake()
     {
-        cam = Camera.main;
         /*if (goToCamera)
         {
             RippleEffect ripple = cam.gameObject.AddComponent(typeof(RippleEffect)) as RippleEffect;

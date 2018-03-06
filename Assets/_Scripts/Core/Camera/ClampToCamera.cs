@@ -15,6 +15,7 @@ public class ClampToCamera : MonoBehaviour
     [Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
 
+    private Camera cam;
     private bool enabledScript = true;
 
     #endregion
@@ -27,6 +28,7 @@ public class ClampToCamera : MonoBehaviour
 
     private void Awake()
     {
+        cam = Camera.main;
         enabledScript = true;
         updateTimer.InitFrequency();
         updateTimer.Ready();
@@ -47,10 +49,10 @@ public class ClampToCamera : MonoBehaviour
     /// </summary>
     private void ClampPlayer()
     {
-        Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        Vector3 pos = cam.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp(pos.x, borderMin, borderMax);
         pos.y = Mathf.Clamp(pos.y, borderMin, borderMax);
-        transform.position = Camera.main.ViewportToWorldPoint(pos);
+        transform.position = cam.ViewportToWorldPoint(pos);
     }
     #endregion
 

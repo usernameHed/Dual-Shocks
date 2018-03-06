@@ -20,7 +20,7 @@ public class DataEventManager
 /// </summary>
 public class EventManager : ISingleton<EventManager>
 {
-    //protected EventManager() { } // guarantee this will be always a singleton only - can't use the constructor!
+    protected EventManager() { } // guarantee this will be always a singleton only - can't use the constructor!
 
     #region Attributes
 
@@ -37,28 +37,6 @@ public class EventManager : ISingleton<EventManager>
     private Dictionary<GameData.Event, UnityEventBoolInt> eventDictionaryBoolInt;
     private Dictionary<GameData.Event, UnityEventData> eventDictionaryData;
 
-    /*private static EventManager instance;
-    public static EventManager Instance
-    {
-        get
-        {
-            if (!instance)
-            {
-                instance = FindObjectOfType(typeof(EventManager)) as EventManager;
-
-                if (!instance)
-                {
-                    Debug.LogError("There needs to be one active EventManger script on a GameObject in your scene.");
-                }
-                else
-                {
-                    instance.Init();
-                }
-            }
-
-            return instance;
-        }
-    }*/
     #endregion
 
     #region Initialization

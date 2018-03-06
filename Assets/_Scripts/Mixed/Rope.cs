@@ -209,15 +209,17 @@ public class Rope : MonoBehaviour, IKillable
         for (int i = 0; i < deck.Length; i++)
         {
             yield return new WaitForSeconds(rationRandom);
-            
+
             //get le link du deck random
+            if (deck[i] >= listCircular.Count || deck[i] < 0)
+                continue;
             GameObject link = listCircular[deck[i]].Value;
 
             if (!link)
                 continue;
 
             //créé un effet de particule
-            GameObject desactiveLink = ObjectsPoolerLocal.Instance.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPoolerLocal.Instance.transform);
+            GameObject desactiveLink = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
             link.GetComponent<MeshRenderer>().enabled = false;
             link.GetComponent<Collider>().enabled = false;
         }

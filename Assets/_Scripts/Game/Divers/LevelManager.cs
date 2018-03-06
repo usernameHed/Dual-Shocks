@@ -44,6 +44,8 @@ public class LevelManager : MonoBehaviour, ILevelManager
     /// </summary>
     public void InitScene()
     {
+        LevelDesign.GetSingleton.InitLevelDesign(); //init le level design !!
+
         EventManager.TriggerEvent(GameData.Event.RoundStart);
 
         Debug.Log("ici reset les scores... (seulement quand on fait un nouveau round ??)");
@@ -142,13 +144,15 @@ public class LevelManager : MonoBehaviour, ILevelManager
         if (!coolDownRestart.Ready())
             return;
 
-        GameManager.GetSingleton.RestartGame(true);
-        GameManager.GetSingleton.SceneManagerLocal.PlayNext();
+        Debug.Log("Ici on ne restart plus la scene comme ça...");
+        //GameManager.GetSingleton.RestartGame(true);
+        //GameManager.GetSingleton.SceneManagerLocal.PlayNext();
     }
 
     [Button("Quit")]
     public void Quit()
     {
+        LevelDesign.GetSingleton.DesactiveScene(); //desactive le level design !!
         GameManager.GetSingleton.SceneManagerLocal.PlayPrevious();
     }
 

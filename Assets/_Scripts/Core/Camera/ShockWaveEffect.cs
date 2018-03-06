@@ -15,16 +15,22 @@ public class ShockWaveEffect : MonoBehaviour
     private GameObject mainCamObject;
 
     private List<RippleEffect> rippleList = new List<RippleEffect>();
-    
+    private Camera cam;
+
     #endregion
 
     #region Initialization
+
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
 
     private void Start()
     {
         if (!mainCamObject)
         {
-            mainCamObject = Camera.main.gameObject;
+            mainCamObject = cam.gameObject;
         }
         SetupRipple();
     }
@@ -45,7 +51,6 @@ public class ShockWaveEffect : MonoBehaviour
     /// </summary>
     public void CreateWave(Transform pos, int id = 0)
     {
-        Camera cam = Camera.main;
         Vector2 ViewportPosition = cam.WorldToViewportPoint(pos.position);
         CreateWave(ViewportPosition, id);
     }

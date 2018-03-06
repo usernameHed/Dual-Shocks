@@ -36,6 +36,7 @@ public class ISingleton<T> : MonoBehaviour where T : MonoBehaviour
                         Debug.LogError("[Singleton] Something went really wrong " +
                             " - there should never be more than 1 singleton!" +
                             " Reopening the scene might fix it.");
+                        
                         return _instance;
                     }
 
@@ -60,6 +61,10 @@ public class ISingleton<T> : MonoBehaviour where T : MonoBehaviour
 
                 return _instance;
             }
+        }
+        set
+        {
+            _instance = value;
         }
     }
 

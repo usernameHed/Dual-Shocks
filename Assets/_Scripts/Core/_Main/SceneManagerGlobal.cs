@@ -16,6 +16,7 @@ public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
         public AsyncOperation async;
         public bool isAdditive;
         public bool swapWhenFinishUpload;
+        public string sceneToChargeAfterAdditive;
     }
 
     private List<SceneCharging> sceneCharging = new List<SceneCharging>();
@@ -37,7 +38,7 @@ public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
     /// <param name="scene">nom de la scène</param>
     /// <param name="swapWhenLoaded">est-ce qu'on change de scène dès qu'elle fini de charger ?</param>
     /// <param name="additive">est-ce qu'on ajoute la scène en additif ou pas ??</param>
-    public void StartLoading(string scene, bool swapWhenLoaded = true, bool additive = false, bool fade = false, float speedFade = 1.0f)
+    public void StartLoading(string scene, bool swapWhenLoaded = true, bool additive = false, bool fade = false, float speedFade = 1.0f, string sceneToChargeAfterAdditive = "")
     {
         
 
@@ -55,6 +56,7 @@ public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
         sceneToCharge.isAdditive = additive;
         sceneToCharge.swapWhenFinishUpload = swapWhenLoaded;
         sceneToCharge.async.allowSceneActivation = sceneToCharge.swapWhenFinishUpload;
+        sceneToCharge.sceneToChargeAfterAdditive = sceneToChargeAfterAdditive;
 
         //ajoute la scène à charger...
         sceneCharging.Add(sceneToCharge);
@@ -105,11 +107,24 @@ public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
         Debug.Log("ici active normalement...");
 
         sceneCharging[index].async.allowSceneActivation = true;
+
+        string newScene = (sceneCharging[index].isAdditive) ? sceneCharging[index].sceneToChargeAfterAdditive : "";
+
         sceneCharging.RemoveAt(index);
+
+        if (newScene != "")
+            FindWitchOneToLoadAfterAdditive(newScene);
     }
     //relance l'essai d'activation
     private IEnumerator WaitForActivateScene(int index, float time) { yield return new WaitForSeconds(time); ActivateScene(index, true, time);  }
 
+
+    private void FindWitchOneToLoadAfterAdditive(string sceneToChargeAfterAdditive)
+    {
+        Debug.Log("findAfterAdditive;.." + sceneToChargeAfterAdditive);
+        SceneManagerLocal local = GameManager.GetSingleton.SceneManagerLocal;
+        local.StartLoading(sceneToChargeAfterAdditive);
+    }
 
     /// <summary>
     /// Ici Lance la scène [index] Dès qu'elle est chargé ! Qu'elle soit asyncro ou pas !

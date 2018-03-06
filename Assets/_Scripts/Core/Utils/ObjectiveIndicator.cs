@@ -123,7 +123,7 @@ public class ObjectiveIndicator : MonoBehaviour
 
     private CanvasGroup cg;
 
-
+    private Camera camMain;
 
 
 
@@ -135,9 +135,10 @@ public class ObjectiveIndicator : MonoBehaviour
     void Awake()
     {
         _trans = transform;
+        camMain = Camera.main;
 
         if (usedCamera == null)
-            usedCamera = Camera.main;
+            usedCamera = camMain;
     }
 
     void OnEnable()
@@ -151,9 +152,9 @@ public class ObjectiveIndicator : MonoBehaviour
 
     void Start()
     {
-        if (!Camera.main)
+        if (!camMain)
             return;
-        cc = Camera.main.transform.gameObject.GetComponent<CameraController>();
+        cc = camMain.transform.gameObject.GetComponent<CameraController>();
 
         if (usedCanvas == null)
         {
@@ -483,7 +484,7 @@ public class ObjectiveIndicator : MonoBehaviour
         else
             horizPerc = (horizAngle + horizFov * 0.5f) / horizFov;
 
-        Vector3 screenPoint = Camera.main.WorldToScreenPoint(_trans.position);
+        Vector3 screenPoint = camMain.WorldToScreenPoint(_trans.position);
         // Debug.Log("screenpoint" + screenPoint);
         if (screenPoint.x > 0 && screenPoint.x < usedCamera.pixelWidth)
         {
@@ -647,7 +648,7 @@ public class ObjectiveIndicator : MonoBehaviour
         Vector3 tmpDesiredPos = cc.TargetPosition;
         tmpDesiredPos.z = 0.0f;
         Vector3 v3Pos;
-        v3Pos = Camera.main.WorldToScreenPoint(tmpDesiredPos);
+        v3Pos = camMain.WorldToScreenPoint(tmpDesiredPos);
         v3Pos = linkedImageTrans.transform.position - v3Pos;
         angle = Mathf.Atan2(v3Pos.y, v3Pos.x) * Mathf.Rad2Deg;
         angle += 90.0f;

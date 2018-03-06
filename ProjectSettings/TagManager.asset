@@ -9,6 +9,8 @@ TagManager:
   - BallColliderLink
   - DeathBulletEnemy
   - Bonus
+  - Score
+  - LevelDesign
   layers:
   - Default
   - TransparentFX

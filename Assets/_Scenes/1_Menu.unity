@@ -3863,7 +3863,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad:
-  - scene: 2_Setup
+  - active: 1
+    scene: 2_Setup
     loadAtStart: 1
     loadAfterXSecond: 0
     fade: 1

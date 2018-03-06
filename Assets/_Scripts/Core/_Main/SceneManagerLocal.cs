@@ -13,10 +13,12 @@ public class SceneManagerLocal : MonoBehaviour
 {
     //[SerializeField]
     [Serializable]
-    private struct SceneInfo
+    public struct SceneInfo
     {
         [Space(10)]
         [Header("Scene à charger")]
+        [Tooltip("Activation")]
+        public bool active;
         [Tooltip("Scene Name")]
         public string scene;
         [Tooltip("Charge la scène en mémoire dès le début ?")]
@@ -24,7 +26,7 @@ public class SceneManagerLocal : MonoBehaviour
         [EnableIf("loadAtStart"), Tooltip("Si on charge au start, est-ce qu'on attend X seconde ou pas ? (default = 0)")]
         public float loadAfterXSecond;
         
-        [Header("effet de la transition")]
+        [Header("Effet de la transition")]
         [Tooltip("Fade lors de la transition ?")]
         public bool fade;
         [EnableIf("fade"), Tooltip("Temps de fade")]
@@ -33,11 +35,14 @@ public class SceneManagerLocal : MonoBehaviour
         public bool additive;
         [EnableIf("loadAtStart"), Tooltip("Swap lorsque la scène est chargé ? Le changement marche en combinaison d'un fade, et d'une additive (fade puis swap complletement ok, additif puis ajoute l'additif au jeu ok)")]
         public bool swapWhenLoaded;
+        [EnableIf("additive"), Tooltip("Lorsque la scene aditive est chargé, charge la scene")]
+        public string sceneToChargeAfterAdditive;
     }
 
     #region Attributes
     [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), SerializeField]
     private List<SceneInfo> sceneToLoad;
+    public List<SceneInfo> SceneToLoad { get { return (sceneToLoad); } }
 
     [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), SerializeField]
     private GameObject levelMangerInterfacce;
@@ -74,7 +79,7 @@ public class SceneManagerLocal : MonoBehaviour
     {
         for (int i = 0; i < sceneToLoad.Count; i++)
         {
-            if (sceneToLoad[i].loadAtStart)
+            if (sceneToLoad[i].loadAtStart && sceneToLoad[i].active)
             {
                 if (sceneToLoad[i].loadAfterXSecond == 0)
                     StartLoading(i);
@@ -91,11 +96,17 @@ public class SceneManagerLocal : MonoBehaviour
 
     private void StartLoading(int index)
     {
+        if (!sceneToLoad[index].active)
+        {
+            return;
+        }
+
         SceneManagerGlobal.Instance.StartLoading(   sceneToLoad[index].scene,
                                                         sceneToLoad[index].swapWhenLoaded,
                                                         sceneToLoad[index].additive,
                                                         sceneToLoad[index].fade,
-                                                        sceneToLoad[index].fadeTime);
+                                                        sceneToLoad[index].fadeTime,
+                                                        sceneToLoad[index].sceneToChargeAfterAdditive);
     }
     /// <summary>
     /// demande de charger une scène précise
