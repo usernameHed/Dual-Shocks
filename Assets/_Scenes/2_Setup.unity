@@ -4429,7 +4429,7 @@ MonoBehaviour:
   - active: 1
     scene: Level 1
     loadAtStart: 1
-    loadAfterXSecond: 2
+    loadAfterXSecond: 1
     fade: 0
     fadeTime: 0
     additive: 1
@@ -6576,6 +6576,31 @@ Prefab:
       propertyPath: alpha
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: fromLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[0].gamepadActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[1].active
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114892966174023146, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: playerData.Array.data[1].gamepadActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114948016746452702, guid: c935be67d020ee64b98f486d6aa0ff15,
+        type: 2}
+      propertyPath: fadeSpeed
+      value: 0.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c935be67d020ee64b98f486d6aa0ff15, type: 2}
   m_IsPrefabParent: 0
@@ -6875,6 +6900,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idPhaseConnexion: 00000000000000000000000000000000
   displayInSetup: {fileID: 2091550341}
+  coolDownRestart:
+    updateFrequency: 2
+    notTheFirstTime: 1
+    waitOnlyOnce: 0
 --- !u!1 &1616493234
 GameObject:
   m_ObjectHideFlags: 0

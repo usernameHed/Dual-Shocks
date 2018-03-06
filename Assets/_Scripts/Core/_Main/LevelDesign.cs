@@ -52,6 +52,9 @@ public class LevelDesign : MonoBehaviour
     #region Core
     public void InitLevelDesign()
     {
+        if (!contentLevel)
+            return;
+
         //s'il est déja actif... peut être le réinitialiser ??
         //ou rechanger les données ???
         if (contentLevel.activeSelf)

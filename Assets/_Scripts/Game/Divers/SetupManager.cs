@@ -17,11 +17,21 @@ public class SetupManager : MonoBehaviour, ILevelManager
     private DisplayInSetup displayInSetup;
     public DisplayInSetup DisplayInSetupScript { get { return displayInSetup; } }
 
+    [FoldoutGroup("Debug"), Tooltip("gere le temps avant de pouvoir faire Restart"), SerializeField]
+    private FrequencyTimer coolDownRestart;
+
     private PlayerConnected playerConnected;
+    private bool enabledScript = true;
 
     #endregion
 
     #region Initialization
+
+    private void Awake()
+    {
+        coolDownRestart.Ready();
+        enabledScript = true;
+    }
 
     private void Start()
     {
@@ -34,6 +44,12 @@ public class SetupManager : MonoBehaviour, ILevelManager
     /// </summary>
     public void InitScene()
     {
+        if (GameManager.GetSingleton.FromGame)
+        {
+            GameManager.GetSingleton.FromGame = false;
+            SetupPhaseThenFromMenu();
+        }
+            
         ChangePhase();
         displayInSetup.InitDisplay();
     }
@@ -44,6 +60,15 @@ public class SetupManager : MonoBehaviour, ILevelManager
     public void CallGamePad()
     {
         ChangePhase();
+    }
+
+    private void SetupPhaseThenFromMenu()
+    {
+        for (int i = 0; i < idPhaseConnexion.Length; i++)
+        {
+            if (GameManager.GetSingleton.PlayerBallInit.PlayerData[i].active)
+                idPhaseConnexion[i] = 2;
+        }
     }
 
     /// <summary>
@@ -194,6 +219,12 @@ public class SetupManager : MonoBehaviour, ILevelManager
     [Button("Play")]
     private void Play()
     {
+        if (!enabledScript)
+            return;
+        if (!coolDownRestart.Ready())
+            return;
+
+        enabledScript = false;
         displayInSetup.CleanUp();
         GameManager.GetSingleton.RestartGame(false);    //notification spécial ... pas forcément utile
         GameManager.GetSingleton.SceneManagerLocal.PlayNext();

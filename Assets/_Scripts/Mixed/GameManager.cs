@@ -40,6 +40,8 @@ public class GameManager : SerializedMonoBehaviour
     private PlayerBallInit playerBallInit;
     public PlayerBallInit PlayerBallInit { get { return playerBallInit; } }
 
+    private bool fromGame = false;
+    public bool FromGame { get { return (fromGame); } set { fromGame = value; } }
 
     private static GameManager instance;
     public static GameManager GetSingleton
@@ -98,6 +100,15 @@ public class GameManager : SerializedMonoBehaviour
     public void RestartGame(bool restart)
     {
         playerBallInit.FromLevel = true;
+    }
+
+    /// <summary>
+    /// est appelé depuis le LevelManager de game quand on restart...
+    /// </summary>
+    /// <param name="isFromGame"></param>
+    public void FromGameToSetup(bool isFromGame)
+    {
+        fromGame = isFromGame;
     }
     #endregion
 

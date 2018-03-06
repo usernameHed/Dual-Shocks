@@ -25,7 +25,8 @@ public static class GameData
         BonusTaken,
         BonusText,
         DesactiveLink,
-        LevelDesign
+        LevelDesign,
+        Ball,
     };
 
     /*public static float SignedAngleBetween()

@@ -24,6 +24,8 @@ public class LevelManager : MonoBehaviour, ILevelManager
     private FrequencyTimer coolDownRestart;
 
     private int playerAlive = 0;
+
+    private bool enabledScript = true;
     #endregion
 
     #region Initialization
@@ -36,6 +38,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     private void Awake()
     {
         coolDownRestart.Ready();
+        enabledScript = true;
     }
 
     /// <summary>
@@ -141,8 +144,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     [Button("Restart")]
     public void Restart()
     {
-        if (!coolDownRestart.Ready())
-            return;
+        
 
         Debug.Log("Ici on ne restart plus la scene comme ça...");
         //GameManager.GetSingleton.RestartGame(true);
@@ -152,8 +154,15 @@ public class LevelManager : MonoBehaviour, ILevelManager
     [Button("Quit")]
     public void Quit()
     {
+        if (!enabledScript)
+            return;
+        if (!coolDownRestart.Ready())
+            return;
+
+        enabledScript = false;
         LevelDesign.GetSingleton.DesactiveScene(); //desactive le level design !!
-        GameManager.GetSingleton.SceneManagerLocal.PlayPrevious();
+        GameManager.GetSingleton.FromGameToSetup(true);
+        GameManager.GetSingleton.SceneManagerLocal.PlayPrevious(false);
     }
 
     #endregion

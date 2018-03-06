@@ -86,7 +86,7 @@ public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
                 return;
             }
         }
-        Debug.Log("scene not found ! Load the scene en normal...");
+        Debug.Log("scene not found ! Load the scene en normal...:" + scene);
         JumpToScene(scene, fade, speedFade);
     }
 

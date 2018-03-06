@@ -137,10 +137,10 @@ public class SceneManagerLocal : MonoBehaviour
 
         //ici gère les unloads ?
     }
-    [FoldoutGroup("Debug"), Button("Previous")]
-    public void PlayPrevious()
+    public void PlayPrevious(bool unloadFirst = true)
     {
-        SceneManagerGlobal.Instance.UnloadScene(sceneToLoad[0].scene);
+        if (unloadFirst)
+            SceneManagerGlobal.Instance.UnloadScene(sceneToLoad[0].scene);
         SceneManagerGlobal.Instance.JumpToScene(sceneToLoad[1].scene, sceneToLoad[1].fade, sceneToLoad[1].fadeTime);    //hard code du previous ?
         //ici gère les unloads ?
     }
