@@ -27,12 +27,18 @@ public class WeaponShockWave : Weapon
     [FoldoutGroup("Gameplay"), EnableIf("pushLink"), Tooltip("Impulsion du joueur lors du tir"), SerializeField]
     private float forceImpulseLink = 1f;
 
+    [FoldoutGroup("Gameplay"), Tooltip("La force est-elle dépendante de la distance ?"), SerializeField]
+    private bool distanceDependent = true;
+
+    [FoldoutGroup("Gameplay"), EnableIf("distanceDependent"), Tooltip("multiplie la force par la distance"), SerializeField]
+    private float distanceAmplify = 1.5f;
+
     [Space(10)]
     [FoldoutGroup("Gameplay"), Tooltip("Est-ce qu'on pousse les ball & rope allié ?"), SerializeField]
     private bool pushFriendBall = false;
 
     [FoldoutGroup("Gameplay"), Tooltip("Nom des layers à chercher et à pousser"), SerializeField]
-    private string[] layerToPush;
+    private GameData.Layers[] layerToTest;
 
     private ShockWaveEffect shockwaveEffect;
 
@@ -60,8 +66,9 @@ public class WeaponShockWave : Weapon
 	protected override void OnShoot()
     {
         Debug.Log("shockwave !");
-        shockwaveEffect.CreateWave(ballRef.transform);  //créé l'effet de shackwave
+        //shockwaveEffect.CreateWave(ballRef.transform);  //créé l'effet de shackwave
 
+        GameObject particleShockWave = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleShockWave, ballRef.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         SoundManager.GetSingleton.playSound("ShockWave" + transform.GetInstanceID().ToString());
         CreateShackWave();  //applique les forces
     }
@@ -72,7 +79,7 @@ public class WeaponShockWave : Weapon
     private void CreateShackWave()
     {
         //par rapport à la position de la balle qui attaque, son radius, et recherche les layers voulu
-        Collider[] ToPush = Physics.OverlapSphere(ballRef.transform.position, radius, LayerMask.GetMask(layerToPush));
+        Collider[] ToPush = Physics.OverlapSphere(ballRef.transform.position, radius, LayerMask.GetMask(UtilityFunctions.GetStringsFromEnum(layerToTest)));
 
         //parcourt chaque collider trouvé
         for (int i = 0; i < ToPush.Length; i++)
@@ -84,29 +91,34 @@ public class WeaponShockWave : Weapon
                 continue;
 
             //si on a trouvé un link...
-            if (toPush.gameObject.CompareTag("Link"))
+            if (toPush.gameObject.CompareTag(GameData.Prefabs.Link.ToString()))
             {
                 if (!pushLink)  //ne rien faire si on a choisi de ne pas pousser les links...
                     continue;
                 //ici on a un link
 
                 //ne rien faire si ce link est amis et !pushFriendLink
-                if (!pushFriendLink && playerRef.IsContainingThisLink(toPush.gameObject))
+                if (!pushFriendLink && playerRef.RopeScript.IsContainingThisLink(toPush.gameObject))
                     continue;
 
                 //ici on a un link enemi (ou allié si pushFriendLink est vrai)
                 PushObject(toPush, true);   //dis qu'on applique la force des links !
             }
             //si on a trouvé une ball..
-            else if (toPush.gameObject.CompareTag("Ball"))
+            else if (toPush.gameObject.CompareTag(GameData.Prefabs.Ball.ToString()))
             {
                 if (!pushFriendBall && playerRef.isContainingThisBall(toPush.gameObject))
                     continue;
+
                 //ici on a une ball ennemi (ou allié si pushFriendBall est vrai)
                 PushObject(toPush);
             }
             else
             {
+                if (toPush.gameObject.layer == LayerMask.NameToLayer(GameData.Layers.Object.ToString()))
+                {
+                    PushObject(toPush);
+                }
                 //ici on a un autre objet
                 //PushObject(toPush);
             }
@@ -119,6 +131,10 @@ public class WeaponShockWave : Weapon
     /// </summary>
     private void PushObject(Collider toPush, bool isLinkForce = false)
     {
+        Rigidbody bodyToPush = toPush.GetComponent<Rigidbody>();
+        if (!bodyToPush)
+            return;
+
         //pousser ! Trouver le vecteur direction ball - collider, et ajouter une force au collider
         Vector3 forceDirection = ballRef.transform.position - toPush.transform.position;
         forceDirection = forceDirection.normalized;
@@ -127,6 +143,15 @@ public class WeaponShockWave : Weapon
 
         //détermine si on applque la force pour les link ou pas
         float force = (!isLinkForce) ? forceImpulse : forceImpulseLink;
+        if (distanceDependent)
+        {
+            Debug.Log("force before: " + force);
+            float dist = Vector3.Distance(toPush.transform.position, ballRef.transform.position);
+            force = ((radius - dist) * force / radius) * distanceAmplify;
+
+            Debug.Log("force before: " + force);
+        }
+
 
         toPush.GetComponent<Rigidbody>().AddForce(force * -forceDirection, ForceMode.Impulse);
     }
@@ -138,11 +163,9 @@ public class WeaponShockWave : Weapon
     /// </summary>
     void OnDrawGizmosSelected()
     {
-        if (!ballRef)
-            return;
         Gizmos.color = Color.red;
         //Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
-        Gizmos.DrawWireSphere(ballRef.transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 
     #endregion

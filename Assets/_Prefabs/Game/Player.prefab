@@ -179,8 +179,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1136879732025386}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12.13, y: 0, z: -7.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4930493971786334}
@@ -377,21 +377,21 @@ MonoBehaviour:
   ropeAnchors: {x: 0, y: 0, z: 0}
   spring:
   - 500
-  - 10
+  - 20
   damper:
   - 50
-  - 1
+  - 0
   massLink:
   - 1
-  - 0
+  - -0.05
   dragLink:
   - 0
   - 0
   useGravityLink: 1
   min: 0.1
   max: 0.3
-  linkCount: 10
-  linkCountMax: 30
+  linkCount: 8
+  linkCountMax: 20
   forceWhenExplode: 10
   dragWhenExplode: 20
   timeToBecomeHarmLess: 1.5

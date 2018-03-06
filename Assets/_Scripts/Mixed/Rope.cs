@@ -228,6 +228,23 @@ public class Rope : MonoBehaviour, IKillable
     }
 
     /// <summary>
+    /// test si le link passé en paramettre est contenue dans la rope
+    /// </summary>
+    /// <param name="link">Link est l'objet link à tester</param>
+    public bool IsContainingThisLink(GameObject link)
+    {
+        Link linkScript = link.GetComponent<Link>();
+        if (!linkScript)
+            return (false);
+
+        if (linkScript.RopeScript == this)
+        {
+            return (true);
+        }
+        return (false);
+    }
+
+    /// <summary>
     /// ici est appelé directement depuis l'un des link
     /// </summary>
     public void AddLink(int index)
@@ -270,7 +287,7 @@ public class Rope : MonoBehaviour, IKillable
             ChangeThisPring(index - 1);
             ChangeThisPring(index - 0);
         }
-        ChangeParamJointWhenAdding();
+        ChangeParamJointWhenAdding(1);
         CreateFakeListForDebug();
     }
 
@@ -290,6 +307,7 @@ public class Rope : MonoBehaviour, IKillable
                 listCircular.Remove(link.gameObject);
                 ChangeThisPring(i - 1);
                 link.Kill();
+                ChangeParamJointWhenAdding(-1);
                 return;
             }
         }
@@ -339,12 +357,12 @@ public class Rope : MonoBehaviour, IKillable
     /// <summary>
     /// ici gère le changements des parametres quand on ajoute (ou supprime ?) un link
     /// </summary>
-    private void ChangeParamJointWhenAdding()
+    private void ChangeParamJointWhenAdding(int add = 1)
     {
-        spring[0] += spring[1];
-        damper[0] += damper[1];
-        massLink[0] += massLink[1];
-        dragLink[0] += dragLink[1];
+        spring[0] += spring[1] * add;
+        damper[0] += damper[1] * add;
+        massLink[0] += massLink[1] * add;
+        dragLink[0] += dragLink[1] * add;
         ChangeValueSpring();
     }
 

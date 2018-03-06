@@ -179,23 +179,6 @@ public class PlayerController : MonoBehaviour, IKillable
     }
 
     /// <summary>
-    /// test si le link passé en paramettre est contenue dans la rope du player
-    /// </summary>
-    /// <param name="link">Link est l'objet link à tester</param>
-    public bool IsContainingThisLink(GameObject link)
-    {
-        Line rope = link.transform.parent.GetComponent<Line>();
-        if (!rope)
-            return (false);
-
-        if (rope.PlayerControllerVariable == this)
-        {
-            return (true);
-        }
-        return (false);
-    }
-
-    /// <summary>
     /// input of player for both joystick
     /// </summary>
     private void InputPlayer()

@@ -20,14 +20,23 @@ public static class GameData
 
     public enum Prefabs
     {
-        Link,
-        LinkSpawner,
-        BonusTaken,
-        BonusText,
-        DesactiveLink,
-        LevelDesign,
-        Ball,
+        Link,           //tag & objet link
+        LinkSpawner,    //objet de tak Bonus
+        BonusTaken,     //particle, sans tag
+        BonusText,      //particle, tag score
+        DesactiveLink,  //particle, sans tag
+        LevelDesign,    //tag level design
+        Ball,           //tag ball (layer player)
+        ParticleShockWave,  //particle shockwave, sans tag,
+        
     };
+
+    public enum Layers
+    {
+        Object,         //tout les objets du décors actif (les boules)
+        Player,         //les balls
+        Rope,           //les link sont dans ce layer
+    }
 
     /*public static float SignedAngleBetween()
     {

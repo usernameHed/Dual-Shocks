@@ -395,7 +395,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1995181605325364}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b530b512a2c07b645971da94bd802801, type: 3}
   m_Name: 
@@ -422,14 +422,14 @@ MonoBehaviour:
   weaponCoolDown: 1
   orderWeapon: 0
   forceImpulse: 30
-  radius: 10
+  radius: 8
   pushLink: 1
   pushFriendLink: 0
-  forceImpulseLink: 20
+  forceImpulseLink: 10
+  distanceDependent: 1
+  distanceAmplify: 1.5
   pushFriendBall: 0
-  layerToPush:
-  - Player
-  - Rope
+  layerToTest: 010000000200000000000000
 --- !u!114 &114688186563547586
 MonoBehaviour:
   m_ObjectHideFlags: 1

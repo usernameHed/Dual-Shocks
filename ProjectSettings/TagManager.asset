@@ -11,6 +11,8 @@ TagManager:
   - Bonus
   - Score
   - LevelDesign
+  - DeathPlayer
+  - PickupRepulseActive
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Player
   - BallColliderLink
   - Bonus
-  - 
+  - Object
   - 
   - 
   - 

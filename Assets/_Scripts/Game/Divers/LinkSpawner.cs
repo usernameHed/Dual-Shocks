@@ -28,7 +28,7 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
     /// </summary>
     private void ReactionHandler(Collider other)
     {
-        if (other.CompareTag("Ball"))
+        if (other.CompareTag(GameData.Prefabs.Ball.ToString()))
         {
             //est-ce que c'est une ball qui a touché ?
             Balls ballScript = other.transform.GetComponent<Balls>();
@@ -37,7 +37,7 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
                 ballScript.AddLink();
             }
         }
-        else if (other.CompareTag("Link"))
+        else if (other.CompareTag(GameData.Prefabs.Link.ToString()))
         {
             Rope rope = other.gameObject.GetComponentInParents<Rope>();
             Link linkScript = other.GetComponent<Link>();
@@ -70,7 +70,7 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
         if (!enabledObject)
             return;
 
-        if (other.CompareTag("Ball") || other.CompareTag("Link"))
+        if (other.CompareTag(GameData.Prefabs.Ball.ToString()) || other.CompareTag(GameData.Prefabs.Link.ToString()))
         {
             DoAction(other);
         }

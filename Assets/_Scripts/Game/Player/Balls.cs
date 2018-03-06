@@ -258,7 +258,7 @@ public class Balls : MonoBehaviour, IKillable
         if (!activated) //si la ball n'est pas activé, ne rien faire
             return;
 
-        if (other.CompareTag("Link"))
+        if (other.CompareTag(GameData.Prefabs.Link.ToString()))
         {
             Link link = other.gameObject.GetComponent<Link>();
             if (link && link.RopeScript && link.RopeScript != playerRef.RopeScript)

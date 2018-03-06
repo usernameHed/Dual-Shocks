@@ -37,6 +37,21 @@ public static class UtilityFunctions
     }
 
     /// <summary>
+    /// prend en parametre une liste d'enum, et renvoi un array de string de ces enum !
+    /// </summary>
+    /// <param name="layers"></param>
+    /// <returns></returns>
+    public static string[] GetStringsFromEnum<T>(T[] layers)
+    {
+        string[] toPush = new string[layers.Length];
+        for (int i = 0; i < toPush.Length; i++)
+        {
+            toPush[i] = layers[i].ToString();
+        }
+        return (toPush);
+    }
+
+    /// <summary>
     /// Test si l'objet est dans la range d'un autre
     /// (pour visualiser la range dans l'éditeur, attacher le script DrawSolidArc
     ///  avec les valeur fovRange et fovAngle sur l'objet "first")
