@@ -54,7 +54,7 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
     private void DoAction(Collider other)
     {
         ReactionHandler(other);
-        GameObject bonusParticle = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BonusTaken, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
+        /*GameObject bonusParticle = */ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BonusTaken, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         GameObject scoreText = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BonusText, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         scoreText.transform.GetChild(0).GetComponent<TextMesh>().text = "+1";
         SoundManager.GetSingleton.playSound("Bonus" + transform.GetInstanceID().ToString());

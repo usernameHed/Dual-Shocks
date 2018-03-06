@@ -69,6 +69,18 @@ public class LevelDesign : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// est appelé quand on est dans le menu Setup, et qu'on s'apperçoi que la scene est active...
+    /// </summary>
+    public void HideContent()
+    {
+        if (contentLevel.activeSelf)
+        {
+            Debug.LogWarning("la scene est active, penser à la désactiver manuellement...");
+            contentLevel.SetActive(false);
+        }
+    }
+
     public void DesactiveScene()
     {
         Destroy(gameObject);

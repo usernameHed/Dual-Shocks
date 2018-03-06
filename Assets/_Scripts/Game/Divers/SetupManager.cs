@@ -27,6 +27,11 @@ public class SetupManager : MonoBehaviour, ILevelManager
 
     #region Initialization
 
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.AdditiveJustFinishLoad, CalledWhenLevelLoaded);
+    }
+
     private void Awake()
     {
         coolDownRestart.Ready();
@@ -62,6 +67,17 @@ public class SetupManager : MonoBehaviour, ILevelManager
         ChangePhase();
     }
 
+    /// <summary>
+    /// est appelé par les event quand une scene additive a été chargé
+    /// </summary>
+    private void CalledWhenLevelLoaded()
+    {
+        LevelDesign.GetSingleton.HideContent();
+    }
+
+    /// <summary>
+    /// est appelé lorsqu'on passe du game au menu
+    /// </summary>
     private void SetupPhaseThenFromMenu()
     {
         for (int i = 0; i < idPhaseConnexion.Length; i++)
@@ -242,6 +258,11 @@ public class SetupManager : MonoBehaviour, ILevelManager
     {
         InputPlayer();
         InputGame();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.AdditiveJustFinishLoad, CalledWhenLevelLoaded);
     }
     #endregion
 }

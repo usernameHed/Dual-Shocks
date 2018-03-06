@@ -40,14 +40,14 @@ public class WeaponShockWave : Weapon
     [FoldoutGroup("Gameplay"), Tooltip("Nom des layers à chercher et à pousser"), SerializeField]
     private GameData.Layers[] layerToTest;
 
-    private ShockWaveEffect shockwaveEffect;
+    //private ShockWaveEffect shockwaveEffect;
 
     #endregion
 
     #region  initialisation
     private void Awake()
     {
-        shockwaveEffect = GetComponent<ShockWaveEffect>();
+        //shockwaveEffect = GetComponent<ShockWaveEffect>();
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class WeaponShockWave : Weapon
         Debug.Log("shockwave !");
         //shockwaveEffect.CreateWave(ballRef.transform);  //créé l'effet de shackwave
 
-        GameObject particleShockWave = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleShockWave, ballRef.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
+        /*GameObject particleShockWave = */ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleShockWave, ballRef.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         SoundManager.GetSingleton.playSound("ShockWave" + transform.GetInstanceID().ToString());
         CreateShackWave();  //applique les forces
     }

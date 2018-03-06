@@ -219,7 +219,7 @@ public class Rope : MonoBehaviour, IKillable
                 continue;
 
             //créé un effet de particule
-            GameObject desactiveLink = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
+            /*GameObject desactiveLink = */ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
             link.GetComponent<MeshRenderer>().enabled = false;
             link.GetComponent<Collider>().enabled = false;
         }
@@ -263,7 +263,7 @@ public class Rope : MonoBehaviour, IKillable
 
 
         GameObject newLink = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.Link, closestLink.transform.position, Quaternion.identity, parentLink);
-        SpringJoint jointLink = newLink.transform.GetOrAddComponent<SpringJoint>();
+        /*SpringJoint jointLink = */newLink.transform.GetOrAddComponent<SpringJoint>();
 
         ChangeMeshRenrered(newLink.GetComponent<MeshRenderer>());
 

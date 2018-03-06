@@ -33,7 +33,7 @@ public class ISingleton<T> : MonoBehaviour where T : MonoBehaviour
 
                     if (FindObjectsOfType(typeof(T)).Length > 1)
                     {
-                        Debug.LogError("[Singleton] Something went really wrong " +
+                        Debug.LogWarning("[Singleton] Something went really wrong " +
                             " - there should never be more than 1 singleton!" +
                             " Reopening the scene might fix it.");
                         

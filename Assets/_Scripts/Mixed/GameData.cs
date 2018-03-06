@@ -16,6 +16,7 @@ public static class GameData
         PlayerDeath,    //est appelé a chaque playerDeath
         GameOver,       //est appelé quand on trigger un gameOver
         GamePadConnectionChange,    //est appelé a chaque co/deco de manette
+        AdditiveJustFinishLoad,
     };
 
     public enum Prefabs

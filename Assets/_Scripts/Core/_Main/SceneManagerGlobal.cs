@@ -121,6 +121,8 @@ public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
 
     private void FindWitchOneToLoadAfterAdditive(string sceneToChargeAfterAdditive)
     {
+        EventManager.TriggerEvent(GameData.Event.AdditiveJustFinishLoad);
+
         Debug.Log("findAfterAdditive;.." + sceneToChargeAfterAdditive);
         SceneManagerLocal local = GameManager.GetSingleton.SceneManagerLocal;
         local.StartLoading(sceneToChargeAfterAdditive);
@@ -195,7 +197,7 @@ public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
     }
     private IEnumerator JumpToSceneWithFadeWait(string scene, float speed)
     {
-        float fadeTime = gameObject.GetComponent<Fading>().BeginFade(1, speed);
+        /*float fadeTime = */gameObject.GetComponent<Fading>().BeginFade(1, speed);
         yield return new WaitForSeconds(speed / 2);
         JumpToScene(scene);
     }
@@ -226,7 +228,7 @@ public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
     }
     private IEnumerator QuitWithFade(float speed)
     {
-        float fadeTime = gameObject.GetComponent<Fading>().BeginFade(1, speed);
+        /*float fadeTime = */gameObject.GetComponent<Fading>().BeginFade(1, speed);
         yield return new WaitForSeconds(speed / 2);
         Quit();
     }

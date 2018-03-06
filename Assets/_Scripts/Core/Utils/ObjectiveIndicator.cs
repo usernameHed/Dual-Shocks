@@ -139,6 +139,8 @@ public class ObjectiveIndicator : MonoBehaviour
 
         if (usedCamera == null)
             usedCamera = camMain;
+
+        
     }
 
     void OnEnable()
@@ -148,9 +150,10 @@ public class ObjectiveIndicator : MonoBehaviour
             Activate();
         }
         //SetVisible();
+        Init();
     }
 
-    void Start()
+    private void Init()
     {
         if (!camMain)
             return;
@@ -541,6 +544,14 @@ public class ObjectiveIndicator : MonoBehaviour
     /// </summary>
     private void UpdateUICanvas()
     {
+        if (!linkedImage)
+        {
+            Debug.LogWarning("something went bad... but it's ok ! We just don't have Objective indicator anymore !");
+            //Init();
+            Destroy(this);
+            return;
+        }
+
         // Set UI width and height
         float elementWidth = 0;
         float elementHeight = 0;
