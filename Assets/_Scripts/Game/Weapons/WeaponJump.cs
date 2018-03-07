@@ -13,13 +13,17 @@ public class WeaponJump : Weapon
     /// <summary>
     /// variable
     /// </summary>
-    [FoldoutGroup("Gameplay"), Tooltip("Impulsion du joueur lors du tir"), SerializeField]
+    [FoldoutGroup("Jump"), Tooltip("Impulsion du joueur lors du tir"), SerializeField]
     private float forceImpulse = 10f;
-    [FoldoutGroup("Gameplay"), Tooltip("Impulsion du joueur lors du tir"), SerializeField]
+    [FoldoutGroup("Jump"), Tooltip("Impulsion du joueur lors du tir"), SerializeField]
     private float forceLinkImpulse = 10f;
-    [FoldoutGroup("Gameplay"), Range(0, 100), Tooltip("Nombre de link à pousser aussi (en %age, pousse les link les plus proch du la ball)"), SerializeField]
+    [FoldoutGroup("Jump"), Range(0, 100), Tooltip("Nombre de link à pousser aussi (en %age, pousse les link les plus proch du la ball)"), SerializeField]
     private int linkToPush = 0;
 
+    [FoldoutGroup("Jump"), Tooltip("la distance à ajouter à la taille des colliders de la ball"), SerializeField]
+    private float marginDistToGround = 0.1f;
+
+    private float distToGround;
     #endregion
 
     #region  initialisation
@@ -29,6 +33,7 @@ public class WeaponJump : Weapon
     protected override void InitParticularWeapon()
     {
         Debug.Log("init this weapon id: " + IdWeapon);
+        distToGround = ballRef.GetComponent<Collider>().bounds.extents.y;
     }
     #endregion
 
@@ -36,9 +41,11 @@ public class WeaponJump : Weapon
     /// <summary>
     /// Jump
     /// </summary>
-	protected override void OnShoot()
+	protected override bool OnShoot()
     {
 		Debug.Log("Jumpi !");
+        if (!IsGrounded())
+            return (false);
 
         //pousse la balle
         ApplyForce(ballRef.BallBody, forceImpulse);
@@ -49,6 +56,7 @@ public class WeaponJump : Weapon
             PushLink();
 
         SoundManager.GetSingleton.playSound("Jump" + transform.GetInstanceID().ToString());
+        return (true);
     }
 
     /// <summary>
@@ -91,10 +99,17 @@ public class WeaponJump : Weapon
     {
         rbToPush.AddForce(Vector3.up * force, ForceMode.Impulse);
     }
+
+    /// <summary>
+    /// renvoi si le joueur est grounded ou pas
+    /// </summary>
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(ballRef.transform.position, -Vector3.up, distToGround + marginDistToGround);
+    }
     #endregion
 
     #region unity fonction and ending
-
 
     #endregion
 }

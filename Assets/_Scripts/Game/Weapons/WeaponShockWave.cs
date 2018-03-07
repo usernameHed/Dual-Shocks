@@ -63,7 +63,7 @@ public class WeaponShockWave : Weapon
     /// <summary>
     /// functionTest
     /// </summary>
-	protected override void OnShoot()
+	protected override bool OnShoot()
     {
         Debug.Log("shockwave !");
         //shockwaveEffect.CreateWave(ballRef.transform);  //créé l'effet de shackwave
@@ -71,6 +71,7 @@ public class WeaponShockWave : Weapon
         /*GameObject particleShockWave = */ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleShockWave, ballRef.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         SoundManager.GetSingleton.playSound("ShockWave" + transform.GetInstanceID().ToString());
         CreateShackWave();  //applique les forces
+        return (true);
     }
 
     /// <summary>

@@ -30,7 +30,10 @@ public abstract class Weapon : MonoBehaviour, IKillable
     [FoldoutGroup("Debug"), Tooltip("id (0 ou 1) du numéro du weapoin par rapport au joueur"), SerializeField]
     protected int orderWeapon;
     public int OrderWeapon { get { return orderWeapon; } }
+    [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
+    protected FrequencyTimer updateTimer;
 
+    protected bool activatedScript = true;
 
     private float nextShoot;
     private bool holding = false;
@@ -43,6 +46,8 @@ public abstract class Weapon : MonoBehaviour, IKillable
     /// </summary>
     public void InitWeapon(PlayerController refPlayer, Balls refBall, int orderOfWeapon)
     {
+        activatedScript = true;
+
         playerRef = refPlayer;
         ballRef = refBall;
         orderWeapon = orderOfWeapon;
@@ -69,8 +74,9 @@ public abstract class Weapon : MonoBehaviour, IKillable
         //si on est en mode cooldown
 		if (nextShoot <= 0 && !hold)
 		{
+            if (!OnShoot())
+                return;
     		nextShoot = cooldown;
-            OnShoot ();
 		}
 
         //si on est en mode hold...
@@ -109,7 +115,7 @@ public abstract class Weapon : MonoBehaviour, IKillable
 
     //appelé obligatoirement dans les fils
     abstract protected void InitParticularWeapon(); //appelé à l'initialisation
-    abstract protected void OnShoot ();             //appelé lors du shoot
+    abstract protected bool OnShoot ();             //appelé lors du shoot
 
     //appelé SI besoin (si on fait du hold)
     protected virtual void OnShootHold() { }          //appelé lorsque l'on reste appuyé
@@ -141,6 +147,10 @@ public abstract class Weapon : MonoBehaviour, IKillable
     [Button("Kill")]
     public void Kill()
     {
+        if (!activatedScript)
+            return;
+
+        activatedScript = false;
         display.transform.SetParent(transform); //remet le display avant de la supprimer !
         //SoundManager.Instance.PlaySound (SoundManager.Instance.RocketSound);
         Destroy(gameObject);

@@ -185,6 +185,8 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         for (int i = 0; i < ballsList.Count; i++)
         {
+            if (!ballsList[i])
+                continue;
             ballsList[i].HorizMove = PlayerConnected.Instance.getPlayer(idPlayer).GetAxis("Move Horizontal" + ((i == 0) ? "" : " Right") );
             ballsList[i].VertiMove = PlayerConnected.Instance.getPlayer(idPlayer).GetAxis("Move Vertical" + ((i == 0) ? "" : " Right"));
 
@@ -203,8 +205,10 @@ public class PlayerController : MonoBehaviour, IKillable
     /// </summary>
     public void UnsetKinematic()
     {
-        ballsList[0].UnsetKinematic();
-        ballsList[1].UnsetKinematic();
+        if (ballsList[0])
+            ballsList[0].UnsetKinematic();
+        if (ballsList[1])
+            ballsList[1].UnsetKinematic();
     }
 
     /// <summary>
@@ -219,11 +223,6 @@ public class PlayerController : MonoBehaviour, IKillable
         {
             if (!ballsList[i] || !followersList[i].gameObject.activeSelf)
             {
-                /*if (followersList[i].gameObject.activeInHierarchy)
-                {
-                    Debug.Log("la balle n'existe pas....");
-                    followersList[i].gameObject.SetActive(false);
-                }*/
                 continue;
             }
 
@@ -233,8 +232,6 @@ public class PlayerController : MonoBehaviour, IKillable
 
             if (ballsList[i].HasMoved)  //set rotation
             {
-                
-
                 followersList[i].rotation = QuaternionExt.DirObject(followersList[i].rotation, ballsList[i].HorizMove, -ballsList[i].VertiMove, turnRateFollowers * ballsList[i].RatioTurnRateFocus);
             }
 
@@ -275,6 +272,18 @@ public class PlayerController : MonoBehaviour, IKillable
     private void StopAction()
     {
         stopAction = true;
+        for (int i = 0; i < ballsList.Count; i++)
+        {
+            if (!ballsList[i])
+                continue;
+            ballsList[i].HorizMove = 0;
+            ballsList[i].VertiMove = 0;
+
+            ballsList[i].Power1 = false;
+            ballsList[i].Power2 = 0;
+
+            ballsList[i].HasMoved = false;
+        }
         Debug.Log("stop action du joueur");
     }
 

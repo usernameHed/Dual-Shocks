@@ -16,6 +16,16 @@ public static class TransformExt
 		}
 		return (transform);
 	}
+    public static Transform ClearChildImediat(this Transform transform)
+    {
+        int children = transform.childCount;
+
+        for (int i = children - 1; i >= 0; i--)
+        {
+            GameObject.DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+        return (transform);
+    }
 
     //Even though they are used like normal methods, extension
     //methods must be declared static. Notice that the first

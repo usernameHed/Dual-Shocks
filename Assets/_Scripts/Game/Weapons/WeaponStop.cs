@@ -49,13 +49,15 @@ public class WeaponStop : Weapon
     /// <summary>
     /// functionTest
     /// </summary>
-	protected override void OnShoot()
+	protected override bool OnShoot()
     {
         Spikes.SetActive(true);
         SoundManager.GetSingleton.playSound("SpiksOn" + transform.GetInstanceID().ToString());
         ballRef.BallBody.drag = dragWhenStop;
         ballRef.BallBody.angularDrag = dragWhenStop;
         ballRef.BallBody.mass += additionalMass;
+
+        return (true);
     }
 
     /// <summary>

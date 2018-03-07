@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
-using UnityEngine.Networking;
 
 /// <summary>
 /// description
@@ -51,7 +50,7 @@ public class WeaponDash : Weapon
     /// <summary>
     /// Applique une force qui pousse la ball devant lui, selon la fariable forceImpulse
     /// </summary>
-    protected override void OnShoot()
+    protected override bool OnShoot()
     {
 		Debug.Log("Dash");
         SoundManager.GetSingleton.playSound("Swouch" + transform.GetInstanceID().ToString());
@@ -67,6 +66,8 @@ public class WeaponDash : Weapon
         //ici attend timeToCallTeleport seconde, puis téléporte
         if (teleport)
             Invoke("Teleport", timeToCallTeleport);
+
+        return (true);
     }
 
     /// <summary>

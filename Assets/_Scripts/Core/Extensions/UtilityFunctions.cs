@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.IO;
 using System;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// Fonctions utile
@@ -34,6 +35,39 @@ public static class UtilityFunctions
     {
         System.Random random = new System.Random();
         return random.Next() * (maximum - minimum) + minimum;
+    }
+
+    /// <summary>
+    /// si TOTO532, retourne "532"
+    /// </summary>
+    public static int GetLastNumberFromString(string lastNNumber)
+    {
+        var x = Regex.Match(lastNNumber, @"([0-9]+)[^0-9]*$");
+
+        if (x.Success && x.Groups.Count > 0)
+        {
+            int foundNumber = Int32.Parse(x.Groups[1].Captures[0].Value);
+            return (foundNumber);
+        }
+        return (0);
+    }
+
+    /// <summary>
+    /// prend en parametre un fileName, et renvoi le prochain numéro
+    /// </summary>
+    public static string GetNextFileName(string fileName)
+    {
+        string extension = Path.GetExtension(fileName);
+        string pathName = Path.GetDirectoryName(fileName);
+        string fileNameOnly = Path.Combine(pathName, Path.GetFileNameWithoutExtension(fileName));
+        int i = 0;
+        // If the file exists, keep trying until it doesn't
+        while (File.Exists(fileName))
+        {
+            i += 1;
+            fileName = string.Format("{0}({1}){2}", fileNameOnly, i, extension);
+        }
+        return fileName.Replace("\\", "/");
     }
 
     /// <summary>

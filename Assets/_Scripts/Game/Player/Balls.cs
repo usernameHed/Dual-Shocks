@@ -86,6 +86,11 @@ public class Balls : MonoBehaviour, IKillable
 
     #region Initialization
 
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.GameOver, StopAction);
+    }
+
     private void Awake()
     {
         //InitBall();
@@ -212,6 +217,8 @@ public class Balls : MonoBehaviour, IKillable
     public void UnsetKinematic()
     {
         kinematicAtStart = false;
+        if (!ballBody)
+            return;
         ballBody.isKinematic = kinematicAtStart;
     }
 
@@ -299,6 +306,14 @@ public class Balls : MonoBehaviour, IKillable
         //playerRef.BallDestroyed(IdBallPlayer);
     }
 
+    /// <summary>
+    /// ici game over, on ne peut pas mourrir !
+    /// </summary>
+    private void StopAction()
+    {
+        activated = false;
+    }
+
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
     {
@@ -337,5 +352,10 @@ public class Balls : MonoBehaviour, IKillable
         //playerRef.RopeScript.HandleDestruction(true, IdBallPlayer);
 
         Invoke("RealyDestroy", timeBeforeDie);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.GameOver, StopAction);
     }
 }

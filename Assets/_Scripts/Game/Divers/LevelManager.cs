@@ -25,6 +25,8 @@ public class LevelManager : MonoBehaviour, ILevelManager
 
     private int playerAlive = 0;
 
+    private bool gameOver = false;
+
     private bool enabledScript = true;
     #endregion
 
@@ -39,6 +41,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     {
         coolDownRestart.Ready();
         enabledScript = true;
+        
     }
 
     /// <summary>
@@ -47,6 +50,21 @@ public class LevelManager : MonoBehaviour, ILevelManager
     /// </summary>
     public void InitScene()
     {
+        if (gameOver)
+        {
+            Debug.Log("ici on active des truck fifou pour le restart ?");
+            Invoke("RealyInit", 0.1f);
+            return;
+        }
+
+        //ici lancement du jeu au premier round
+        RealyInit();
+    }
+
+    private void RealyInit()
+    {
+        gameOver = false;
+        playerAlive = 0;
         LevelDesign.GetSingleton.InitLevelDesign(); //init le level design !!
 
         EventManager.TriggerEvent(GameData.Event.RoundStart);
@@ -121,6 +139,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
         if (IsGameOver())
         {
             Debug.Log("ici c'est la fin du jeu !!! Setup les rounds");
+            gameOver = true;
         }
 
     }
@@ -144,7 +163,15 @@ public class LevelManager : MonoBehaviour, ILevelManager
     [Button("Restart")]
     public void Restart()
     {
-        
+        if (gameOver)
+        {
+            Debug.Log("ici restart ?");
+            for (int i = 0; i < playersLocal.Count; i++)
+            {
+                playersLocal[i].SetActive(false);
+            }
+            InitScene();
+        }
 
         Debug.Log("Ici on ne restart plus la scene comme ça...");
         //GameManager.GetSingleton.RestartGame(true);

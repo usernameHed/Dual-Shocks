@@ -29,10 +29,11 @@ public class WeaponThrowerBoost : Weapon
     /// <summary>
     /// appelé la première fois qu'on appui
     /// </summary>
-	protected override void OnShoot()
+	protected override bool OnShoot()
     {
         SoundManager.GetSingleton.playSound("Thrower" + transform.GetInstanceID().ToString());
         ApplyForce();
+        return (true);
     }
 
     /// <summary>

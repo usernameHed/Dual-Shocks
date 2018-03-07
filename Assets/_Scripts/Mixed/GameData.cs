@@ -29,7 +29,6 @@ public static class GameData
         LevelDesign,    //tag level design
         Ball,           //tag ball (layer player)
         ParticleShockWave,  //particle shockwave, sans tag,
-        
     };
 
     public enum Layers
@@ -38,11 +37,5 @@ public static class GameData
         Player,         //les balls
         Rope,           //les link sont dans ce layer
     }
-
-    /*public static float SignedAngleBetween()
-    {
-
-    }*/
-
     #endregion
 }
