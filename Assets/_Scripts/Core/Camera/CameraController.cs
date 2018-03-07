@@ -30,9 +30,9 @@ public class CameraController : MonoBehaviour
     [FoldoutGroup("GamePlay"), Tooltip("Approximation: la caméra est-elle sur sa cible ?"), SerializeField]
     private float focusThreshold = 0f;
 
-    
-    [FoldoutGroup("GamePlay"), Tooltip("Border margin before unzoom"), SerializeField]
-    private float borderMargin = 4f;
+
+    [FoldoutGroup("GamePlay"), Tooltip("Border margin de l'axe Z du zoom"), SerializeField]
+    private float borderMarginZ = 4f;
 
     //Fallback target if target list is empty
     [FoldoutGroup("GamePlay"), Space(10), Tooltip("objet que la caméra doit focus s'il n'y a plus de target"), SerializeField]
@@ -205,6 +205,11 @@ public class CameraController : MonoBehaviour
         // Find middle point for all targets
         if (activeTargetAmount > 0)
         {
+            /*minX -= borderMarginXYZ[0];
+            maxX += borderMarginXYZ[0];
+            minY -= borderMarginXYZ[1];
+            maxY -= borderMarginXYZ[1];*/
+
             averagePos.x = (minX + maxX) / 2.0f;
             //averagePos.y = (minY + maxY) / 2.0F;
             averagePos.z = (minY + maxY) / 2.0f;
@@ -222,7 +227,7 @@ public class CameraController : MonoBehaviour
         // Calculate zoom
         float dist = Mathf.Max(Mathf.Abs(maxX - minX), Mathf.Abs(maxY - minY));
         //averagePos.z = (targetList.Count > 1) ? -Mathf.Min(Mathf.Max(minZoom, dist + borderMargin), maxZoom) : -defaultZoom;
-        averagePos.y = (targetList.Count > 1) ? Mathf.Min(Mathf.Max(minZoom, dist + borderMargin), maxZoom) : defaultZoom;
+        averagePos.y = (targetList.Count > 1) ? Mathf.Min(Mathf.Max(minZoom, dist + borderMarginZ), maxZoom) : defaultZoom;
 
         // Change camera target
         averageTargetPosition = averagePos;
