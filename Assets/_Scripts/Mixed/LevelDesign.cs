@@ -1,18 +1,34 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// LevelDesign Description
 /// </summary>
 public class LevelDesign : MonoBehaviour
 {
-    //protected LevelDesign() { } // guarantee this will be always a singleton only - can't use the constructor!
-
+    [Serializable]
+    public struct SpawnsPlayers
+    {
+        public List<Transform> spawnBall;
+    }
+    
     #region Attributes
+
+    [FoldoutGroup("Objects"), Tooltip("list spawn players"), SerializeField]
+    private SpawnsPlayers[] spawnPlayers = new SpawnsPlayers[playerMax];
+    public SpawnsPlayers[] SpawnPlayersGet { get { return (spawnPlayers); } }
+
+    private const int playerMax = 4;  //nombre de players
+    
     [FoldoutGroup("GamePlay"), Tooltip("idLevel"), SerializeField]
     private int idLevel = 0;
     [FoldoutGroup("GamePlay"), Tooltip("idLevel"), SerializeField]
     private GameObject contentLevel;
+
+    [FoldoutGroup("Debug"), Tooltip("ref to spawnFromPool"), SerializeField]
+    private SpawnFromPool spawnFromPool;
 
     private static LevelDesign instance;
     public static LevelDesign GetSingleton
@@ -39,12 +55,6 @@ public class LevelDesign : MonoBehaviour
 
     private void Awake()
     {
-        /*if (gameObject.activeSelf)
-        {
-            gameObject.SetActive(false);
-            return;
-        }*/
-
         SetSingleton();
     }
     #endregion
@@ -53,15 +63,21 @@ public class LevelDesign : MonoBehaviour
     public void InitLevelDesign()
     {
         if (!contentLevel)
+        {
+            Debug.Log("Erreur, no content ??");
             return;
+        }
+        HandleActivationScene();        //active la scene
+        spawnFromPool.SpawnContent();   //active le spawn des objets non - players
+    }
 
+    private void HandleActivationScene()
+    {
         //s'il est déja actif... peut être le réinitialiser ??
         //ou rechanger les données ???
         if (contentLevel.activeSelf)
         {
             Debug.Log("Error ici !!");
-            //contentLevel.SetActive(false);
-            //contentLevel.SetActive(true);
         }
         else
         {

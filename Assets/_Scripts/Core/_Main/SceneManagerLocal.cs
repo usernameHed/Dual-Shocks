@@ -141,6 +141,10 @@ public class SceneManagerLocal : MonoBehaviour
     {
         if (unloadFirst)
             SceneManagerGlobal.Instance.UnloadScene(sceneToLoad[0].scene);
+
+        ObjectsPooler.Instance.desactiveEveryOneForTransition();
+        ObjectsPoolerLocal.Instance.desactiveEveryOneForTransition();
+
         SceneManagerGlobal.Instance.JumpToScene(sceneToLoad[1].scene, sceneToLoad[1].fade, sceneToLoad[1].fadeTime);    //hard code du previous ?
         //ici gère les unloads ?
     }

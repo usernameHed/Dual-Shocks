@@ -41,22 +41,61 @@ public class ObjectsPooler : ISingleton<ObjectsPooler>
     {
         poolDictionary = new Dictionary<GameData.Prefabs, List<GameObject>>();
 
-        foreach(Pool pool  in pools)
+        for (int j = 0; j < pools.Count; j++)
         {
             List<GameObject> objectPool = new List<GameObject>();
-            for (int i = 0; i < pool.size; i++)
+            for (int i = 0; i < pools[j].size; i++)
             {
-                GameObject obj = Instantiate(pool.prefab, transform);
+                GameObject obj = Instantiate(pools[j].prefab, transform);
                 obj.SetActive(false);
                 objectPool.Add(obj);
             }
-            poolDictionary.Add(pool.tag, objectPool);
+            poolDictionary.Add(pools[j].tag, objectPool);
         }
     }
 
     #endregion
 
     #region Core
+    /// <summary>
+    /// ici désactive tout les éléments de la pool qui sont actuellement activé...
+    /// Appeler une fonction spécial ??
+    /// </summary>
+    public void desactiveEveryOneForTransition()
+    {
+        foreach (KeyValuePair<GameData.Prefabs, List<GameObject>> attachStat in poolDictionary)
+        {
+            List<GameObject> objFromTag = attachStat.Value;
+            for (int j = 0; j < objFromTag.Count; j++)
+            {
+                //l'objet en question
+                GameObject obj = objFromTag[j];
+                if (!obj)
+                    continue;
+
+                //est-ce que l'objet est dans la pool ? (le transform), Si non, le mettre
+                if (obj.transform.parent.GetInstanceID() != transform.GetInstanceID())
+                {
+                    Debug.Log("ici set le transform parent de: " + obj.name);
+                    obj.transform.SetParent(transform);
+                }
+                if (obj.activeSelf)
+                {
+                    IPooledObject pooledObject = objFromTag[j].GetComponent<IPooledObject>();
+
+                    if (pooledObject != null)
+                    {
+                        pooledObject.OnDesactivePool();
+                    }
+                    else
+                    {
+                        obj.SetActive(false);
+                    }
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// access object from pool
     /// </summary>
@@ -93,13 +132,13 @@ public class ObjectsPooler : ISingleton<ObjectsPooler>
         }
 
         Debug.Log("ici on a raté ! tout les objets de la pools sont complet !!");
-        foreach (Pool pool in pools)
+        for (int i = 0; i < pools.Count; i++)
         {
-            if (pool.tag == tag)
+            if (pools[i].tag == tag)
             {
-                if (pool.shouldExpand)
+                if (pools[i].shouldExpand)
                 {
-                    GameObject obj = Instantiate(pool.prefab, transform);
+                    GameObject obj = Instantiate(pools[i].prefab, transform);
                     //obj.SetActive(false);
                     objFromTag.Add(obj);
 

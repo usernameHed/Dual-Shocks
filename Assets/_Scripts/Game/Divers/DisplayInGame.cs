@@ -13,10 +13,10 @@ public class DisplayInGame : MonoBehaviour
     public struct PlayerRef
     {
         [Space(10)]
-        public GameObject objectSpawn;        //a désactiver si on joue pas
+        //public GameObject objectSpawn;        //a désactiver si on joue pas
         public GameObject displaySpawn;        //a désactiver si on joue pas
         public TextMeshProUGUI textScore;
-        public List<Transform> spawnBall;
+        //public List<Transform> spawnBall;
         public bool active;
     }
 

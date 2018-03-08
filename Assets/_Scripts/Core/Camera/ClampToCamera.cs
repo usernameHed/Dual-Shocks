@@ -30,7 +30,7 @@ public class ClampToCamera : MonoBehaviour
     {
         cam = Camera.main;
         enabledScript = true;
-        updateTimer.InitFrequency();
+        updateTimer.Reset();
         updateTimer.Ready();
     }
     #endregion

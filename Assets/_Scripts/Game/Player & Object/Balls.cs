@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Collections;
 
 /// <summary>
 /// Balls Description
@@ -16,13 +17,18 @@ public class Balls : MonoBehaviour, IKillable
     [FoldoutGroup("GamePlay"), Tooltip("Ratio du turnRate de la visée"), SerializeField]
     private float ratioTurnRateFocus = 1;
     public float RatioTurnRateFocus { get { return ratioTurnRateFocus; } }
+    [FoldoutGroup("GamePlay"), Tooltip("drag des balls quand elle sont arreté"), SerializeField]
+    private float dragWhenStop = 2f;
+    private float initialDrag = 0;
 
-  
+    [FoldoutGroup("GamePlay"), Tooltip("stun de la ball (quand on est poussé par exemple...)"), SerializeField]
+    private FrequencyCoolDown timeStunBall;
+
     [FoldoutGroup("GamePlay"), Tooltip("Temps d'attente entre le moment de la mort et la réel mort"), SerializeField]
     private float timeBeforeDie = 2f;
 
-    [FoldoutGroup("Object"), Tooltip("explosion prefabs"), SerializeField]
-    private GameObject prefabsExplode;
+    //[FoldoutGroup("Object"), Tooltip("explosion prefabs"), SerializeField]
+    //private GameObject prefabsExplode;
     [FoldoutGroup("Object"), Tooltip("ball render"), SerializeField]
     private MeshRenderer renderBall;
     [FoldoutGroup("Object"), Tooltip("ball render"), SerializeField]
@@ -104,8 +110,12 @@ public class Balls : MonoBehaviour, IKillable
         HasMoved = false;
         Power1 = false;
         Power2 = 0f;
+        //timeStunBall.Reset();
 
         ballBody = gameObject.GetComponent<Rigidbody>();
+        initialDrag = ballBody.drag;
+
+
         playerRef = player;
         idBallPlayer = id;
 
@@ -222,6 +232,46 @@ public class Balls : MonoBehaviour, IKillable
         ballBody.isKinematic = kinematicAtStart;
     }
 
+    [Button("Stun")]
+    private void StunTrue() { Stun(true); }
+    public void Stun(bool active = true)
+    {
+        if (active)
+        {
+            Debug.Log("Start cooldown");
+            timeStunBall.StartCoolDown();
+        }
+        else
+        {
+            Debug.Log("End cooldown");
+            ballBody.drag = initialDrag;
+        }
+    }
+
+    /// <summary>
+    /// Set la drag (quand le joueur s'arrete, ralentir la velocité / drag des ball..
+    /// </summary>
+    /// <param name="moving"></param>
+    private void SetDrag(bool moving)
+    {
+        //Ici on A ETE stun, et que le temps est écoulé
+        if (timeStunBall.IsWaiting())
+            return;
+        else if (timeStunBall.IsStartedAndOver())
+            Stun(false);
+
+        //ici on est pas stun
+        if (moving)
+        {
+            ballBody.drag = initialDrag;
+        }
+        else
+        {
+
+            ballBody.drag = dragWhenStop;
+        }
+    }
+
     /// <summary>
     /// déplace et tir
     /// </summary>
@@ -229,9 +279,14 @@ public class Balls : MonoBehaviour, IKillable
     {
         if (HasMoved)
         {
+            SetDrag(true);
             if (kinematicAtStart)
                 playerRef.UnsetKinematic();
             ballBody.AddForce(HorizMove * (moveSpeed) * Time.deltaTime, 0.0f, VertiMove * (moveSpeed) * Time.deltaTime, ForceMode.Impulse);
+        }
+        else
+        {
+            SetDrag(false);
         }
 
         if (Power1 && weaponsList[0])
@@ -270,7 +325,7 @@ public class Balls : MonoBehaviour, IKillable
             Link link = other.gameObject.GetComponent<Link>();
             if (link && link.RopeScript && link.RopeScript != playerRef.RopeScript)
             {
-                link.TryToKill();
+                link.Kill();
                 Kill();
             }
         }
@@ -297,6 +352,7 @@ public class Balls : MonoBehaviour, IKillable
     }
 
     #endregion
+    
     /// <summary>
     /// ici détruit l'objet finalement
     /// </summary>
@@ -323,6 +379,8 @@ public class Balls : MonoBehaviour, IKillable
         Debug.Log("ici la mort !");
         activated = false;
 
+        ballBody.drag = initialDrag;
+
         //désactive les pouvoirs
         if (weaponsList[0])
             weaponsList[0].Kill();
@@ -333,7 +391,8 @@ public class Balls : MonoBehaviour, IKillable
         playerRef.TestForDestroyLink(transform.position); //envoi l'info comme quoi une ball est en train de se faire détruire...
 
         //créé la particule
-        Instantiate(prefabsExplode, transform.position, Quaternion.identity, null);
+        ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BallExplode, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
+        //Instantiate(prefabsExplode, transform.position, Quaternion.identity, null);
 
         //stop la ball
         ballBody.velocity = Vector3.zero;

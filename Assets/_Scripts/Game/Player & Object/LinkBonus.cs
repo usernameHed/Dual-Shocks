@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// LinkSpawner Description
 /// </summary>
-public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
+public class LinkBonus : MonoBehaviour, IPooledObject, IKillable
 {
     #region Attributes
     private bool enabledObject = true;
@@ -18,6 +18,11 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
     {
         Debug.Log("active !!");
         enabledObject = true;
+    }
+
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.GameOver, StopAction);
     }
 
     #endregion
@@ -54,7 +59,7 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
     private void DoAction(Collider other)
     {
         ReactionHandler(other);
-        /*GameObject bonusParticle = */ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BonusTaken, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
+        ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BonusTaken, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         GameObject scoreText = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BonusText, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         scoreText.transform.GetChild(0).GetComponent<TextMesh>().text = "+1";
         SoundManager.GetSingleton.playSound("Bonus" + transform.GetInstanceID().ToString());
@@ -75,13 +80,35 @@ public class LinkSpawner : MonoBehaviour, IPooledObject, IKillable
             DoAction(other);
         }
     }
+
+    /// <summary>
+    /// appelé quand le jeu est fini...
+    /// </summary>
+    private void StopAction()
+    {
+        enabledObject = false;
+    }
     #endregion
 
     #region Unity ending functions
+    /// <summary>
+    /// appelé lorsque la pool clean up les objet actif et les désactif (lors d'une transition de scene)
+    /// </summary>
+    public void OnDesactivePool()
+    {
+        Debug.Log("DesactiveFromPool");
+        Kill();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.GameOver, StopAction);
+    }
+
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
     {
-        enabledObject = false;
+        StopAction();
         //Debug.Log("linkSpawner desactive !");
         gameObject.SetActive(false);
     }

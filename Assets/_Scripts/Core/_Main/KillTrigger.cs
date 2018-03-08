@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -7,14 +8,17 @@ using UnityEngine;
 public class KillTrigger : MonoBehaviour
 {
     #region Attributes
-    [SerializeField]
+    [FoldoutGroup("GamePlay"), Tooltip("prefabs à tuer"), SerializeField]
     private List<GameData.Prefabs> listPrefabsToKill;
 
-	[SerializeField]
-	private bool killOnEnter = true;
+    [FoldoutGroup("GamePlay"), Tooltip("Est-ce qu'on se tue sois même quand on kill ?"), SerializeField]
+    private bool killItSelf = false;
 
-	[SerializeField]
-	private bool killOnExit = false;
+    [FoldoutGroup("GamePlay"), Tooltip("Collision à l'entré"), SerializeField]
+    private bool killOnEnter = true;
+
+    [FoldoutGroup("GamePlay"), Tooltip("Collision à la sortie"), SerializeField]
+    private bool killOnExit = false;
 
 	#endregion
 
@@ -36,6 +40,19 @@ public class KillTrigger : MonoBehaviour
 		}
 	}
 
+    /// <summary>
+    /// on se tue soit même
+    /// </summary>
+    private void KillSelf()
+    {
+        IKillable killable = gameObject.GetComponent<IKillable>();
+        if (killable != null)
+            killable.Kill();
+    }
+
+    /// <summary>
+    /// essai de tuer...
+    /// </summary>
 	private void TryKill(GameObject other)
 	{
 		IKillable killable = other.GetComponent<IKillable> ();
@@ -46,10 +63,11 @@ public class KillTrigger : MonoBehaviour
                 if (other.CompareTag(listPrefabsToKill[i].ToString()))
                 {
                     killable.Kill();
+                    if (killItSelf)
+                        KillSelf();
                     return;
                 }
             }
-			
 		}
 
 

@@ -55,24 +55,40 @@ MonoBehaviour:
   - tag: 0
     prefab: {fileID: 1608521408533352, guid: c0c03b57f4c7a448884569172a68f988, type: 2}
     size: 125
-    shouldExpand: 1
+    shouldExpand: 0
   - tag: 1
     prefab: {fileID: 1608521408533352, guid: b63ff764ccd4b294e9150c926d65c7d6, type: 2}
     size: 20
-    shouldExpand: 1
+    shouldExpand: 0
   - tag: 2
     prefab: {fileID: 1252393073312354, guid: d7b2624c26da00e4ea5aa8df057d08b2, type: 2}
     size: 20
-    shouldExpand: 1
+    shouldExpand: 0
   - tag: 3
     prefab: {fileID: 1252393073312354, guid: e2f4d14e25f44924e82bb3a2dd52e2d1, type: 2}
     size: 10
-    shouldExpand: 1
+    shouldExpand: 0
   - tag: 4
     prefab: {fileID: 1643204372404494, guid: 8ba0e978a7edf8844b12967c9704e2bc, type: 2}
     size: 70
-    shouldExpand: 1
+    shouldExpand: 0
   - tag: 7
     prefab: {fileID: 1389624335083248, guid: bb11eccd34d5f2444a1daf0db0fe1cd9, type: 2}
     size: 10
-    shouldExpand: 1
+    shouldExpand: 0
+  - tag: 8
+    prefab: {fileID: 1221095074222132, guid: ba06735fc58c53f41a8482f307cf24e1, type: 2}
+    size: 20
+    shouldExpand: 0
+  - tag: 9
+    prefab: {fileID: 1252393073312354, guid: 5a74f26bc481ed54c87befe3133d1882, type: 2}
+    size: 20
+    shouldExpand: 0
+  - tag: 10
+    prefab: {fileID: 1252393073312354, guid: 9c9d82de34d1bd646b36f859bc886e75, type: 2}
+    size: 10
+    shouldExpand: 0
+  - tag: 11
+    prefab: {fileID: 132248, guid: 4fb289a8b3118504aa10a71d31e84a40, type: 2}
+    size: 20
+    shouldExpand: 0

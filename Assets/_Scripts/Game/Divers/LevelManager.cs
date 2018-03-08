@@ -41,7 +41,6 @@ public class LevelManager : MonoBehaviour, ILevelManager
     {
         coolDownRestart.Ready();
         enabledScript = true;
-        
     }
 
     /// <summary>
@@ -65,7 +64,10 @@ public class LevelManager : MonoBehaviour, ILevelManager
     {
         gameOver = false;
         playerAlive = 0;
-        LevelDesign.GetSingleton.InitLevelDesign(); //init le level design !!
+
+        //init le level design !! (+ spawn les entité dans le jeu)
+        LevelDesign.GetSingleton.InitLevelDesign();
+
 
         EventManager.TriggerEvent(GameData.Event.RoundStart);
 
@@ -97,6 +99,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     {
         Debug.Log("ici Spawn les players");
         PlayerBallInit playerBallInit = GameManager.GetSingleton.PlayerBallInit;
+        
 
         //ici parcours les player locals, et change leurs ballInfo avec ceux du playerBallInit !
         for (int i = 0; i < playerBallInit.PlayerData.Length; i++)
@@ -108,7 +111,10 @@ public class LevelManager : MonoBehaviour, ILevelManager
             
             
             bool activePlayer = playerBallInit.PlayerData[i].active;
-            playerController.SpawnBallPos(displayInGame.PlayerRocks[i].spawnBall[0], displayInGame.PlayerRocks[i].spawnBall[1]);
+            Transform posFirstBall = LevelDesign.GetSingleton.SpawnPlayersGet[i].spawnBall[0];
+            Transform posSecondBall = LevelDesign.GetSingleton.SpawnPlayersGet[i].spawnBall[1];
+
+            playerController.SpawnBallPos(posFirstBall, posSecondBall);
             if (activePlayer)
             {
                 playerAlive++;
@@ -170,6 +176,8 @@ public class LevelManager : MonoBehaviour, ILevelManager
             {
                 playersLocal[i].SetActive(false);
             }
+            ObjectsPooler.Instance.desactiveEveryOneForTransition();
+            ObjectsPoolerLocal.Instance.desactiveEveryOneForTransition();
             InitScene();
         }
 
@@ -187,6 +195,10 @@ public class LevelManager : MonoBehaviour, ILevelManager
             return;
 
         enabledScript = false;
+
+        //ObjectsPooler.Instance.desactiveEveryOneForTransition();
+        //ObjectsPoolerLocal.Instance.desactiveEveryOneForTransition();
+
         LevelDesign.GetSingleton.DesactiveScene(); //desactive le level design !!
         GameManager.GetSingleton.FromGameToSetup(true);
         GameManager.GetSingleton.SceneManagerLocal.PlayPrevious(false);

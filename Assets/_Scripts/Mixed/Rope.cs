@@ -219,7 +219,7 @@ public class Rope : MonoBehaviour, IKillable
                 continue;
 
             //créé un effet de particule
-            /*GameObject desactiveLink = */ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
+            ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.DesactiveLink, link.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
             link.GetComponent<MeshRenderer>().enabled = false;
             link.GetComponent<Collider>().enabled = false;
         }
@@ -251,6 +251,11 @@ public class Rope : MonoBehaviour, IKillable
     {
         if (linkCount == linkCountMax || linkBreaked)
             return;
+        if (index > listCircular.Count)
+        {
+            Debug.LogError("index out of range: " + index);
+            return;
+        }
         LinkCountAdd();
 
         GameObject closestLink = listCircular[index].Value;
@@ -306,7 +311,7 @@ public class Rope : MonoBehaviour, IKillable
             {
                 listCircular.Remove(link.gameObject);
                 ChangeThisPring(i - 1);
-                link.Kill();
+                link.RealyKill();
                 ChangeParamJointWhenAdding(-1);
                 return;
             }
@@ -378,7 +383,7 @@ public class Rope : MonoBehaviour, IKillable
     }
     private void ChangeThisPring(int index)
     {
-        if (index + 1 >= listCircular.Count || !listCircular[index + 1].Value || !listCircular[index].Value)
+        if (index < 0 || index + 1 >= listCircular.Count || !listCircular[index + 1].Value || !listCircular[index].Value)
         {
             listCircular.RemoveAllEmpty();
             return;

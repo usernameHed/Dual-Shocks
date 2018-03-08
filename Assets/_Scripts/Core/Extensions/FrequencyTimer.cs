@@ -23,7 +23,7 @@ public class FrequencyTimer
 		this.updateFrequency = updateFrequency;
 	}
 
-    public void InitFrequency()
+    public void Reset()
     {
         hasBeenReady = false;
     }
@@ -31,19 +31,35 @@ public class FrequencyTimer
     /// <summary>
     /// lorsque le timer est pret, renvoyer true
     /// </summary>
-	public bool Ready()
+	public bool Ready(bool setReadyWhenTest = true)
 	{
+
         if (waitOnlyOnce && hasBeenReady)
             return (true);
 
 		if (Time.fixedTime >= nextUpdate)
 		{
+
             if (notTheFirstTime)
             {
                 notTheFirstTime = false;
                 nextUpdate = Time.fixedTime + updateFrequency;
                 return (false);
             }
+
+            if (!setReadyWhenTest)  //si on test
+            {
+                if (hasBeenReady)   //ici on est pret, et on a déja été solicité
+                {
+                    return (true);
+                }
+                else
+                {
+                    return (false);
+                }
+
+            }
+
 			nextUpdate = Time.fixedTime + updateFrequency;
             hasBeenReady = true;
 			return (true);

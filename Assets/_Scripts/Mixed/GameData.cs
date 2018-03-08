@@ -22,13 +22,17 @@ public static class GameData
     public enum Prefabs
     {
         Link,           //tag & objet link
-        LinkSpawner,    //objet de tak Bonus
+        LinkBonus,    //objet de tak Bonus
         BonusTaken,     //particle, sans tag
         BonusText,      //particle, tag score
         DesactiveLink,  //particle, sans tag
         LevelDesign,    //tag level design
         Ball,           //tag ball (layer player)
         ParticleShockWave,  //particle shockwave, sans tag,
+        Enemy,          //enemy
+        EnemyExplode,   //particle
+        BallExplode,    //particle ball explode
+        Blockers,
     };
 
     public enum Layers
