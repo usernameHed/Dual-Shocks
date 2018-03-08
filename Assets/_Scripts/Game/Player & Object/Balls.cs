@@ -232,14 +232,17 @@ public class Balls : MonoBehaviour, IKillable
         ballBody.isKinematic = kinematicAtStart;
     }
 
-    [Button("Stun")]
-    private void StunTrue() { Stun(true); }
+    /// <summary>
+    /// est appelé pour stun le joueur
+    /// </summary>
+    /// <param name="active"></param>
     public void Stun(bool active = true)
     {
         if (active)
         {
             Debug.Log("Start cooldown");
             timeStunBall.StartCoolDown();
+            ballBody.drag = initialDrag;
         }
         else
         {
@@ -252,7 +255,7 @@ public class Balls : MonoBehaviour, IKillable
     /// Set la drag (quand le joueur s'arrete, ralentir la velocité / drag des ball..
     /// </summary>
     /// <param name="moving"></param>
-    private void SetDrag(bool moving)
+    private void SetStunParam(bool moving)
     {
         //Ici on A ETE stun, et que le temps est écoulé
         if (timeStunBall.IsWaiting())
@@ -279,14 +282,14 @@ public class Balls : MonoBehaviour, IKillable
     {
         if (HasMoved)
         {
-            SetDrag(true);
+            SetStunParam(true);
             if (kinematicAtStart)
                 playerRef.UnsetKinematic();
             ballBody.AddForce(HorizMove * (moveSpeed) * Time.deltaTime, 0.0f, VertiMove * (moveSpeed) * Time.deltaTime, ForceMode.Impulse);
         }
         else
         {
-            SetDrag(false);
+            SetStunParam(false);
         }
 
         if (Power1 && weaponsList[0])

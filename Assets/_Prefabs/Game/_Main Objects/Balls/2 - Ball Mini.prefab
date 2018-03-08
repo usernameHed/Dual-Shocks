@@ -768,7 +768,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1696340403240580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: faebbdf52187f024598c8f742f8dfd3a, type: 3}
   m_Name: 
@@ -852,7 +852,7 @@ MonoBehaviour:
   moveSpeed: 250
   idBall: 2
   ratioTurnRateFocus: 2
-  dragWhenStop: 2
+  dragWhenStop: 5
   timeStunBall:
     timeCoolDown: 5
     coolDownStarted: 0
@@ -874,7 +874,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1696340403240580}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8b11e115b393d94da4e302790452464, type: 3}
   m_Name: 

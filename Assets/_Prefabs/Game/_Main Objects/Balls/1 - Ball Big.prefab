@@ -839,7 +839,7 @@ MonoBehaviour:
   moveSpeed: 190
   idBall: 1
   ratioTurnRateFocus: 0.7
-  dragWhenStop: 2
+  dragWhenStop: 50
   timeStunBall:
     timeCoolDown: 5
     coolDownStarted: 0

@@ -111,6 +111,9 @@ public class WeaponShockWave : Weapon
                 if (!pushFriendBall && playerRef.isContainingThisBall(toPush.gameObject))
                     continue;
 
+                Balls ball = toPush.gameObject.GetComponent<Balls>();
+                ball.Stun(true);
+
                 //ici on a une ball ennemi (ou allié si pushFriendBall est vrai)
                 PushObject(toPush);
             }
