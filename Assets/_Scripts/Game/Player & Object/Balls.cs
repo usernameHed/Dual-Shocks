@@ -270,7 +270,6 @@ public class Balls : MonoBehaviour, IKillable
         }
         else
         {
-
             ballBody.drag = dragWhenStop;
         }
     }
