@@ -421,8 +421,13 @@ MonoBehaviour:
   idWeapon: 4
   weaponCoolDown: 1
   orderWeapon: 0
+  updateTimer:
+    updateFrequency: 0
+    notTheFirstTime: 0
+    waitOnlyOnce: 0
   forceImpulse: 30
   radius: 8
+  timeStunPlayer: 0.7
   pushLink: 1
   pushFriendLink: 0
   forceImpulseLink: 10
