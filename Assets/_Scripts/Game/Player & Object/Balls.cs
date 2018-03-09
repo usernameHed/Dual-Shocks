@@ -21,8 +21,8 @@ public class Balls : MonoBehaviour, IKillable
     private float dragWhenStop = 2f;
     private float initialDrag = 0;
 
-    [FoldoutGroup("GamePlay"), Tooltip("stun de la ball (quand on est poussé par exemple...)"), SerializeField]
-    private FrequencyCoolDown timeStunBall;
+    //[FoldoutGroup("GamePlay"), Tooltip("stun de la ball (quand on est poussé par exemple...)"), SerializeField]
+    private FrequencyCoolDown timeStunBall = new FrequencyCoolDown();
 
     [FoldoutGroup("GamePlay"), Tooltip("Temps d'attente entre le moment de la mort et la réel mort"), SerializeField]
     private float timeBeforeDie = 2f;
@@ -41,6 +41,9 @@ public class Balls : MonoBehaviour, IKillable
 
     [FoldoutGroup("Debug"), Tooltip("opti fps"), SerializeField]
 	private FrequencyTimer updateTimer;
+
+    [FoldoutGroup("Debug"), Tooltip("speed of balls"), SerializeField]
+    private bool isStunned = false;
 
     private Rigidbody ballBody;
     public Rigidbody BallBody { get { return ballBody; } }
@@ -107,14 +110,17 @@ public class Balls : MonoBehaviour, IKillable
     /// </summary>
     public void InitBall(PlayerController player, int id)
     {
+        Debug.Log("INit ball: " + player + ", " + id);
         HasMoved = false;
         Power1 = false;
         Power2 = 0f;
+        isStunned = false;
         //timeStunBall.Reset();
 
         ballBody = gameObject.GetComponent<Rigidbody>();
         initialDrag = ballBody.drag;
 
+        transform.position = player.SpawnBall[id].position;
 
         playerRef = player;
         idBallPlayer = id;
@@ -236,19 +242,32 @@ public class Balls : MonoBehaviour, IKillable
     /// est appelé pour stun le joueur
     /// </summary>
     /// <param name="active"></param>
-    public void Stun(bool active = true)
+    public void Stun(bool active, float timeStun)
     {
         if (active)
         {
             Debug.Log("Start cooldown");
-            timeStunBall.StartCoolDown();
+            isStunned = true;
+            timeStunBall.StartCoolDown(timeStun);
             ballBody.drag = initialDrag;
         }
         else
         {
             Debug.Log("End cooldown");
+            isStunned = false;
             ballBody.drag = initialDrag;
         }
+    }
+
+    /// <summary>
+    /// test si la ball est actuellement stun... et si oui, le désactive à la fin
+    /// </summary>
+    private void testIfBallIsStunned()
+    {
+        if (timeStunBall.IsWaiting())
+            return;
+        else if (timeStunBall.IsStartedAndOver())
+            Stun(false, 0);
     }
 
     /// <summary>
@@ -257,11 +276,13 @@ public class Balls : MonoBehaviour, IKillable
     /// <param name="moving"></param>
     private void SetStunParam(bool moving)
     {
+        /*
         //Ici on A ETE stun, et que le temps est écoulé
         if (timeStunBall.IsWaiting())
             return;
         else if (timeStunBall.IsStartedAndOver())
             Stun(false);
+        */
 
         //ici on est pas stun
         if (moving)
@@ -279,15 +300,24 @@ public class Balls : MonoBehaviour, IKillable
     /// </summary>
     private void MovePlayer()
     {
+        testIfBallIsStunned();
+
         if (HasMoved)
         {
+            //set le drag
             SetStunParam(true);
+
+            //set kinematic au début !
             if (kinematicAtStart)
                 playerRef.UnsetKinematic();
-            ballBody.AddForce(HorizMove * (moveSpeed) * Time.deltaTime, 0.0f, VertiMove * (moveSpeed) * Time.deltaTime, ForceMode.Impulse);
+
+            //si la ball n'est PAS stun, on peut bouger !
+            if (!isStunned)
+                ballBody.AddForce(HorizMove * (moveSpeed) * Time.deltaTime, 0.0f, VertiMove * (moveSpeed) * Time.deltaTime, ForceMode.Impulse);
         }
         else
         {
+            //enlève le drag !
             SetStunParam(false);
         }
 

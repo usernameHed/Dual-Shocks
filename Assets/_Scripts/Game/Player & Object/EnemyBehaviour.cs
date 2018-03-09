@@ -9,7 +9,7 @@ using System;
 public class EnemyBehaviour : MonoBehaviour, IKillable, IPooledObject
 {
     #region Attributes
-    private bool enabledEnemy = true;
+    private bool enabledObject = true;
     private Rigidbody rigidBody;
     #endregion
 
@@ -30,7 +30,7 @@ public class EnemyBehaviour : MonoBehaviour, IKillable, IPooledObject
 
     private void Init()
     {
-        enabledEnemy = true;
+        enabledObject = true;
         rigidBody.velocity = Vector3.zero;
     }
 
@@ -46,7 +46,7 @@ public class EnemyBehaviour : MonoBehaviour, IKillable, IPooledObject
     /// </summary>
     private void StopAction()
     {
-        enabledEnemy = false;
+        enabledObject = false;
     }
 
     /// <summary>
@@ -73,11 +73,11 @@ public class EnemyBehaviour : MonoBehaviour, IKillable, IPooledObject
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()
 	{
-        if (!enabledEnemy)
+        if (!enabledObject)
             return;
 
 		Debug.Log ("Enemy dead !");
-        enabledEnemy = false;
+        enabledObject = false;
 
         /*GameObject bonusParticle = */
         ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.EnemyExplode, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);

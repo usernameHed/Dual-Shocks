@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour, IKillable
     /// </summary>
     private void InitPlayer()
     {
+        Debug.Log("init player: " + idPlayer);
         enabledPlayer = true;
         stopAction = false;
         ropeScript.gameObject.SetActive(true);

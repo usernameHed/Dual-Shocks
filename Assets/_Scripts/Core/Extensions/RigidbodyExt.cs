@@ -18,6 +18,14 @@ public static class RigidbodyExt
 		body.AddForce(accel, forceMode);
 	}
 
+    public static Rigidbody ClearVelocity(this Rigidbody rigid)
+    {
+        rigid.velocity = Vector3.zero;
+        //rigid.angularDrag = 0;
+        //rigid.angularVelocity = Vector3.zero;
+        return (rigid);
+    }
+
     /// <summary>
     /// Changes the direction of a rigidbody without changing its speed.
     /// </summary>

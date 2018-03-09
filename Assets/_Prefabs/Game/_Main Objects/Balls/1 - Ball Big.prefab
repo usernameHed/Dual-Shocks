@@ -841,7 +841,7 @@ MonoBehaviour:
   ratioTurnRateFocus: 0.7
   dragWhenStop: 50
   timeStunBall:
-    timeCoolDown: 5
+    timeCoolDown: 3
     coolDownStarted: 0
   timeBeforeDie: 2
   renderBall: {fileID: 23272596771757678}

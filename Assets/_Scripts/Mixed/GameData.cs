@@ -41,5 +41,21 @@ public static class GameData
         Player,         //les balls
         Rope,           //les link sont dans ce layer
     }
+
+    /// <summary>
+    /// retourne vrai si le layer est dans la list
+    /// </summary>
+    public static bool IsInList(List<Layers> listLayer, int layer)
+    {
+        string layerName = LayerMask.LayerToName(layer);
+        for (int i = 0; i < listLayer.Count; i++)
+        {
+            if (listLayer[i].ToString() == layerName)
+            {
+                return (true);
+            }
+        }
+        return (false);
+    }
     #endregion
 }

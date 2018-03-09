@@ -33,10 +33,7 @@ public abstract class Generate : MonoBehaviour
     protected string pathToSave = "Assets/_Prefabs/Game/Generate/";
 
 
-    protected SaveGeneratedMesh saveMesh;
-    /*protected MeshFilter meshFilter;
-    protected MeshRenderer meshRenderer;*/
-    //protected Mesh mesh;
+    //protected SaveGeneratedMesh saveMesh;
 
     #endregion
 
@@ -45,7 +42,7 @@ public abstract class Generate : MonoBehaviour
     {
         
 
-        saveMesh = new SaveGeneratedMesh(transform);
+        //saveMesh = new SaveGeneratedMesh(transform);
     }
 
     private void Start()
@@ -66,7 +63,7 @@ public abstract class Generate : MonoBehaviour
     [Button("Save")]
     private void SaveMesh()
     {
-        saveMesh.SaveAsset("Assets/_Prefabs/Game/Generate/", "SavedMesh");
+        //saveMesh.SaveAsset("Assets/_Prefabs/Game/Generate/", "SavedMesh");
     }
 
     abstract protected void InitMesh(); //appelé à l'initialisation

@@ -5,7 +5,8 @@ using UnityEngine;
 public class FrequencyCoolDown
 {
     [FoldoutGroup("GamePlay"), Tooltip("Temspd e coolDown"), SerializeField]
-    public float timeCoolDown = 1f;           //optimisation du temps
+    private float timeCoolDown = 1f;           //optimisation du temps
+    public float TimeCoolDown { get { return (timeCoolDown); } }
 
     [FoldoutGroup("Debug"), Tooltip("A-t-on commencé ?"), SerializeField]
     private bool coolDownStarted = false;
@@ -15,9 +16,10 @@ public class FrequencyCoolDown
     /// <summary>
     /// Initialise l'optimisation
     /// </summary>
-    public void StartCoolDown()
+    public void StartCoolDown(float time = -1)
     {
-        timeToGo = Time.fixedTime + timeCoolDown;
+        time = (time == -1) ? timeCoolDown : time;
+        timeToGo = Time.fixedTime + time;
         coolDownStarted = true;
     }
 

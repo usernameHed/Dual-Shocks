@@ -141,6 +141,43 @@ public class Rope : MonoBehaviour, IKillable
         CreateFakeListForDebug();
     }
 
+    /// <summary>
+    /// applique une force sur TOUT les objets
+    /// - force sur les link (et les autres... les balls)
+    /// </summary>
+    public void ApplyForceOnAll(GameObject obj, Vector3 dir, float force)
+    {
+        StartCoroutine(ApplyForceOnAllTime(obj, dir, force));
+    }
+    private IEnumerator ApplyForceOnAllTime(GameObject obj, Vector3 dir, float force)
+    {
+        if (listCircular[0].Value && listCircular[0].Value.GetInstanceID() == obj.GetInstanceID())
+        {
+            for (int i = 0; i < listCircular.Count; i++)
+            {
+                ApplyForce(i, dir, force);
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        else if (listCircular[listCircular.Count - 1].Value && listCircular[listCircular.Count - 1].Value.GetInstanceID() == obj.GetInstanceID())
+        {
+            for (int i = listCircular.Count - 1; i >= 0; i--)
+            {
+                ApplyForce(i, dir, force);
+                yield return new WaitForEndOfFrame();
+            }
+        }
+    }
+    private void ApplyForce(int i, Vector3 dir, float force)
+    {
+        if (!listCircular[i].Value)
+            return;
+        Rigidbody rbObject = listCircular[i].Value.GetComponent<Rigidbody>();
+        if (!rbObject)
+            return;
+
+        rbObject.AddForce(dir * force, ForceMode.Impulse);
+    }
 
     /// <summary>
     /// une fois créé, setup le link

@@ -161,7 +161,7 @@ public class ObjectsPooler : ISingleton<ObjectsPooler>
                 }
                 else
                 {
-                    Debug.LogError("pas d'expantion, error");
+                    Debug.LogError("pas d'expantion, error pour le tag: " + tag);
 
                     break;
                 }

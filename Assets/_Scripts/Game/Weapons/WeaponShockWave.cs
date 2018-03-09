@@ -17,6 +17,8 @@ public class WeaponShockWave : Weapon
     private float forceImpulse = 10f;
     [FoldoutGroup("Gameplay"), Tooltip("radius de l'explosion"), SerializeField]
     private float radius = 5f;
+    [FoldoutGroup("Gameplay"), Tooltip("Temps de stun si on shock une wave"), SerializeField]
+    private float timeStunPlayer = 1f;
 
     [Space(10)]
 
@@ -66,9 +68,8 @@ public class WeaponShockWave : Weapon
 	protected override bool OnShoot()
     {
         Debug.Log("shockwave !");
-        //shockwaveEffect.CreateWave(ballRef.transform);  //créé l'effet de shackwave
 
-        /*GameObject particleShockWave = */ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleShockWave, ballRef.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
+        ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleShockWave, ballRef.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         SoundManager.GetSingleton.playSound("ShockWave" + transform.GetInstanceID().ToString());
         CreateShackWave();  //applique les forces
         return (true);
@@ -112,7 +113,7 @@ public class WeaponShockWave : Weapon
                     continue;
 
                 Balls ball = toPush.gameObject.GetComponent<Balls>();
-                ball.Stun(true);
+                ball.Stun(true, timeStunPlayer);
 
                 //ici on a une ball ennemi (ou allié si pushFriendBall est vrai)
                 PushObject(toPush);
