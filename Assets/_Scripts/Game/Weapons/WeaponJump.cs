@@ -55,7 +55,7 @@ public class WeaponJump : Weapon
         if (linkToPush > 0)
             PushLink();
 
-        SoundManager.GetSingleton.playSound("Jump" + transform.GetInstanceID().ToString());
+        SoundManager.GetSingleton.playSound(GameData.Sounds.Jump.ToString() + transform.GetInstanceID().ToString());
         return (true);
     }
 

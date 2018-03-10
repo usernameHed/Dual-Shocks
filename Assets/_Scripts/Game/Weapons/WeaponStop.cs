@@ -52,7 +52,7 @@ public class WeaponStop : Weapon
 	protected override bool OnShoot()
     {
         Spikes.SetActive(true);
-        SoundManager.GetSingleton.playSound("SpiksOn" + transform.GetInstanceID().ToString());
+        SoundManager.GetSingleton.playSound(GameData.Sounds.SpiksOn.ToString() + transform.GetInstanceID().ToString());
         ballRef.BallBody.drag = dragWhenStop;
         ballRef.BallBody.angularDrag = dragWhenStop;
         ballRef.BallBody.mass += additionalMass;
@@ -77,7 +77,7 @@ public class WeaponStop : Weapon
         ballRef.BallBody.drag = saveDrag;
         ballRef.BallBody.angularDrag = saveAngularDrag;
         ballRef.BallBody.mass = saveMass;
-        SoundManager.GetSingleton.playSound("SpiksOff" + transform.GetInstanceID().ToString());
+        SoundManager.GetSingleton.playSound(GameData.Sounds.SpiksOff.ToString() + transform.GetInstanceID().ToString());
     }
 
     #endregion

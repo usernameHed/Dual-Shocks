@@ -6,7 +6,7 @@ using System;
 /// <summary>
 /// PlayerController handle player movement
 /// <summary>
-public class EnemyBehaviour : MonoBehaviour, IKillable, IPooledObject
+public class BlockerBehaviour : MonoBehaviour, IKillable, IPooledObject
 {
     #region Attributes
     private bool enabledObject = true;
@@ -76,12 +76,7 @@ public class EnemyBehaviour : MonoBehaviour, IKillable, IPooledObject
 	{
         if (!enabledObject)
             return;
-
-		Debug.Log ("Enemy dead !");
         enabledObject = false;
-
-        /*GameObject bonusParticle = */
-        ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.EnemyExplode, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
 
         gameObject.SetActive(false);
     }

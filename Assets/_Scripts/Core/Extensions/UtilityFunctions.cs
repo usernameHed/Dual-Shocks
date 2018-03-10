@@ -37,6 +37,18 @@ public static class UtilityFunctions
         return random.Next() * (maximum - minimum) + minimum;
     }
 
+    public static bool IsTargetOnScreen(Camera cam, Transform target, float xMargin = 0, float yMargin = 0, Renderer render = null)
+    {
+        if (!cam)
+            return (false);
+        Vector3 boundExtent = (render == null) ? Vector3.zero : render.bounds.extents;
+
+        Vector3 bottomCorner = cam.WorldToViewportPoint(target.position - boundExtent);
+        Vector3 topCorner = cam.WorldToViewportPoint(target.position + boundExtent);
+
+        return (topCorner.x >= -xMargin && bottomCorner.x <= 1 + xMargin && topCorner.y >= -yMargin && bottomCorner.y <= 1 + yMargin);
+    }
+
     /// <summary>
     /// si TOTO532, retourne "532"
     /// </summary>

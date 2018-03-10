@@ -92,3 +92,11 @@ MonoBehaviour:
     prefab: {fileID: 132248, guid: 4fb289a8b3118504aa10a71d31e84a40, type: 2}
     size: 20
     shouldExpand: 0
+  - tag: 12
+    prefab: {fileID: 1551932104604348, guid: 08ad5b94817038a44a07f56bc17f73a3, type: 2}
+    size: 20
+    shouldExpand: 0
+  - tag: 13
+    prefab: {fileID: 1810421176405260, guid: ce4499c468141b14bbc00e592aabfcd8, type: 2}
+    size: 10
+    shouldExpand: 0

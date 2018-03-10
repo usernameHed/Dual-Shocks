@@ -8,7 +8,16 @@ using System;
 /// <summary>
 public class BumperBehaviour : MonoBehaviour
 {
+    public enum TypeBumper
+    {
+        Horiz,
+        Verti,
+        Mixed,
+    }
+
     #region Attributes
+    [FoldoutGroup("GamePlay"), Tooltip("Bumper type"), SerializeField]
+    private TypeBumper bumperType;
     [FoldoutGroup("GamePlay"), Tooltip("Vecteur direction de la poussé"), SerializeField]
     private Transform direction;
 
@@ -33,11 +42,13 @@ public class BumperBehaviour : MonoBehaviour
     private MeshRenderer mesh;
 
     private bool enabledObject = true;
+    private Camera cam;
     #endregion
 
     #region Initialize
     private void Awake()
     {
+        cam = Camera.main;
         Init();
     }
 
@@ -71,19 +82,34 @@ public class BumperBehaviour : MonoBehaviour
     /// </summary>
     private void DoBump(GameObject obj)
     {
+        //sound bump
+        SoundManager.GetSingleton.playSound(GameData.Sounds.Bump.ToString() + transform.GetInstanceID().ToString());
+
+
         Rigidbody rbOther = obj.GetComponent<Rigidbody>();
         if (!rbOther)
             return;
 
         Vector3 dir = (transform.position - direction.position).normalized;
-        rbOther.ClearVelocity();
+
+        if (UtilityFunctions.IsTargetOnScreen(cam, obj.transform))
+        {
+            //particleBump
+            //Cree uniquement si la position X,Y est dans la caméra ???
+            Debug.Log("TODO: erreur direction...");
+            Quaternion dirQuat = Quaternion.Euler(dir);
+            ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleBump, obj.transform.position, dirQuat, ObjectsPooler.Instance.transform);
+        }
+
+
+        rbOther.ClearVelocity();    //clear velocity du rigidbody
 
         if (obj.CompareTag(GameData.Prefabs.Ball.ToString()))
         {
             Debug.Log("Stun Ball !");
             
             Balls ball = obj.gameObject.GetComponent<Balls>();
-            if (stunPlayer)
+            if (stunPlayer && bumperType == TypeBumper.Horiz)
                 ball.Stun(true, stunPlayerTime);
             ball.PlayerRef.RopeScript.ApplyForceOnAll(obj, dir, -forcePlayer);
         }
@@ -93,6 +119,8 @@ public class BumperBehaviour : MonoBehaviour
         }*/
         else
         {
+            //ForceMode mode = (bumperType == TypeBumper.Horiz) ? ForceMode.VelocityChange : ForceMode.Impulse;
+
             rbOther.AddForce(dir * -forceObjects, ForceMode.VelocityChange);
         }
 

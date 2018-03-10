@@ -42,7 +42,7 @@ public class IsOnCamera : MonoBehaviour
 		Vector3 bottomCorner = cam.WorldToViewportPoint(gameObject.transform.position - objectRenderer.bounds.extents);
 		Vector3 topCorner = cam.WorldToViewportPoint(gameObject.transform.position + objectRenderer.bounds.extents);
 
-		return topCorner.x >= -xMargin && bottomCorner.x <= 1 + xMargin && topCorner.y >= -yMargin && bottomCorner.y <= 1 + yMargin;
+		return (topCorner.x >= -xMargin && bottomCorner.x <= 1 + xMargin && topCorner.y >= -yMargin && bottomCorner.y <= 1 + yMargin);
 	}
 
 	// Unity functions

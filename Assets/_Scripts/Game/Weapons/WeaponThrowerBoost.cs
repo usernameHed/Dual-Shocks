@@ -31,7 +31,7 @@ public class WeaponThrowerBoost : Weapon
     /// </summary>
 	protected override bool OnShoot()
     {
-        SoundManager.GetSingleton.playSound("Thrower" + transform.GetInstanceID().ToString());
+        SoundManager.GetSingleton.playSound(GameData.Sounds.Thrower.ToString() + transform.GetInstanceID().ToString());
         ApplyForce();
         return (true);
     }
@@ -51,7 +51,7 @@ public class WeaponThrowerBoost : Weapon
     /// </summary>
     protected override void OnShootRelease()
     {
-        SoundManager.GetSingleton.playSound("Thrower" + transform.GetInstanceID().ToString(), true);
+        SoundManager.GetSingleton.playSound(GameData.Sounds.Thrower.ToString() + transform.GetInstanceID().ToString(), true);
     }
 
     /// <summary>

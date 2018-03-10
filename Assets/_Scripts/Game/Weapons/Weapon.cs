@@ -120,7 +120,7 @@ public abstract class Weapon : MonoBehaviour, IKillable
     //appelé SI besoin (si on fait du hold)
     protected virtual void OnShootHold() { }          //appelé lorsque l'on reste appuyé
     protected virtual void OnShootRelease() { }          //appelé lorsque l'on reste appuyé
-
+    protected virtual void KillParticularWeapon() { }          //appelé lorsque l'on reste appuyé
 
     public virtual float WeaponPercent()
 	{
@@ -149,6 +149,7 @@ public abstract class Weapon : MonoBehaviour, IKillable
     {
         if (!activatedScript)
             return;
+        KillParticularWeapon();
 
         activatedScript = false;
         display.transform.SetParent(transform); //remet le display avant de la supprimer !

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 
 /// <summary>
 /// description
@@ -42,13 +43,14 @@ public class WeaponShockWave : Weapon
     [FoldoutGroup("Gameplay"), Tooltip("Nom des layers à chercher et à pousser"), SerializeField]
     private GameData.Layers[] layerToTest;
 
-    //private ShockWaveEffect shockwaveEffect;
+    private ShowArrow showArrow;
 
     #endregion
 
     #region  initialisation
     private void Awake()
     {
+        showArrow = GetComponent<ShowArrow>();
         //shockwaveEffect = GetComponent<ShockWaveEffect>();
     }
 
@@ -70,7 +72,7 @@ public class WeaponShockWave : Weapon
         Debug.Log("shockwave !");
 
         ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleShockWave, ballRef.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
-        SoundManager.GetSingleton.playSound("ShockWave" + transform.GetInstanceID().ToString());
+        SoundManager.GetSingleton.playSound(GameData.Sounds.ShockWave.ToString() + transform.GetInstanceID().ToString());
         CreateShackWave();  //applique les forces
         return (true);
     }
@@ -163,6 +165,7 @@ public class WeaponShockWave : Weapon
     #endregion
 
     #region unity fonction and ending
+
     /// <summary>
     /// affichage du radius dans l'éditeur quand on sélectionne la ball
     /// </summary>
@@ -171,6 +174,14 @@ public class WeaponShockWave : Weapon
         Gizmos.color = Color.red;
         //Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
         Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+    /// <summary>
+    /// appelé quand on meurt...
+    /// </summary>
+    protected override void KillParticularWeapon()
+    {
+        showArrow.Kill();
     }
 
     #endregion

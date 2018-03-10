@@ -53,7 +53,7 @@ public class WeaponDash : Weapon
     protected override bool OnShoot()
     {
 		Debug.Log("Dash");
-        SoundManager.GetSingleton.playSound("Swouch" + transform.GetInstanceID().ToString());
+        SoundManager.GetSingleton.playSound(GameData.Sounds.Swouch.ToString() + transform.GetInstanceID().ToString());
 
         //pousse la balle
         ApplyForce(ballRef.BallBody, forceImpulse);

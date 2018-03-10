@@ -437,7 +437,7 @@ public class Balls : MonoBehaviour, IKillable
         TimeManager.Instance.DoSlowMothion();
 
         //play un son de destruction
-        SoundManager.GetSingleton.playSound("Explode" + transform.GetInstanceID());
+        SoundManager.GetSingleton.playSound(GameData.Sounds.Explode.ToString() + transform.GetInstanceID());
 
         //di à la rope que son objet principal X est mort !
         //playerRef.RopeScript.HandleDestruction(true, IdBallPlayer);

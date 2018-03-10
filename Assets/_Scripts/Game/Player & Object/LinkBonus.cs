@@ -62,7 +62,7 @@ public class LinkBonus : MonoBehaviour, IPooledObject, IKillable
         ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BonusTaken, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         GameObject scoreText = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BonusText, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
         scoreText.transform.GetChild(0).GetComponent<TextMesh>().text = "+1";
-        SoundManager.GetSingleton.playSound("Bonus" + transform.GetInstanceID().ToString());
+        SoundManager.GetSingleton.playSound(GameData.Sounds.Bonus.ToString() + transform.GetInstanceID().ToString());
         Kill();
     }
 

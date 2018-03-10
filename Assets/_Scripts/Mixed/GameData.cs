@@ -32,7 +32,9 @@ public static class GameData
         Enemy,          //enemy
         EnemyExplode,   //particle
         BallExplode,    //particle ball explode
-        Blockers,
+        Blockers,       //prefabs blocked (la boule)
+        ParticleBump,   //particule du bumper
+        ParticleArrowShockWave, //target du shockwave
     };
 
     public enum Layers
@@ -40,6 +42,19 @@ public static class GameData
         Object,         //tout les objets du décors actif (les boules)
         Player,         //les balls
         Rope,           //les link sont dans ce layer
+    }
+
+    public enum Sounds
+    {
+        ShockWave,
+        Bump,
+        Explode,
+        Jump,
+        Bonus,
+        Swouch,
+        SpiksOn,
+        SpiksOff,
+        Thrower,
     }
 
     /// <summary>
@@ -51,6 +66,20 @@ public static class GameData
         for (int i = 0; i < listLayer.Count; i++)
         {
             if (listLayer[i].ToString() == layerName)
+            {
+                return (true);
+            }
+        }
+        return (false);
+    }
+    /// <summary>
+    /// retourne vrai si le layer est dans la list
+    /// </summary>
+    public static bool IsInList(List<Prefabs> listLayer, string tag)
+    {
+        for (int i = 0; i < listLayer.Count; i++)
+        {
+            if (listLayer[i].ToString() == tag)
             {
                 return (true);
             }
