@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -3871,6 +3871,7 @@ MonoBehaviour:
     fadeTime: 1.5
     additive: 0
     swapWhenLoaded: 0
+    sceneToChargeAfterAdditive: 
   levelMangerInterfacce: {fileID: 596972350}
 --- !u!1 &1697105279
 GameObject:
