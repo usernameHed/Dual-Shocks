@@ -12,17 +12,17 @@ public class Rope : MonoBehaviour, IKillable
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Position de l'anchor pour les 2 balles"), SerializeField]
     private Vector3 ropeAnchors = Vector3.zero;
 
-    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'élastique"), SerializeField]
-    private float[] spring = new float[2];
+    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'élastique (case 0: valeur de base, case 1: valeur à ajouter quand +un nouveau link)"), SerializeField]
+    private float[] spring = new float[3];
+
+    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force du damper (case 0: valeur de base, case 1: valeur à ajouter quand +un nouveau link)"), SerializeField]
+    private float[] damper = new float[3];
+
+    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("mass des links (case 0: valeur de base, case 1: valeur à ajouter quand +un nouveau link, case 2: valeur fixe quand il ne reste qu'une ball)"), SerializeField]
+    private float[] massLink = new float[3];
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
-    private float[] damper = new float[2];
-
-    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
-    private float[] massLink = new float[2];
-
-    [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
-    private float[] dragLink = new float[2];
+    private float[] dragLink = new float[3];
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
     private bool useGravityLink = true;
@@ -58,17 +58,8 @@ public class Rope : MonoBehaviour, IKillable
     [FoldoutGroup("Objects"), Tooltip("le parent où mettre les Link"), SerializeField]
     private Transform parentLink;
 
-    //[FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
-    //private List<GameObject> linkList;
-    //public List<GameObject> LinkList { get { return linkList; } }
-
-
     [FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     private Color colorRope;
-
-    //[FoldoutGroup("Debug"), Tooltip("FUUUUUUUUUUUU"), SerializeField]
-    //private GameObject prefabsLink;
-
 
     [OnValueChanged("CreateFakeListForDebug")]
     private CircularLinkedList<GameObject> listCircular = new CircularLinkedList<GameObject>();
@@ -80,7 +71,7 @@ public class Rope : MonoBehaviour, IKillable
 
     private bool linkBreaked = false;
     private bool enabledScript = true;
-
+    private bool onlyOneLeft = false;
     #endregion
 
     #region Initialization
@@ -102,6 +93,7 @@ public class Rope : MonoBehaviour, IKillable
     public void InitPhysicRope()
     {
         enabledScript = true;
+        OnlyOneMainLeft(false);
         ClearJoints();  //clear les joints précédents
 
         //cree un sprintjoint sur la première ball si il n'y en a pas déja
@@ -139,6 +131,18 @@ public class Rope : MonoBehaviour, IKillable
         ChangeColorLink(colorRope);  //change color
 
         CreateFakeListForDebug();
+    }
+
+    /// <summary>
+    /// est appelé quand on est la derniere ball restante...
+    /// </summary>
+    public void OnlyOneMainLeft(bool active)
+    {
+        onlyOneLeft = active;
+        if (active)
+        {
+            ChangeParamJointWhenAdding(0);
+        }
     }
 
     /// <summary>
@@ -412,6 +416,15 @@ public class Rope : MonoBehaviour, IKillable
         damper[0] += damper[1] * add;
         massLink[0] += massLink[1] * add;
         dragLink[0] += dragLink[1] * add;
+
+        if (onlyOneLeft)
+        {
+            //spring[0] = spring[2];
+            //damper[0] = damper[2];
+            massLink[0] = massLink[2];
+            //dragLink[0] = dragLink[2];
+        }
+
         ChangeValueSpring();
     }
 

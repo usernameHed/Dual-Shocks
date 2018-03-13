@@ -384,6 +384,7 @@ MonoBehaviour:
   massLink:
   - 0.6
   - -0.025
+  - 0.2
   dragLink:
   - 0
   - 0

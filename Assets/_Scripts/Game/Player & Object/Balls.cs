@@ -19,6 +19,9 @@ public class Balls : MonoBehaviour, IKillable
     public float RatioTurnRateFocus { get { return ratioTurnRateFocus; } }
     [FoldoutGroup("GamePlay"), Tooltip("drag des balls quand elle sont arreté"), SerializeField]
     private float dragWhenStop = 2f;
+    private bool ImTheOnlyOne = false;
+    [FoldoutGroup("GamePlay"), Tooltip("drag de la ball quand elle est toute seul"), SerializeField]
+    private float dragWhenIAmTheOnlyOne = 10f;
     private float initialDrag = 0;
 
     //[FoldoutGroup("GamePlay"), Tooltip("stun de la ball (quand on est poussé par exemple...)"), SerializeField]
@@ -115,6 +118,7 @@ public class Balls : MonoBehaviour, IKillable
         Power1 = false;
         Power2 = 0f;
         isStunned = false;
+        IAmTheOnlyOne(false);
         //timeStunBall.Reset();
 
         ballBody = gameObject.GetComponent<Rigidbody>();
@@ -274,15 +278,13 @@ public class Balls : MonoBehaviour, IKillable
     /// Set la drag (quand le joueur s'arrete, ralentir la velocité / drag des ball..
     /// </summary>
     /// <param name="moving"></param>
-    private void SetStunParam(bool moving)
+    private void SetDragParam(bool moving)
     {
-        /*
-        //Ici on A ETE stun, et que le temps est écoulé
-        if (timeStunBall.IsWaiting())
+        if (ImTheOnlyOne)
+        {
+            ballBody.drag = dragWhenIAmTheOnlyOne;
             return;
-        else if (timeStunBall.IsStartedAndOver())
-            Stun(false);
-        */
+        }
 
         //ici on est pas stun
         if (moving)
@@ -305,7 +307,7 @@ public class Balls : MonoBehaviour, IKillable
         if (HasMoved)
         {
             //set le drag
-            SetStunParam(true);
+            SetDragParam(true);
 
             //set kinematic au début !
             if (kinematicAtStart)
@@ -318,7 +320,7 @@ public class Balls : MonoBehaviour, IKillable
         else
         {
             //enlève le drag !
-            SetStunParam(false);
+            SetDragParam(false);
         }
 
         if (Power1 && weaponsList[0])
@@ -331,9 +333,6 @@ public class Balls : MonoBehaviour, IKillable
         }            
     }
 
-    #endregion
-
-    #region Unity ending functions
     /// <summary>
     /// Appelé quand on touche un bonus, ajout un link !
     /// </summary>
@@ -346,6 +345,17 @@ public class Balls : MonoBehaviour, IKillable
     {
         return (playerRef.RopeScript);
     }
+
+    /// <summary>
+    /// est appelé quand on est la derniere ball restante...
+    /// </summary>
+    public void IAmTheOnlyOne(bool active)
+    {
+        ImTheOnlyOne = active;
+    }
+    #endregion
+
+    #region Unity ending functions
 
     private void OnTriggerEnter(Collider other)
     {
@@ -420,7 +430,7 @@ public class Balls : MonoBehaviour, IKillable
             weaponsList[1].Kill();
 
         playerRef.FollowersList[IdBallPlayer].gameObject.SetActive(false);
-        playerRef.TestForDestroyLink(transform.position); //envoi l'info comme quoi une ball est en train de se faire détruire...
+        playerRef.TestForDestroyLink(transform.position, IdBallPlayer); //envoi l'info comme quoi une ball est en train de se faire détruire...
 
         //créé la particule
         ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.BallExplode, transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);

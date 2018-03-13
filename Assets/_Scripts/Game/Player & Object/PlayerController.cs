@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour, IKillable
     /// est appelé pour voir si la dernière ball est en train d'être détruite...
     /// position de l'explosion...
     /// </summary>
-    public void TestForDestroyLink(Vector3 position)
+    public void TestForDestroyLink(Vector3 position, int indexBall)
     {
         Debug.Log("ici plusieurs fois ??");
         ballRemaining--;
@@ -264,6 +264,12 @@ public class PlayerController : MonoBehaviour, IKillable
             Debug.Log("ici call kill & break");
             Invoke("Kill", ropeScript.TimeToBecomeHarmLess + (ropeScript.RationRandom * (ropeScript.LinkCircular.Count + 1)));
             ropeScript.JustBreakUpLink(position);
+        }
+        else
+        {
+            //ici il y a une ball encore fonctionnelle
+            ballsList[(indexBall == 0) ? 1 : 0].IAmTheOnlyOne(true);
+            ropeScript.OnlyOneMainLeft(true);
         }
     }
 
