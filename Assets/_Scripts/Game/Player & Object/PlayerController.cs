@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         Debug.Log("init player: " + idPlayer);
         enabledPlayer = true;
-        stopAction = false;
+        //stopAction = false;
         ropeScript.gameObject.SetActive(true);
         ActiveFollower(true);
 
@@ -84,6 +84,11 @@ public class PlayerController : MonoBehaviour, IKillable
         ballRemaining = SizeArrayId;
         
         InitRope();
+
+
+        stopAction = true;
+
+        stopAction = false;
     }
 
     /// <summary>
@@ -320,18 +325,6 @@ public class PlayerController : MonoBehaviour, IKillable
     }
 
     #endregion
-
-    /// <summary>
-    /// fonction de debug pour éviter de resizer le tableau d'id
-    /// </summary>
-    void OnValidate()
-    {
-        if (ballInfo.Length != SizeArrayId)
-        {
-            Debug.LogWarning("Don't change the 'ints' field's array size!");
-            Array.Resize(ref ballInfo, SizeArrayId);
-        }
-    }
 
     [FoldoutGroup("Debug"), Button("Kill")]
     public void Kill()

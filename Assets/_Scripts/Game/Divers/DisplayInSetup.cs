@@ -97,7 +97,8 @@ public class DisplayInSetup : MonoBehaviour
                     break;
                 case 1:
                     playersSetup[i].ActiveObj(1);
-                    playersSetup[i].rope.gameObject.SetActive(false);
+                    playersSetup[i].rope.Kill();
+                    //playersSetup[i].rope.gameObject.SetActive(false);
 
                     break;
                 case 2:
@@ -121,7 +122,7 @@ public class DisplayInSetup : MonoBehaviour
     {
         for (int i = 0; i < setupManager.IdPhaseConnexion.Length; i++)
         {
-            playersSetup[i].rope.ClearJoints();
+            playersSetup[i].rope.ClearJoints(false);
         }
     }
     #endregion

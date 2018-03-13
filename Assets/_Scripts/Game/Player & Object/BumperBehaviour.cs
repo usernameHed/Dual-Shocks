@@ -48,16 +48,15 @@ public class BumperBehaviour : MonoBehaviour
     #endregion
 
     #region Initialize
-    private void Awake()
+    private void Start()
     {
-        cam = Camera.main;
         Init();
     }
 
     private void Init()
     {
+        cam = GameManager.GetSingleton.CameraMain;
         enabledObject = true;
-        //mesh.enabled = false;
     }
 
     private void OnEnable()
@@ -91,11 +90,14 @@ public class BumperBehaviour : MonoBehaviour
         Rigidbody rbOther = obj.GetComponent<Rigidbody>();
         if (!rbOther)
             return;
+        if (!cam)
+            Init();
 
         Vector3 dir = (transform.position - direction.position).normalized;
 
         if (UtilityFunctions.IsTargetOnScreen(cam, obj.transform))
         {
+            Debug.Log("Is On Screen !");
             //Cree uniquement si la position X,Y est dans la caméra ???
             GameObject particle = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleBump, obj.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
             particle.transform.rotation = QuaternionExt.LookAtDir(dir);

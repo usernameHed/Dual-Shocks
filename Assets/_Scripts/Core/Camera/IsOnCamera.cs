@@ -22,7 +22,7 @@ public class IsOnCamera : MonoBehaviour
     #region Initialization
     private void Awake()
 	{
-        cam = Camera.main;
+        cam = GameManager.GetSingleton.CameraMain;
         objectRenderer = GetComponent<Renderer> ();
 	}
 	#endregion

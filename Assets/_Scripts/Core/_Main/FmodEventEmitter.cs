@@ -48,4 +48,11 @@ public class FmodEventEmitter : MonoBehaviour
             return;
         emitter.SetParameter(paramName, value);
     }
+
+    private void OnDestroy()
+    {
+        string addParent = (addIdOfObject) ? addIdOfObject.GetInstanceID().ToString() : "";
+        if (emitter && emitter.Event != "" && SoundManager.GetSingleton)
+            SoundManager.GetSingleton.DeleteKey(emitter.Event + additionnalName + addParent, this);
+    }
 }

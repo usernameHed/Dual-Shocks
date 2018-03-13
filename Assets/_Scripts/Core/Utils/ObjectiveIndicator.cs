@@ -135,7 +135,7 @@ public class ObjectiveIndicator : MonoBehaviour
     void Awake()
     {
         _trans = transform;
-        camMain = Camera.main;
+        camMain = GameManager.GetSingleton.CameraMain;
 
         if (usedCamera == null)
             usedCamera = camMain;

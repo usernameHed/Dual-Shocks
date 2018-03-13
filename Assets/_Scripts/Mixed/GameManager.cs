@@ -40,6 +40,25 @@ public class GameManager : SerializedMonoBehaviour
     private PlayerBallInit playerBallInit;
     public PlayerBallInit PlayerBallInit { get { return playerBallInit; } }
 
+    [FoldoutGroup("Debug"), Tooltip("Caméra"), SerializeField]
+    private GameObject cameraObject;
+    public GameObject CameraObject
+    {
+        get
+        {
+            if (!cameraObject)
+            {
+                cameraMain = Camera.main;
+                cameraObject = cameraMain.gameObject;
+                return (cameraObject);
+            }
+            return cameraObject;
+        }
+    }
+    public void SetCamera(GameObject cam) { cameraMain = cam.GetComponent<Camera>(); }
+    private Camera cameraMain;
+    public Camera CameraMain { get { return (cameraMain); } }
+
     private bool fromGame = false;
     public bool FromGame { get { return (fromGame); } set { fromGame = value; } }
 
@@ -78,8 +97,16 @@ public class GameManager : SerializedMonoBehaviour
     /// </summary>
     private void InitNewScene()
     {
-        if (sceneManagerLocal.LevelManagerScript != null)
-            sceneManagerLocal.LevelManagerScript.InitScene();
+        if (sceneManagerLocal.LevelManagerScript == null)
+        {
+            Debug.LogError("no ILevelManager ??");
+        }
+        //init la caméra de la scene...
+        cameraObject = sceneManagerLocal.CameraObject;
+        SetCamera(cameraObject);
+
+        //init le level...
+        sceneManagerLocal.LevelManagerScript.InitScene();
     }
 
     /// <summary>

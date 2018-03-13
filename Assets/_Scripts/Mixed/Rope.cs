@@ -137,7 +137,7 @@ public class Rope : MonoBehaviour, IKillable
 
         enabledScript = true;
         OnlyOneMainLeft(false);
-        ClearJoints();  //clear les joints précédents
+        ClearJoints(false);  //clear les joints précédents
 
         //cree un sprintjoint sur la première ball si il n'y en a pas déja
         objectToConnect[0].transform.GetOrAddComponent<SpringJoint>();
@@ -411,8 +411,10 @@ public class Rope : MonoBehaviour, IKillable
 
     /// <summary>
     /// clear la list des joints (et supprime les objets dedant)
+    /// clean = true: supprimer cleannement en passant par mes fonctions kill
+    /// clean = false: just Desactive !
     /// </summary>
-    public void ClearJoints()
+    public void ClearJoints(bool clean)
     {
         Debug.Log("Clear la rope !!");
         for (int i = 0; i < listCircular.Count; i++)
@@ -420,7 +422,10 @@ public class Rope : MonoBehaviour, IKillable
             GameObject linkTmp = listCircular[i].Value;
             if (!linkTmp || !linkTmp.GetComponent<Link>())
                 continue;
-            linkTmp.GetComponent<Link>().Kill();
+            if (clean)
+                linkTmp.GetComponent<Link>().Kill();
+            else
+                linkTmp.GetComponent<Link>().RealyKill();
         }
         listCircular.Clear();
     }
@@ -546,13 +551,16 @@ public class Rope : MonoBehaviour, IKillable
             return;
         enabledScript = false;
         Debug.Log("Death Rope ! handle link bien sur");
-        ClearJoints();
+
+        ClearJoints(false);
+
         //InitPrefabsValue(false);
         gameObject.SetActive(false);
     }
 
     private void OnDisable()
     {
+        
         InitPrefabsValue(false);
     }
     #endregion

@@ -89,6 +89,22 @@ public class SoundManager : SerializedMonoBehaviour                             
         soundsEmitter.Add(key, value);
     }
 
+    /// <summary>
+    /// ajoute une key dans la liste
+    /// </summary>
+    public void DeleteKey(string key, FmodEventEmitter value)
+    {
+        foreach (KeyValuePair<string, FmodEventEmitter> sound in soundsEmitter)
+        {
+            if (key == sound.Key)
+            {
+                soundsEmitter.Remove(key);
+                return;
+            }
+        }
+        Debug.Log("key sound not found");
+    }
+
     private FmodEventEmitter GetEmitter(string soundTag)
     {
         foreach (KeyValuePair<string, FmodEventEmitter> sound in soundsEmitter)
@@ -121,6 +137,13 @@ public class SoundManager : SerializedMonoBehaviour                             
     /// <param name="emitterScript"></param>
     public void playSound(FmodEventEmitter emitterScript, bool stop = false)
     {
+
+        if (!emitterScript)
+        {
+            Debug.LogWarning("Emmiter SOund not found !!");
+            return;
+        }
+
         if (!stop)
             emitterScript.play();
         else

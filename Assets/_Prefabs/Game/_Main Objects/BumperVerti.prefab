@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 114751259626766758}
   - component: {fileID: 114017343834100324}
   m_Layer: 0
-  m_Name: ShockWave Music
+  m_Name: Bump Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1099,8 +1099,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1802566147204008}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -12.42, y: 0.37, z: -5.17}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 14.95, y: 0.55, z: 14.15}
   m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 0.6624613}
   m_Children:
   - {fileID: 4231827836551802}
@@ -4218,6 +4218,7 @@ MonoBehaviour:
   direction: {fileID: 4231827836551802}
   forceObjects: 7
   forcePlayer: 10
+  forcePlayerLink: 5
   stunPlayer: 0
   stunPlayerTime: 1
   listLayerToPush: 0100000000000000

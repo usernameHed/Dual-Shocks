@@ -40,6 +40,10 @@ public class SceneManagerLocal : MonoBehaviour
     }
 
     #region Attributes
+    [FoldoutGroup("GamePlay"), Tooltip("Caméra de la scene"), SerializeField]
+    private GameObject cameraObject;
+    public GameObject CameraObject { get { return cameraObject; } }
+
     [FoldoutGroup("Scene"), Tooltip("Scene to load at start"), SerializeField]
     private List<SceneInfo> sceneToLoad;
     public List<SceneInfo> SceneToLoad { get { return (sceneToLoad); } }

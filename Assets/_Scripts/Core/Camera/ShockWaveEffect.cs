@@ -23,7 +23,7 @@ public class ShockWaveEffect : MonoBehaviour
 
     private void Awake()
     {
-        cam = Camera.main;
+        cam = GameManager.GetSingleton.CameraMain;
     }
 
     private void Start()
