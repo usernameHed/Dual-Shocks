@@ -296,6 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6579e403431fb39448251eb4ebccf558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitBeforeActive: 1
   turnRateFollowers: 400
   ballInfo:
   - idBallType: 1
@@ -393,7 +394,7 @@ MonoBehaviour:
   max: 0.3
   linkCount: 7
   linkCountMax: 20
-  forceWhenExplode: 10
+  forceWhenExplode: 2
   dragWhenExplode: 20
   timeToBecomeHarmLess: 1.5
   rationRandom: 0.1

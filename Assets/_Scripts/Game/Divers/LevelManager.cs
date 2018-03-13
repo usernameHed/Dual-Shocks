@@ -17,17 +17,14 @@ public class LevelManager : MonoBehaviour, ILevelManager
     [FoldoutGroup("Objects"), Tooltip("player parent"), SerializeField]
     private Transform playerParent;
 
-    [FoldoutGroup("Debug"), Tooltip("gère la GUI in games"), SerializeField]
-    private DisplayInGame displayInGame;
-
     [FoldoutGroup("Debug"), Tooltip("gere le temps avant de pouvoir faire Restart"), SerializeField]
     private FrequencyTimer coolDownRestart;
 
     private int playerAlive = 0;
-
-    private bool gameOver = false;
-
+    private bool roundIsOver = false;
     private bool enabledScript = true;
+
+    private bool partyOver = false;
     #endregion
 
     #region Initialization
@@ -45,40 +42,85 @@ public class LevelManager : MonoBehaviour, ILevelManager
 
     /// <summary>
     /// est appelé depuis le GameManager depuis l'interface
-    /// à l'initialisation...
+    /// à l'initialisation... 
     /// </summary>
     public void InitScene()
     {
-        if (gameOver)
-        {
-            Debug.Log("ici on active des truck fifou pour le restart ?");
-            Invoke("RealyInit", 0.1f);
-            return;
-        }
+        roundIsOver = false;
+        playerAlive = 0;
+        partyOver = false;
 
-        //ici lancement du jeu au premier round
-        RealyInit();
+        LevelInit();
     }
 
-    private void RealyInit()
+    /// <summary>
+    /// est appelé à l'init, OU au restart
+    /// </summary>
+    private void LevelInit()
     {
-        gameOver = false;
-        playerAlive = 0;
+        if (!roundIsOver)
+        {
+            GameStart();            //première fois que les partie on débuté
+            return;
+        }
+        GameContinue();           //ici on a déja commencé, on en est au round X
+    }
+
+    /// <summary>
+    /// le jeu commence la première fois
+    /// </summary>
+    private void GameStart()
+    {
+        Debug.Log("ici reset les scores... en début de jeu");
+        ScoreManager.Instance.ResetAll();   //reset les scores
+
+        EventManager.TriggerEvent(GameData.Event.GameStart);
+
+        RoundStart();
+    }
+
+    private void GameContinue()
+    {
+        roundIsOver = false;
+        Debug.Log("ici on active des truck fifou pour le restart ?");
+        RoundStart();
+    }
+
+    /// <summary>
+    /// le round start
+    /// </summary>
+    private void RoundStart()
+    {
+        Debug.Log("ici start round !");
+        ScoreManager.Instance.NextRound();
+        EventManager.TriggerEvent(GameData.Event.RoundStart);
 
         //init le level design !! (+ spawn les entité dans le jeu)
         LevelDesign.GetSingleton.InitLevelDesign();
 
-
-        EventManager.TriggerEvent(GameData.Event.RoundStart);
-
-        Debug.Log("ici reset les scores... (seulement quand on fait un nouveau round ??)");
-        ScoreManager.Instance.ResetAll();   //reset les scores
-        //GameManager.GetSingleton.PlayerBallInit.Setup();
-
         SpawnPlayer();
-        displayInGame.InitDisplay();
-        displayInGame.ChangeDisplayInGame();
     }
+
+    /// <summary>
+    /// est appelé quand tout les joueurs sont mort / le dernier en vie
+    /// </summary>
+    private void RoundOver()
+    {
+        roundIsOver = true;
+        EventManager.TriggerEvent(GameData.Event.GameOver);
+        if (ScoreManager.Instance.IsPartyOver())
+            PartyOver();
+    }
+
+    /// <summary>
+    /// ici la partie est fini !
+    /// </summary>
+    private void PartyOver()
+    {
+        Debug.Log("ici la partie est fini !!!");
+        partyOver = true;
+    }
+
     /// <summary>
     /// est appelé depuis le GameManager depuis l'interface
     /// est appelé quand il y a un changement de gamePad
@@ -144,10 +186,8 @@ public class LevelManager : MonoBehaviour, ILevelManager
         playerAlive--;
         if (IsGameOver())
         {
-            Debug.Log("ici c'est la fin du jeu !!! Setup les rounds");
-            gameOver = true;
+            RoundOver();
         }
-
     }
 
     /// <summary>
@@ -157,7 +197,6 @@ public class LevelManager : MonoBehaviour, ILevelManager
     {
         if (playerAlive <= 1)
         {
-            EventManager.TriggerEvent(GameData.Event.GameOver);
             return (true);
         }
         return (false);
@@ -169,7 +208,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     [Button("Restart")]
     public void Restart()
     {
-        if (gameOver)
+        if (roundIsOver && !partyOver)
         {
             Debug.Log("ici restart ?");
             for (int i = 0; i < playersLocal.Count; i++)
@@ -178,7 +217,11 @@ public class LevelManager : MonoBehaviour, ILevelManager
             }
             ObjectsPooler.Instance.desactiveEveryOneForTransition();
             ObjectsPoolerLocal.Instance.desactiveEveryOneForTransition();
-            InitScene();
+            LevelInit();
+        }
+        else if (roundIsOver && partyOver)
+        {
+            Quit();
         }
 
         Debug.Log("Ici on ne restart plus la scene comme ça...");

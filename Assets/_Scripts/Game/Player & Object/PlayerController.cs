@@ -9,6 +9,8 @@ using System;
 public class PlayerController : MonoBehaviour, IKillable
 {
     #region Attributes
+    [FoldoutGroup("GamePlay"), Tooltip("Attend X seconde avant d'activer les inputs"), SerializeField]
+    private float waitBeforeActive = 1f;
 
     [FoldoutGroup("GamePlay"), Tooltip("vitesse de rotation des followers (de base, à multiplier par le ratio des balls"), SerializeField]
     private float turnRateFollowers = 400f;
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private void OnEnable()
 	{
         EventManager.StartListening(GameData.Event.GameOver, StopAction);
+        //EventManager.StartListening(GameData.Event.GameOver, StopAction);
         InitPlayer();
 	}
 
@@ -84,11 +87,9 @@ public class PlayerController : MonoBehaviour, IKillable
         ballRemaining = SizeArrayId;
         
         InitRope();
-
-
+        
         stopAction = true;
-
-        stopAction = false;
+        Invoke("StartAction", waitBeforeActive);
     }
 
     /// <summary>
@@ -278,6 +279,11 @@ public class PlayerController : MonoBehaviour, IKillable
         }
     }
 
+    private void StartAction()
+    {
+        stopAction = false;
+        Debug.Log("ici le joueur peut jouer !");
+    }
     /// <summary>
     /// stop les action du player...
     /// </summary>

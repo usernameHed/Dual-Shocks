@@ -28,6 +28,11 @@ public class DisplayInGame : MonoBehaviour
     private PlayerRef[] playerRocks = new PlayerRef[playerMax];
     public PlayerRef[] PlayerRocks { get { return (playerRocks); } }
 
+    [FoldoutGroup("Objects"), Tooltip("display round over"), SerializeField]
+    private GameObject roundOver;
+    [FoldoutGroup("Objects"), Tooltip("display party over"), SerializeField]
+    private GameObject partyOver;
+
 
     private const int playerMax = 4;  //nombre de ball du joueur
     private PlayerData data;
@@ -35,27 +40,37 @@ public class DisplayInGame : MonoBehaviour
     #endregion
 
     #region Initialization
-
+    private void OnEnable()
+    {
+        EventManager.StartListening(GameData.Event.GameStart, GameStart);
+        EventManager.StartListening(GameData.Event.RoundStart, RoundStart);
+        EventManager.StartListening(GameData.Event.GameOver, GameOver);
+    }
     #endregion
 
     #region Core
     /// <summary>
     /// initialise le display avec les joueurs connecté
     /// </summary>
-    public void InitDisplay()
+    private void GameStart()
     {
+        partyOver.SetActive(false);
+
         data = ScoreManager.Instance.Data;
         for (int i = 0; i < playerRocks.Length; i++)
         {
-            playerRocks[i].active = true;   //ici active ou non selon si le player est connecté
+            playerRocks[i].active = GameManager.GetSingleton.PlayerBallInit.PlayerData[i].active;   //ici active ou non selon si le player est connecté
+            playerRocks[i].displaySpawn.SetActive(playerRocks[i].active);
         }
     }
 
     /// <summary>
     /// actualise le display par rapport aux scores, player, etc
     /// </summary>
-    public void ChangeDisplayInGame()
+    private void RoundStart()
     {
+        roundOver.SetActive(false);
+
         textRound.text = data.CurrentRound.ToString();
         for (int i = 0; i < playerRocks.Length; i++)
         {
@@ -65,9 +80,32 @@ public class DisplayInGame : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// appelé quand la game est over
+    /// </summary>
+    private void GameOver()
+    {
+        if (ScoreManager.Instance.IsPartyOver())
+        {
+            Debug.Log("ici C'est la fin de la partie ! affiche l'écran de victoire");
+            partyOver.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("ici c'est la fin du round" + ScoreManager.Instance.Data.CurrentRound);
+            roundOver.SetActive(true);
+        }
+    }
+
     #endregion
 
     #region Unity ending functions
-
+    private void OnDisable()
+    {
+        EventManager.StopListening(GameData.Event.GameStart, GameStart);
+        EventManager.StopListening(GameData.Event.RoundStart, RoundStart);
+        EventManager.StopListening(GameData.Event.GameOver, GameOver);
+    }
     #endregion
 }

@@ -32,6 +32,33 @@ public class ScoreManager : ISingleton<ScoreManager>
 
     #region Core
 
+    public void AddPoint(int indexPlayer, int point)
+    {
+        data.ScorePlayer[indexPlayer] += point;
+    }
+
+    /// <summary>
+    /// ajoute 1 au nombre de round
+    /// renvoi faux si on dépasse le maxRound
+    /// </summary>
+    /// <returns></returns>
+    public bool IsPartyOver()
+    {
+        if (data.CurrentRound >= data.MaxRound)
+            return (true);
+        return (false);
+    }
+
+    /// <summary>
+    /// ajoute 1 au nombre de round
+    /// renvoi faux si on dépasse le maxRound
+    /// </summary>
+    /// <returns></returns>
+    public void NextRound()
+    {
+        data.CurrentRound++;
+    }
+
     /// <summary>
     /// 
     /// </summary>

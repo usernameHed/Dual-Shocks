@@ -61,6 +61,7 @@ public class BumperBehaviour : MonoBehaviour
 
     private void OnEnable()
     {
+        EventManager.StartListening(GameData.Event.RoundStart, StartAction);
         EventManager.StartListening(GameData.Event.GameOver, StopAction);
     }
     #endregion
@@ -72,6 +73,9 @@ public class BumperBehaviour : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
+        if (!enabledObject)
+            return;
+
         if (GameData.IsInList(listLayerToPush, other.gameObject.layer))
         {
             DoBump(other.gameObject);
@@ -134,6 +138,10 @@ public class BumperBehaviour : MonoBehaviour
     /// <summary>
     /// appelé quand le jeu est fini...
     /// </summary>
+    private void StartAction()
+    {
+        enabledObject = true;
+    }
     private void StopAction()
     {
         enabledObject = false;
@@ -156,6 +164,7 @@ public class BumperBehaviour : MonoBehaviour
 
     private void OnDisable()
     {
+        EventManager.StopListening(GameData.Event.RoundStart, StartAction);
         EventManager.StopListening(GameData.Event.GameOver, StopAction);
     }
 

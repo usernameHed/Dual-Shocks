@@ -15,7 +15,8 @@ public class PlayerData : PersistantData
     public int[] ScorePlayer { get { return scorePlayer; } }
 
     [FoldoutGroup("GamePlay"), Tooltip("round courrant des joueurs"), SerializeField]
-    private int maxRound = 3;
+    private int maxRound = 9;
+    public int MaxRound { get { return maxRound; } }
 
     private const int SizeArrayId = 4;  //nombre de ball du joueur
     #endregion
@@ -26,7 +27,7 @@ public class PlayerData : PersistantData
     /// </summary>
     public void SetDefault()
     {
-        currentRound = maxRound;
+        currentRound = 0;
         for (int i = 0; i < SizeArrayId; i++)
         {
             scorePlayer[i] = 0;

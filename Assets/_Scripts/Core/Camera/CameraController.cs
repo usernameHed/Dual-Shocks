@@ -74,6 +74,7 @@ public class CameraController : MonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening(GameData.Event.GameOver, GameOver);
+        EventManager.StartListening(GameData.Event.RoundStart, RoundStart);
     }
 
     private void Start()
@@ -99,6 +100,14 @@ public class CameraController : MonoBehaviour
     private void GameOver()
     {
         Invoke("FallBack", timeBeforeFallBack);
+    }
+
+    /// <summary>
+    /// ici annule le fallback si on a fait restart !!
+    /// </summary>
+    private void RoundStart()
+    {
+        CancelInvoke("FallBack");
     }
 
     private void FallBack()
@@ -311,6 +320,7 @@ public class CameraController : MonoBehaviour
     private void OnDisable()
     {
         EventManager.StopListening(GameData.Event.GameOver, GameOver);
+        EventManager.StopListening(GameData.Event.RoundStart, RoundStart);
     }
     #endregion
 }
