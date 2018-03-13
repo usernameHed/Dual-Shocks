@@ -29,6 +29,8 @@ public class BumperBehaviour : MonoBehaviour
     //private float forceLinkAlone = 5;
     [FoldoutGroup("GamePlay"), Tooltip("force de poussée"), SerializeField]
     private float forcePlayer = 10;
+    [FoldoutGroup("GamePlay"), Tooltip("force de poussée"), SerializeField]
+    private float forcePlayerLink = 10;
     [FoldoutGroup("GamePlay"), Tooltip("stun player"), SerializeField]
     private bool stunPlayer = true;
     [FoldoutGroup("GamePlay"), EnableIf("stunPlayer"), Tooltip("stun player"), SerializeField]
@@ -94,12 +96,8 @@ public class BumperBehaviour : MonoBehaviour
 
         if (UtilityFunctions.IsTargetOnScreen(cam, obj.transform))
         {
-            //particleBump
             //Cree uniquement si la position X,Y est dans la caméra ???
-            Debug.Log("TODO: erreur direction...");
-            //Quaternion dirQuat = Quaternion.Euler(dir);
             GameObject particle = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleBump, obj.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
-
             particle.transform.rotation = QuaternionExt.LookAtDir(dir);
         }
 
@@ -113,7 +111,7 @@ public class BumperBehaviour : MonoBehaviour
             Balls ball = obj.gameObject.GetComponent<Balls>();
             if (stunPlayer && bumperType == TypeBumper.Horiz)
                 ball.Stun(true, stunPlayerTime);
-            ball.PlayerRef.RopeScript.ApplyForceOnAll(obj, dir, -forcePlayer);
+            ball.PlayerRef.RopeScript.ApplyForceOnAll(obj, dir, -forcePlayer, -forcePlayerLink);
         }
         /*else if (obj.CompareTag(GameData.Prefabs.Link.ToString()))
         {

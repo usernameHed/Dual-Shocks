@@ -382,15 +382,15 @@ MonoBehaviour:
   - 50
   - 0
   massLink:
-  - 1
-  - -0.055
+  - 0.6
+  - -0.025
   dragLink:
   - 0
   - 0
   useGravityLink: 1
   min: 0.1
   max: 0.3
-  linkCount: 12
+  linkCount: 7
   linkCountMax: 20
   forceWhenExplode: 10
   dragWhenExplode: 20

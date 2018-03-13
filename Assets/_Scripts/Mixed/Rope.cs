@@ -145,17 +145,17 @@ public class Rope : MonoBehaviour, IKillable
     /// applique une force sur TOUT les objets
     /// - force sur les link (et les autres... les balls)
     /// </summary>
-    public void ApplyForceOnAll(GameObject obj, Vector3 dir, float force)
+    public void ApplyForceOnAll(GameObject obj, Vector3 dir, float force, float forceLink)
     {
-        StartCoroutine(ApplyForceOnAllTime(obj, dir, force));
+        StartCoroutine(ApplyForceOnAllTime(obj, dir, force, forceLink));
     }
-    private IEnumerator ApplyForceOnAllTime(GameObject obj, Vector3 dir, float force)
+    private IEnumerator ApplyForceOnAllTime(GameObject obj, Vector3 dir, float force, float forceLink)
     {
         if (listCircular[0].Value && listCircular[0].Value.GetInstanceID() == obj.GetInstanceID())
         {
             for (int i = 0; i < listCircular.Count; i++)
             {
-                ApplyForce(i, dir, force);
+                ApplyForce(i, dir, force, forceLink);
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -163,12 +163,12 @@ public class Rope : MonoBehaviour, IKillable
         {
             for (int i = listCircular.Count - 1; i >= 0; i--)
             {
-                ApplyForce(i, dir, force);
+                ApplyForce(i, dir, force, forceLink);
                 yield return new WaitForEndOfFrame();
             }
         }
     }
-    private void ApplyForce(int i, Vector3 dir, float force)
+    private void ApplyForce(int i, Vector3 dir, float force, float forceLink)
     {
         if (!listCircular[i].Value)
             return;
@@ -176,7 +176,14 @@ public class Rope : MonoBehaviour, IKillable
         if (!rbObject)
             return;
 
-        rbObject.AddForce(dir * force, ForceMode.Impulse);
+        if (i > 0 && i < listCircular.Count - 1 || listCircular[i].Value.HasComponent<Link>())
+        {
+            rbObject.AddForce(dir * forceLink, ForceMode.Impulse);
+        }
+        else
+        {
+            rbObject.AddForce(dir * force, ForceMode.Impulse);
+        }
     }
 
     /// <summary>
@@ -437,10 +444,12 @@ public class Rope : MonoBehaviour, IKillable
             
         joint.connectedBody = next;
 
-        linkBody.mass = massLink[0];
-        linkBody.drag = dragLink[0];
-        linkBody.useGravity = useGravityLink;
-
+        if (index != 0 || index == 0 && linkBody.HasComponent<Link>())
+        {
+            linkBody.mass = massLink[0];
+            linkBody.drag = dragLink[0];
+            linkBody.useGravity = useGravityLink;
+        }
 
         joint.minDistance = min;
         joint.maxDistance = max;
