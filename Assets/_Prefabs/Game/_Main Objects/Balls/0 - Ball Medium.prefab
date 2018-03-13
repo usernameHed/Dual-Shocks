@@ -92,9 +92,8 @@ GameObject:
   - component: {fileID: 54510478010571616}
   - component: {fileID: 114860671979244486}
   - component: {fileID: 114195111743477434}
-  - component: {fileID: 114828167525729516}
   - component: {fileID: 114934967086933620}
-  - component: {fileID: 114416877674035530}
+  - component: {fileID: 114307835227786694}
   - component: {fileID: 145634142054991704}
   m_Layer: 10
   m_Name: 0 - Ball Medium
@@ -774,18 +773,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelocity: 10
---- !u!114 &114416877674035530
+--- !u!114 &114307835227786694
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1696340403240580}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8363666f6dab1844ba4232540fe696ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ListenerNumber: 0
+  overallGravityAmplify: 1
+  fallDownGravity: 1.25
+  marginDescend: 0.05
+  objectCollider: {fileID: 1696340403240580}
 --- !u!114 &114694486364776928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -821,23 +823,6 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
---- !u!114 &114828167525729516
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1696340403240580}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faebbdf52187f024598c8f742f8dfd3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  borderMin: 0
-  borderMax: 1
-  updateTimer:
-    updateFrequency: 2
-    notTheFirstTime: 1
-    waitOnlyOnce: 1
 --- !u!114 &114860671979244486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -853,9 +838,6 @@ MonoBehaviour:
   idBall: 0
   ratioTurnRateFocus: 1
   dragWhenStop: 10
-  timeStunBall:
-    timeCoolDown: 3
-    coolDownStarted: 0
   timeBeforeDie: 2
   renderBall: {fileID: 23272596771757678}
   trailsBall:
@@ -868,6 +850,7 @@ MonoBehaviour:
     updateFrequency: 0
     notTheFirstTime: 0
     waitOnlyOnce: 0
+  isStunned: 0
 --- !u!114 &114934967086933620
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -67,4 +67,12 @@ public static class GameObjectExt
 
         return mask;
     }
+
+    /// <summary>
+    /// renvoi si le joueur est grounded ou pas
+    /// </summary>
+    public static bool IsGrounded(GameObject target, float distToGround, float marginDistToGround = 0.1f)
+    {
+        return Physics.Raycast(target.transform.position, -Vector3.up, distToGround + marginDistToGround);
+    }
 }

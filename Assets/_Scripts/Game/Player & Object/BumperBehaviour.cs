@@ -97,8 +97,10 @@ public class BumperBehaviour : MonoBehaviour
             //particleBump
             //Cree uniquement si la position X,Y est dans la caméra ???
             Debug.Log("TODO: erreur direction...");
-            Quaternion dirQuat = Quaternion.Euler(dir);
-            ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleBump, obj.transform.position, dirQuat, ObjectsPooler.Instance.transform);
+            //Quaternion dirQuat = Quaternion.Euler(dir);
+            GameObject particle = ObjectsPooler.Instance.SpawnFromPool(GameData.Prefabs.ParticleBump, obj.transform.position, Quaternion.identity, ObjectsPooler.Instance.transform);
+
+            particle.transform.rotation = QuaternionExt.LookAtDir(dir);
         }
 
 

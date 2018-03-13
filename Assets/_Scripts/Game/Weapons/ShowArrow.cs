@@ -90,9 +90,17 @@ public class ShowArrow : MonoBehaviour, IKillable
                 if (!Arrow[i].activeSelf)
                     Arrow[i].SetActive(true);
                 Arrow[i].transform.position = targetToShowArrow[i].transform.position;
-                Vector3 dir = transform.position - targetToShowArrow[i].transform.position;
+
+                //Vector3 dir = transform.position - targetToShowArrow[i].transform.position;
+                //Debug.Log("dir: " + dir);
+                //Arrow[i].transform.rotation = Quaternion.Euler(dir);
+                Vector3 relativePos = transform.position - targetToShowArrow[i].transform.position;
+                //Arrow[i].transform.rotation.LookAtDir((transform.position - targetToShowArrow[i].transform.position) * -1);
+
                 
-                Arrow[i].transform.rotation = Quaternion.Euler(dir);
+                //Quaternion rotation = Quaternion.LookRotation(relativePos * -1);
+                Arrow[i].transform.rotation = QuaternionExt.LookAtDir(relativePos);
+                //Arrow[i].transform.LookAt(transform.position * -1);
 
                 float dist = Vector3.Distance(transform.position, targetToShowArrow[i].transform.position); //get la distance ball - ennemy
                 dist = Mathf.Min(dist, radiusDetection);     //clamp la distance max au radius (normalement la distance ne doit pas être plus grande que le radius)
