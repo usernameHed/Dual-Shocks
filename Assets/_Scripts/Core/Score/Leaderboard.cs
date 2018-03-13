@@ -11,7 +11,7 @@ using Sirenix.OdinInspector;
 /// Leaderboard.GetSingleton.AddNewHighscore("Noob", 7);
 /// </summary>
 [ShowOdinSerializedPropertiesInInspector]
-public class Leaderboard : ISingleton<Leaderboard>
+public class Leaderboard : SingletonMono<Leaderboard>
 {
     protected Leaderboard() { } // guarantee this will be always a singleton only - can't use the constructor!
 

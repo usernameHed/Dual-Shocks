@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ObjectsPooler Description
 /// </summary>
-public class ObjectsPoolerLocal : ISingleton<ObjectsPoolerLocal>
+public class ObjectsPoolerLocal : SingletonMono<ObjectsPoolerLocal>
 {
     protected ObjectsPoolerLocal() { } // guarantee this will be always a singleton only - can't use the constructor!
 
@@ -40,6 +40,11 @@ public class ObjectsPoolerLocal : ISingleton<ObjectsPoolerLocal>
     {
         poolDictionary = new Dictionary<GameData.Prefabs, List<GameObject>>();
 
+        if (pools == null)
+        {
+            Debug.LogWarning("erreur console ?");
+            return;
+        }
         for (int j = 0; j < pools.Count; j++)
         {
             List<GameObject> objectPool = new List<GameObject>();

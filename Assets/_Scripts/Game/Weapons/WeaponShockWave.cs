@@ -83,7 +83,7 @@ public class WeaponShockWave : Weapon
     private void CreateShackWave()
     {
         //par rapport à la position de la balle qui attaque, son radius, et recherche les layers voulu
-        Collider[] ToPush = Physics.OverlapSphere(ballRef.transform.position, radius, LayerMask.GetMask(UtilityFunctions.GetStringsFromEnum(layerToTest)));
+        Collider[] ToPush = Physics.OverlapSphere(ballRef.transform.position, radius, LayerMask.GetMask(ParsingExt.GetStringsFromEnum(layerToTest)));
 
         //parcourt chaque collider trouvé
         for (int i = 0; i < ToPush.Length; i++)

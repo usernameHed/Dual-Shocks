@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 using System;
 using System.Text.RegularExpressions;
+
 
 /// <summary>
 /// Fonctions utile
@@ -47,54 +47,6 @@ public static class UtilityFunctions
         Vector3 topCorner = cam.WorldToViewportPoint(target.position + boundExtent);
 
         return (topCorner.x >= -xMargin && bottomCorner.x <= 1 + xMargin && topCorner.y >= -yMargin && bottomCorner.y <= 1 + yMargin);
-    }
-
-    /// <summary>
-    /// si TOTO532, retourne "532"
-    /// </summary>
-    public static int GetLastNumberFromString(string lastNNumber)
-    {
-        var x = Regex.Match(lastNNumber, @"([0-9]+)[^0-9]*$");
-
-        if (x.Success && x.Groups.Count > 0)
-        {
-            int foundNumber = Int32.Parse(x.Groups[1].Captures[0].Value);
-            return (foundNumber);
-        }
-        return (0);
-    }
-
-    /// <summary>
-    /// prend en parametre un fileName, et renvoi le prochain numéro
-    /// </summary>
-    public static string GetNextFileName(string fileName)
-    {
-        string extension = Path.GetExtension(fileName);
-        string pathName = Path.GetDirectoryName(fileName);
-        string fileNameOnly = Path.Combine(pathName, Path.GetFileNameWithoutExtension(fileName));
-        int i = 0;
-        // If the file exists, keep trying until it doesn't
-        while (File.Exists(fileName))
-        {
-            i += 1;
-            fileName = string.Format("{0}({1}){2}", fileNameOnly, i, extension);
-        }
-        return fileName.Replace("\\", "/");
-    }
-
-    /// <summary>
-    /// prend en parametre une liste d'enum, et renvoi un array de string de ces enum !
-    /// </summary>
-    /// <param name="layers"></param>
-    /// <returns></returns>
-    public static string[] GetStringsFromEnum<T>(T[] layers)
-    {
-        string[] toPush = new string[layers.Length];
-        for (int i = 0; i < toPush.Length; i++)
-        {
-            toPush[i] = layers[i].ToString();
-        }
-        return (toPush);
     }
 
     /// <summary>

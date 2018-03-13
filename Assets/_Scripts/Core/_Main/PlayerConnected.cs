@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 /// <summary>
 
 
-public class PlayerConnected : ISingleton<PlayerConnected>
+public class PlayerConnected : SingletonMono<PlayerConnected>
 {
     protected PlayerConnected() { } // guarantee this will be always a singleton only - can't use the constructor!
 

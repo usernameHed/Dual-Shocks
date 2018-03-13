@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ObjectsPooler Description
 /// </summary>
-public class ObjectsPooler : ISingleton<ObjectsPooler>
+public class ObjectsPooler : SingletonMono<ObjectsPooler>
 {
     protected ObjectsPooler() { } // guarantee this will be always a singleton only - can't use the constructor!
 

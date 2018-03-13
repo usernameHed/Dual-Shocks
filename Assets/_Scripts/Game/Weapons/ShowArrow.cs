@@ -58,7 +58,7 @@ public class ShowArrow : MonoBehaviour, IKillable
     private void UpdateArrowPosition()
     {
         //par rapport à la position de la balle qui attaque, son radius, et recherche les layers voulu
-        int numberEnnemy = Physics.OverlapSphereNonAlloc(transform.position, radiusDetection, arrowToShow, LayerMask.GetMask(UtilityFunctions.GetStringsFromEnum(layerToShowArrow)));
+        int numberEnnemy = Physics.OverlapSphereNonAlloc(transform.position, radiusDetection, arrowToShow, LayerMask.GetMask(ParsingExt.GetStringsFromEnum(layerToShowArrow)));
 
         //parcourt chaque collider trouvé
         for (int i = 0; i < numberEnnemy; i++)

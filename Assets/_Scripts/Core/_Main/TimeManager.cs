@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 /// <summary>
 /// TimeManager Description
 /// </summary>
-public class TimeManager : ISingleton<TimeManager>
+public class TimeManager : SingletonMono<TimeManager>
 {
     protected TimeManager() { } // guarantee this will be always a singleton only - can't use the constructor!
 

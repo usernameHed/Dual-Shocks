@@ -18,7 +18,7 @@ public class DataEventManager
 /// <summary>
 /// EventManager Description
 /// </summary>
-public class EventManager : ISingleton<EventManager>
+public class EventManager : SingletonMono<EventManager>
 {
     protected EventManager() { } // guarantee this will be always a singleton only - can't use the constructor!
 

@@ -1,11 +1,115 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public static class GameObjectExt
 {
     //setup un layerMask en enlevant certain layer...
     //int layerMask = ~((1 << LayerMask.NameToLayer("Walls")) | (1 << LayerMask.NameToLayer("Lock")) | (1 << LayerMask.NameToLayer("Ignore Raycast")) );
+
+    /// <summary>
+    /// Returns true if the GO is null or inactive
+    /// </summary>
+    /// <param name="go"></param>
+    /// <returns></returns>
+    public static bool IsNullOrInactive(this GameObject go)
+    {
+        return ((go == null) || (!go.activeSelf));
+    }
+
+    /// <summary>
+    /// Returns true if the GO is not null and is active
+    /// </summary>
+    /// <param name="go"></param>
+    /// <returns></returns>
+    public static bool IsActive(this GameObject go)
+    {
+        return ((go != null) && (go.activeSelf));
+    }
+
+    #region GetInterfaces
+    /// <summary>
+    /// Returns the interface on this game object
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="go"></param>
+    /// <remarks>
+    /// Suggested by: A.Killingbeck
+    /// Link: http://forum.unity3d.com/members/a-killingbeck.560711/
+    /// </remarks>
+    public static T GetInterface<T>(this GameObject go) where T : class
+    {
+
+        if (!typeof(T).IsInterface)
+        {
+            Debug.LogError(typeof(T).ToString() + " is not an interface");
+            return null;
+        }
+
+        return go.GetComponents<Component>().OfType<T>().FirstOrDefault();
+    }
+    /// <summary>
+    /// Returns the first matching interface on this game object's children
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="go"></param>
+    /// <remarks>
+    /// Suggested by: A.Killingbeck
+    /// Link: http://forum.unity3d.com/members/a-killingbeck.560711/
+    /// </remarks>
+    public static T GetInterfaceInChildren<T>(this GameObject go) where T : class
+    {
+
+        if (!typeof(T).IsInterface)
+        {
+            Debug.LogError(typeof(T).ToString() + " is not an interface");
+            return null;
+        }
+
+        return go.GetComponentsInChildren<Component>().OfType<T>().FirstOrDefault();
+    }
+    /// <summary>
+    /// Returns all interfaces on this game object matching this type
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="go"></param>
+    /// <remarks>
+    /// Suggested by: A.Killingbeck
+    /// Link: http://forum.unity3d.com/members/a-killingbeck.560711/
+    /// </remarks>
+    public static IEnumerable<T> GetInterfaces<T>(this GameObject go) where T : class
+    {
+
+        if (!typeof(T).IsInterface)
+        {
+            Debug.LogError(typeof(T).ToString() + " is not an interface");
+            return Enumerable.Empty<T>();
+        }
+
+        return go.GetComponents<Component>().OfType<T>();
+    }
+    /// <summary>
+    /// Returns all matching interfaces on this game object's children
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="go"></param>
+    /// <remarks>
+    /// Suggested by: A.Killingbeck
+    /// Link: http://forum.unity3d.com/members/a-killingbeck.560711/
+    /// </remarks>
+    public static IEnumerable<T> GetInterfacesInChildren<T>(this GameObject go) where T : class
+    {
+        if (!typeof(T).IsInterface)
+        {
+            Debug.LogError(typeof(T).ToString() + " is not an interface");
+            return Enumerable.Empty<T>();
+        }
+
+        return go.GetComponentsInChildren<Component>(true).OfType<T>();
+    }
+    #endregion
+
 
     /// <summary>
     /// change le layer de TOUT les enfants

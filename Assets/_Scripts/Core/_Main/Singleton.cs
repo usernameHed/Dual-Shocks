@@ -7,7 +7,7 @@
 /// 
 /// As a note, this is made as MonoBehaviour because we need Coroutines.
 /// </summary>
-public class ISingleton<T> : MonoBehaviour where T : MonoBehaviour
+public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
 

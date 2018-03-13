@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 
-public class SceneManagerGlobal : ISingleton<SceneManagerGlobal>
+public class SceneManagerGlobal : SingletonMono<SceneManagerGlobal>
 {
     protected SceneManagerGlobal() { } // guarantee this will be always a singleton only - can't use the constructor!
 

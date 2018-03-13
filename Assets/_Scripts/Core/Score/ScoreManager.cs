@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// ScoreManager Description
 /// </summary>
-public class ScoreManager : ISingleton<ScoreManager>
+public class ScoreManager : SingletonMono<ScoreManager>
 {
     protected ScoreManager() { } // guarantee this will be always a singleton only - can't use the constructor!
 

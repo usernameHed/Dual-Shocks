@@ -38,7 +38,7 @@ public class SaveGeneratedMesh
             else
             {
                 Debug.Log("Mesh already created, suppress and recreate...");
-                savePath = UtilityFunctions.GetNextFileName(savePath);
+                savePath = ParsingExt.GetNextFileName(savePath);
                 Debug.Log("name: " + savePath);
 
                 AssetDatabase.CreateAsset(mf.mesh, savePath);
