@@ -14,15 +14,19 @@ public class Rope : MonoBehaviour, IKillable
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'élastique (case 0: valeur de base, case 1: valeur à ajouter quand +un nouveau link)"), SerializeField]
     private float[] spring = new float[3];
+    private float safeSpring;
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force du damper (case 0: valeur de base, case 1: valeur à ajouter quand +un nouveau link)"), SerializeField]
     private float[] damper = new float[3];
+    private float safeDamper;
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("mass des links (case 0: valeur de base, case 1: valeur à ajouter quand +un nouveau link, case 2: valeur fixe quand il ne reste qu'une ball)"), SerializeField]
     private float[] massLink = new float[3];
+    private float safeMassLink;
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
     private float[] dragLink = new float[3];
+    private float safeDragLink;
 
     [FoldoutGroup("Rope"), OnValueChanged("ChangeValueSpring"), Tooltip("Force de l'amortissement"), SerializeField]
     private bool useGravityLink = true;
@@ -36,6 +40,8 @@ public class Rope : MonoBehaviour, IKillable
     [FoldoutGroup("Rope"), Range(0, 100), OnValueChanged("LinkCountAdd"), OnValueChanged("InitPhysicRope"), Tooltip("Nombre de maillons"), SerializeField]
     private int linkCount = 3;
     private void LinkCountAdd() { linkCount++; if (linkCount > linkCountMax) linkCount = linkCountMax; }
+    private int safeLinkCount;
+
     [FoldoutGroup("Rope"), Tooltip("Maillons max"), SerializeField]
     private int linkCountMax = 30;
 
@@ -75,6 +81,40 @@ public class Rope : MonoBehaviour, IKillable
     #endregion
 
     #region Initialization
+    /*/// <summary>
+    /// 
+    /// </summary>
+    private void Awake()
+    {
+        Debug.Log("awake dabord ??");
+        InitPrefabsValue(true);
+    }*/
+
+    /// <summary>
+    /// ici save les valeurs de base
+    /// init = true: save les valeurs en awake
+    /// init = false: récupère les valeur sauvé en awake
+    /// </summary>
+    public void InitPrefabsValue(bool init)
+    {
+        if (init)
+        {
+            safeSpring = spring[0];
+            safeDamper = damper[0];
+            safeMassLink = massLink[0];
+            safeDragLink = dragLink[0];
+            safeLinkCount = linkCount;
+        }
+        else
+        {
+            spring[0] = safeSpring;
+            damper[0] = safeDamper;
+            massLink[0] = safeMassLink;
+            dragLink[0] = safeDragLink;
+            linkCount = safeLinkCount;
+        }
+    }
+
     /// <summary>
     /// Setup les 2 objet à relié
     /// </summary>
@@ -92,6 +132,9 @@ public class Rope : MonoBehaviour, IKillable
     /// </summary>
     public void InitPhysicRope()
     {
+        Debug.Log("init rope ensuite !");
+        InitPrefabsValue(true);
+
         enabledScript = true;
         OnlyOneMainLeft(false);
         ClearJoints();  //clear les joints précédents
@@ -504,8 +547,13 @@ public class Rope : MonoBehaviour, IKillable
         enabledScript = false;
         Debug.Log("Death Rope ! handle link bien sur");
         ClearJoints();
+        //InitPrefabsValue(false);
         gameObject.SetActive(false);
     }
 
+    private void OnDisable()
+    {
+        InitPrefabsValue(false);
+    }
     #endregion
 }

@@ -833,8 +833,12 @@ MonoBehaviour:
   idWeapon: 3
   weaponCoolDown: 0
   orderWeapon: 0
-  dragWhenStop: 6
-  additionalMass: 12
+  updateTimer:
+    updateFrequency: 0
+    notTheFirstTime: 0
+    waitOnlyOnce: 0
+  dragWhenStop: 8
+  additionalMass: 15
   Spikes: {fileID: 1642116018543144}
 --- !u!114 &114624794338726350
 MonoBehaviour:

@@ -52951,6 +52951,26 @@ Prefab:
     m_Modifications:
     - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
         type: 2}
+      propertyPath: spring.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: damper.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: massLink.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: dragLink.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
       propertyPath: listDebug.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -53095,6 +53115,36 @@ Prefab:
         type: 2}
       propertyPath: listDebug.Array.data[13]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: listDebug.Array.data[14]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: listDebug.Array.data[15]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: listDebug.Array.data[16]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: listDebug.Array.data[17]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: listDebug.Array.data[18]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114597573558135552, guid: 9fb3f57496f178d48a3ba21caf5f5880,
+        type: 2}
+      propertyPath: damper.Array.data[0]
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9fb3f57496f178d48a3ba21caf5f5880, type: 2}
