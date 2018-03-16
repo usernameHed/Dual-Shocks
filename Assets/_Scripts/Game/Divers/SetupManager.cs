@@ -49,9 +49,9 @@ public class SetupManager : MonoBehaviour, ILevelManager
     /// </summary>
     public void InitScene()
     {
-        if (GameManager.GetSingleton.FromGame)
+        if (GameManager.Instance.FromGame)
         {
-            GameManager.GetSingleton.FromGame = false;
+            GameManager.Instance.FromGame = false;
             SetupPhaseThenFromMenu();
         }
             
@@ -82,7 +82,7 @@ public class SetupManager : MonoBehaviour, ILevelManager
     {
         for (int i = 0; i < idPhaseConnexion.Length; i++)
         {
-            if (GameManager.GetSingleton.PlayerBallInit.PlayerData[i].active)
+            if (GameManager.Instance.PlayerBallInit.PlayerData[i].active)
                 idPhaseConnexion[i] = 2;
         }
     }
@@ -176,7 +176,7 @@ public class SetupManager : MonoBehaviour, ILevelManager
         //ici active les joueurs qui ont validé... et désactive les autres
         for (int i = 0; i < idPhaseConnexion.Length; i++)
         {
-            GameManager.GetSingleton.PlayerBallInit.PlayerData[i].active = (idPhaseConnexion[i] >= 3);
+            GameManager.Instance.PlayerBallInit.PlayerData[i].active = (idPhaseConnexion[i] >= 3);
         }
 
         Play(); //ici play enfin !!!!!
@@ -216,7 +216,7 @@ public class SetupManager : MonoBehaviour, ILevelManager
         }
     }
 
-    private void InputGame()
+    public void InputLevel()
     {
         //Si: on appui sur echape et qu'il y a 2+ player de connecté, on quit
         //SI: on appui sur echap, qu'il n'y a qu'un joueur (clavier), et qu'il est en phase 0, 1, on quit
@@ -233,7 +233,7 @@ public class SetupManager : MonoBehaviour, ILevelManager
     /// ici lance le jeu, il est chargé !
     /// </summary>
     [Button("Play")]
-    private void Play()
+    public void Play()
     {
         if (!enabledScript)
             return;
@@ -242,14 +242,14 @@ public class SetupManager : MonoBehaviour, ILevelManager
 
         enabledScript = false;
         displayInSetup.CleanUp();
-        GameManager.GetSingleton.RestartGame(false);    //notification spécial ... pas forcément utile
-        GameManager.GetSingleton.SceneManagerLocal.PlayNext();
+        GameManager.Instance.RestartGame(false);    //notification spécial ... pas forcément utile
+        GameManager.Instance.SceneManagerLocal.PlayNext();
     }
 
     [Button("Quit")]
-    private void Quit()
+    public void Quit()
     {
-        GameManager.GetSingleton.SceneManagerLocal.PlayPrevious();
+        GameManager.Instance.SceneManagerLocal.PlayPrevious();
     }
     #endregion
 
@@ -257,7 +257,7 @@ public class SetupManager : MonoBehaviour, ILevelManager
     private void Update()
     {
         InputPlayer();
-        InputGame();
+        InputLevel();
     }
 
     private void OnDisable()

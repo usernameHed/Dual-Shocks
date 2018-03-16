@@ -71,12 +71,12 @@ public class DisplayInSetup : MonoBehaviour
         for (int i = 0; i < playersSetup.Length; i++)
         {
             //power 1
-            playersSetup[i].power1[0].sprite = powerImage1[GameManager.GetSingleton.PlayerBallInit.PlayerData[i].ballInfo[0].powers[0]];
-            playersSetup[i].power1[1].sprite = powerImage1[GameManager.GetSingleton.PlayerBallInit.PlayerData[i].ballInfo[1].powers[0]];
+            playersSetup[i].power1[0].sprite = powerImage1[GameManager.Instance.PlayerBallInit.PlayerData[i].ballInfo[0].powers[0]];
+            playersSetup[i].power1[1].sprite = powerImage1[GameManager.Instance.PlayerBallInit.PlayerData[i].ballInfo[1].powers[0]];
 
             //power 2
-            playersSetup[i].power2[0].sprite = powerImage2[GameManager.GetSingleton.PlayerBallInit.PlayerData[i].ballInfo[0].powers[1]];
-            playersSetup[i].power2[1].sprite = powerImage2[GameManager.GetSingleton.PlayerBallInit.PlayerData[i].ballInfo[1].powers[1]];
+            playersSetup[i].power2[0].sprite = powerImage2[GameManager.Instance.PlayerBallInit.PlayerData[i].ballInfo[0].powers[1]];
+            playersSetup[i].power2[1].sprite = powerImage2[GameManager.Instance.PlayerBallInit.PlayerData[i].ballInfo[1].powers[1]];
         }
     }
 

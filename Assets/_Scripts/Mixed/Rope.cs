@@ -63,6 +63,9 @@ public class Rope : MonoBehaviour, IKillable
     private GameObject[] objectToConnect = new GameObject[2];
     [FoldoutGroup("Objects"), Tooltip("le parent où mettre les Link"), SerializeField]
     private Transform parentLink;
+    [FoldoutGroup("Objects"), Tooltip("le parent où mettre les Link"), SerializeField]
+    private PlayerController playerController;
+    public PlayerController RefPlayer { get { return (playerController); } }
 
     [FoldoutGroup("Debug"), Tooltip("points des link"), SerializeField]
     private Color colorRope;

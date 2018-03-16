@@ -32,6 +32,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     private void OnEnable()
     {
         EventManager.StartListening(GameData.Event.PlayerDeath, PlayerDeath);
+        EventManager.StartListening(GameData.Event.PlayerAddScore, AddPlayerScore);
     }
 
     private void Awake()
@@ -140,7 +141,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
     private void SpawnPlayer()
     {
         Debug.Log("ici Spawn les players");
-        PlayerBallInit playerBallInit = GameManager.GetSingleton.PlayerBallInit;
+        PlayerBallInit playerBallInit = GameManager.Instance.PlayerBallInit;
         
 
         //ici parcours les player locals, et change leurs ballInfo avec ceux du playerBallInit !
@@ -165,7 +166,7 @@ public class LevelManager : MonoBehaviour, ILevelManager
         }
     }
 
-    private void InputGame()
+    public void InputLevel()
     {
         if (PlayerConnected.Instance.getPlayer(-1).GetButtonDown("Escape")
             || PlayerConnected.Instance.getButtonDownFromAnyGamePad("Back"))
@@ -179,7 +180,9 @@ public class LevelManager : MonoBehaviour, ILevelManager
         }
     }
 
-    [SerializeField]
+    /// <summary>
+    /// appelé quand un joueur est mort
+    /// </summary>
     private void PlayerDeath(int idPlayer)
     {
         Debug.Log("un player est mort !");
@@ -188,6 +191,16 @@ public class LevelManager : MonoBehaviour, ILevelManager
         {
             RoundOver();
         }
+    }
+
+    /// <summary>
+    /// ajout de point au joueur...
+    /// </summary>
+    private void AddPlayerScore(int idPlayer, int score)
+    {
+        Debug.Log("add score: " + score + ", player: " + idPlayer);
+        ScoreManager.Instance.AddPoint(idPlayer, score);
+        EventManager.TriggerEvent(GameData.Event.DisplayActualise, false);
     }
 
     /// <summary>
@@ -200,6 +213,11 @@ public class LevelManager : MonoBehaviour, ILevelManager
             return (true);
         }
         return (false);
+    }
+
+    public void Play()
+    {
+
     }
 
     /// <summary>
@@ -243,8 +261,8 @@ public class LevelManager : MonoBehaviour, ILevelManager
         //ObjectsPoolerLocal.Instance.desactiveEveryOneForTransition();
 
         LevelDesign.GetSingleton.DesactiveScene(); //desactive le level design !!
-        GameManager.GetSingleton.FromGameToSetup(true);
-        GameManager.GetSingleton.SceneManagerLocal.PlayPrevious(false);
+        GameManager.Instance.FromGameToSetup(true);
+        GameManager.Instance.SceneManagerLocal.PlayPrevious(false);
     }
 
     #endregion
@@ -252,12 +270,13 @@ public class LevelManager : MonoBehaviour, ILevelManager
     #region Unity ending functions
     private void Update()
     {
-        InputGame();
+        InputLevel();
     }
 
     private void OnDisable()
     {
         EventManager.StopListening(GameData.Event.PlayerDeath, PlayerDeath);
+        EventManager.StopListening(GameData.Event.PlayerAddScore, AddPlayerScore);
     }
     #endregion
 }

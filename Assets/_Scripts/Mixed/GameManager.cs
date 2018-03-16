@@ -63,7 +63,7 @@ public class GameManager : SerializedMonoBehaviour
     public bool FromGame { get { return (fromGame); } set { fromGame = value; } }
 
     private static GameManager instance;
-    public static GameManager GetSingleton
+    public static GameManager Instance
     {
         get { return instance; }
     }
@@ -115,9 +115,6 @@ public class GameManager : SerializedMonoBehaviour
     public void CallChangePhase(bool active, int id)
     {
         playerBallInit.SetupGamePadActive();
-
-        if (sceneManagerLocal.LevelManagerScript != null)
-            sceneManagerLocal.LevelManagerScript.CallGamePad();
     }
 
     /// <summary>

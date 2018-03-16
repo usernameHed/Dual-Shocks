@@ -45,6 +45,7 @@ public class DisplayInGame : MonoBehaviour
         EventManager.StartListening(GameData.Event.GameStart, GameStart);
         EventManager.StartListening(GameData.Event.RoundStart, RoundStart);
         EventManager.StartListening(GameData.Event.GameOver, GameOver);
+        EventManager.StartListening(GameData.Event.DisplayActualise, DisplayActualise);
     }
     #endregion
 
@@ -59,7 +60,7 @@ public class DisplayInGame : MonoBehaviour
         data = ScoreManager.Instance.Data;
         for (int i = 0; i < playerRocks.Length; i++)
         {
-            playerRocks[i].active = GameManager.GetSingleton.PlayerBallInit.PlayerData[i].active;   //ici active ou non selon si le player est connecté
+            playerRocks[i].active = GameManager.Instance.PlayerBallInit.PlayerData[i].active;   //ici active ou non selon si le player est connecté
             playerRocks[i].displaySpawn.SetActive(playerRocks[i].active);
         }
     }
@@ -72,11 +73,24 @@ public class DisplayInGame : MonoBehaviour
         roundOver.SetActive(false);
 
         textRound.text = data.CurrentRound.ToString();
+        DisplayActualise(true);
+    }
+
+    /// <summary>
+    /// appelé pour actualiser le gameplay
+    /// roundInit = true: appelé lors des roundStart (pas d'effet)
+    /// </summary>
+    private void DisplayActualise(bool roundInit = false)
+    {
         for (int i = 0; i < playerRocks.Length; i++)
         {
             if (playerRocks[i].active)
             {
-                playerRocks[i].textScore.text = data.ScorePlayer[i].ToString();
+                if (playerRocks[i].textScore.text != data.ScorePlayer[i].ToString())
+                {
+                    Debug.Log("ici le score a changé, faire un effet ??");
+                    playerRocks[i].textScore.text = data.ScorePlayer[i].ToString();
+                }
             }
         }
     }
@@ -106,6 +120,7 @@ public class DisplayInGame : MonoBehaviour
         EventManager.StopListening(GameData.Event.GameStart, GameStart);
         EventManager.StopListening(GameData.Event.RoundStart, RoundStart);
         EventManager.StopListening(GameData.Event.GameOver, GameOver);
+        EventManager.StopListening(GameData.Event.DisplayActualise, DisplayActualise);
     }
     #endregion
 }

@@ -48,7 +48,7 @@ public class MenuManager : MonoBehaviour, ILevelManager
     public void Play()
     {
         Debug.Log("play ici menu");
-        GameManager.GetSingleton.SceneManagerLocal.PlayNext();
+        GameManager.Instance.SceneManagerLocal.PlayNext();
     }
 
     [FoldoutGroup("Debug"), Button("Quit")]
@@ -60,7 +60,7 @@ public class MenuManager : MonoBehaviour, ILevelManager
         SceneManagerGlobal.Instance.QuitGame(true);
     }
 
-    private void InputMenu()
+    public void InputLevel()
     {
         if (PlayerConnected.Instance.getPlayer(-1).GetButtonDown("Escape")
            || PlayerConnected.Instance.getButtonDownFromAnyGamePad("Back"))
@@ -89,7 +89,7 @@ public class MenuManager : MonoBehaviour, ILevelManager
     {
         if (!enabledScript)
             return;
-        InputMenu();
+        InputLevel();
         DebugMouseCLick();
     }
     #endregion

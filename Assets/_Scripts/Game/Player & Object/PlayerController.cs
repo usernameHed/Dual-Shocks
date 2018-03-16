@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private void OnEnable()
 	{
         EventManager.StartListening(GameData.Event.GameOver, StopAction);
-        //EventManager.StartListening(GameData.Event.GameOver, StopAction);
+        EventManager.StartListening(GameData.Event.PlayerAddScore, AddPlayerScore);
         InitPlayer();
 	}
 
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         ropeScript.InitObjects(ballsList[0].gameObject, ballsList[1].gameObject, Rope);
         ropeScript.InitPhysicRope();
-        ropeScript.ChangeColorLink(GameManager.GetSingleton.ColorPlayer[idPlayer]);
+        ropeScript.ChangeColorLink(GameManager.Instance.ColorPlayer[idPlayer]);
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour, IKillable
     }
     private void CreateBall(int index)
     {
-        GameObject ballsObject = Instantiate(GameManager.GetSingleton.GiveMeBall(ballInfo[index].idBallType), spawnBall[index].position, Quaternion.identity/*followersList[index].rotation*/, parentBalls);
+        GameObject ballsObject = Instantiate(GameManager.Instance.GiveMeBall(ballInfo[index].idBallType), spawnBall[index].position, Quaternion.identity/*followersList[index].rotation*/, parentBalls);
 
 
         ballsList[index] = ballsObject.GetComponent<Balls>();
@@ -216,6 +216,16 @@ public class PlayerController : MonoBehaviour, IKillable
             ballsList[0].UnsetKinematic();
         if (ballsList[1])
             ballsList[1].UnsetKinematic();
+    }
+
+    /// <summary>
+    /// est trigger quand un player gagne du score... (pas forcément lui !)
+    /// </summary>
+    private void AddPlayerScore(int _idPlayer, int score)
+    {
+        if (_idPlayer != idPlayer)
+            return;
+        Debug.Log("Effet de particule, ou +1 sur le player ! (ou ses 1, 2 ball restantes ?)");
     }
 
     /// <summary>
@@ -328,6 +338,7 @@ public class PlayerController : MonoBehaviour, IKillable
     private void OnDisable()
     {
         EventManager.StopListening(GameData.Event.GameOver, StopAction);
+        EventManager.StopListening(GameData.Event.PlayerAddScore, AddPlayerScore);
     }
 
     #endregion

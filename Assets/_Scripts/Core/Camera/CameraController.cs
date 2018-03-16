@@ -312,9 +312,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        posLisener = fmodListener.position;
-        posLisener.y = 0f;
-        fmodListener.position = posLisener;
+        fmodListener.SetY(0);
     }
 
     private void OnDisable()

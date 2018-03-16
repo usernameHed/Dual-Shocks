@@ -28,7 +28,7 @@ public class ClampToCamera : MonoBehaviour
 
     private void Awake()
     {
-        cam = GameManager.GetSingleton.CameraMain;
+        cam = GameManager.Instance.CameraMain;
         enabledScript = true;
         updateTimer.Reset();
         updateTimer.Ready();

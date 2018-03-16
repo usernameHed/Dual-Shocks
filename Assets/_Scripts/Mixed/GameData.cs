@@ -18,6 +18,8 @@ public static class GameData
         GamePadConnectionChange,    //est appelé a chaque co/deco de manette
         AdditiveJustFinishLoad,
         GameStart,      //est appelé en début de partie
+        PlayerAddScore, //ajout points au player
+        DisplayActualise,   //actualise tout les display du jeu
     };
 
     public enum Prefabs

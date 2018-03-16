@@ -69,7 +69,7 @@ public class SceneManagerLocal : MonoBehaviour
         }
             
 
-        GameManager.GetSingleton.SceneManagerLocal = this;
+        GameManager.Instance.SceneManagerLocal = this;
 
         InitSceneLoading();
     }

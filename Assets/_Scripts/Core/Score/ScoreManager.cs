@@ -32,6 +32,9 @@ public class ScoreManager : SingletonMono<ScoreManager>
 
     #region Core
 
+    /// <summary>
+    /// ajout de point au player
+    /// </summary>
     public void AddPoint(int indexPlayer, int point)
     {
         data.ScorePlayer[indexPlayer] += point;

@@ -124,7 +124,7 @@ public class SceneManagerGlobal : SingletonMono<SceneManagerGlobal>
         EventManager.TriggerEvent(GameData.Event.AdditiveJustFinishLoad);
 
         Debug.Log("findAfterAdditive;.." + sceneToChargeAfterAdditive);
-        SceneManagerLocal local = GameManager.GetSingleton.SceneManagerLocal;
+        SceneManagerLocal local = GameManager.Instance.SceneManagerLocal;
         local.StartLoading(sceneToChargeAfterAdditive);
     }
 

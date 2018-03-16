@@ -55,7 +55,7 @@ public class BumperBehaviour : MonoBehaviour
 
     private void Init()
     {
-        cam = GameManager.GetSingleton.CameraMain;
+        cam = GameManager.Instance.CameraMain;
         enabledObject = true;
     }
 

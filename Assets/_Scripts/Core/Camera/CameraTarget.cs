@@ -21,7 +21,7 @@ public class CameraTarget : MonoBehaviour
     #region Initialisation
     private void Awake()
     {
-        cameraController = GameManager.GetSingleton.CameraObject.GetComponent<CameraController>();
+        cameraController = GameManager.Instance.CameraObject.GetComponent<CameraController>();
     }
     #endregion
 

@@ -402,6 +402,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   parentLink: {fileID: 0}
+  playerController: {fileID: 114064721508296888}
   colorRope: {r: 0, g: 0, b: 0, a: 0}
   listDebug: []
 --- !u!114 &114646876059439448

@@ -26,6 +26,7 @@ public class EventManager : SingletonMono<EventManager>
 
     private class UnityEventInt : UnityEvent<int>  {    }
     private class UnityEvent2Int : UnityEvent<int, int>  {    }
+    private class UnityEventGameObject2Int : UnityEvent<GameObject, int, int> { }
     private class UnityEventBool : UnityEvent<bool>  {    }
     private class UnityEventBoolInt : UnityEvent<bool, int> { }
     private class UnityEventData : UnityEvent<DataEventManager>  {    }
@@ -33,6 +34,7 @@ public class EventManager : SingletonMono<EventManager>
     private Dictionary<GameData.Event, UnityEvent> eventDictionary;
     private Dictionary<GameData.Event, UnityEventInt> eventDictionaryInt;
     private Dictionary<GameData.Event, UnityEvent2Int> eventDictionary2Int;
+    private Dictionary<GameData.Event, UnityEventGameObject2Int> eventDictionaryGameObject2Int;
     private Dictionary<GameData.Event, UnityEventBool> eventDictionaryBool;
     private Dictionary<GameData.Event, UnityEventBoolInt> eventDictionaryBoolInt;
     private Dictionary<GameData.Event, UnityEventData> eventDictionaryData;
@@ -56,6 +58,8 @@ public class EventManager : SingletonMono<EventManager>
             eventDictionaryInt = new Dictionary<GameData.Event, UnityEventInt>();
         if (eventDictionary2Int == null)
             eventDictionary2Int = new Dictionary<GameData.Event, UnityEvent2Int>();
+        if (eventDictionaryGameObject2Int == null)
+            eventDictionaryGameObject2Int = new Dictionary<GameData.Event, UnityEventGameObject2Int>();
         if (eventDictionaryBool == null)
             eventDictionaryBool = new Dictionary<GameData.Event, UnityEventBool>();
         if (eventDictionaryBoolInt == null)
@@ -123,6 +127,23 @@ public class EventManager : SingletonMono<EventManager>
             thisEvent = new UnityEvent2Int();
             thisEvent.AddListener(listener);
             Instance.eventDictionary2Int.Add(eventName, thisEvent);
+        }
+    }
+    public static void StartListening(GameData.Event eventName, UnityAction<GameObject, int, int> listener)
+    {
+        if (!Instance)
+            return;
+
+        UnityEventGameObject2Int thisEvent = null;
+        if (Instance.eventDictionaryGameObject2Int.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.AddListener(listener);
+        }
+        else
+        {
+            thisEvent = new UnityEventGameObject2Int();
+            thisEvent.AddListener(listener);
+            Instance.eventDictionaryGameObject2Int.Add(eventName, thisEvent);
         }
     }
     public static void StartListening(GameData.Event eventName, UnityAction<bool, int> listener)
@@ -213,6 +234,17 @@ public class EventManager : SingletonMono<EventManager>
             thisEvent.RemoveListener(listener);
         }
     }
+    public static void StopListening(GameData.Event eventName, UnityAction<GameObject, int, int> listener)
+    {
+        if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
+            return;
+        UnityEventGameObject2Int thisEvent = null;
+        //si on veut unregister et que la clé existe dans le dico..
+        if (Instance.eventDictionaryGameObject2Int.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.RemoveListener(listener);
+        }
+    }
     public static void StopListening(GameData.Event eventName, UnityAction<bool, int> listener)
     {
         if (EventManager.Instance == null)   //au cas ou on a déja supprimé l'eventManager
@@ -274,6 +306,14 @@ public class EventManager : SingletonMono<EventManager>
         if (Instance.eventDictionary2Int.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.Invoke(firstValue, secondValue);
+        }
+    }
+    public static void TriggerEvent(GameData.Event eventName, GameObject obj, int firstValue, int secondValue)
+    {
+        UnityEventGameObject2Int thisEvent = null;
+        if (Instance.eventDictionaryGameObject2Int.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.Invoke(obj, firstValue, secondValue);
         }
     }
     public static void TriggerEvent(GameData.Event eventName, bool active, int secondValue)

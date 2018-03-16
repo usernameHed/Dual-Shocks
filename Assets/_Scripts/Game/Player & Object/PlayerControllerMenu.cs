@@ -105,12 +105,12 @@ public class PlayerControllerMenu : MonoBehaviour
         if (!enabledScript)
             return;
         Debug.Log("changement de ball !");
-        DataPlayers dataPlayer = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer];
+        DataPlayers dataPlayer = GameManager.Instance.PlayerBallInit.PlayerData[idPlayer];
 
         for (int i = 0; i < ballsList.Count; i++)
         {
             int idBall = dataPlayer.ballInfo[i].idBallType;
-            GameObject ball = GameManager.GetSingleton.GiveMeBall(idBall);
+            GameObject ball = GameManager.Instance.GiveMeBall(idBall);
 
             massBall[i] = ball.GetComponent<Rigidbody>().mass;
             sizeScale[i] = ball.transform.localScale.x;
@@ -153,33 +153,33 @@ public class PlayerControllerMenu : MonoBehaviour
             Vector3 pos = ballsList[i].transform.position;
             if (pos.x - margeChangeBall <= initialPos[i].x - clampDistance && coolDownBalls[i].Ready())
             {
-                int id = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType;
-                id = GameManager.GetSingleton.GiveMeGoodIdBall(id - 1, loopBallAndPower);
-                GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType = id;
+                int id = GameManager.Instance.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType;
+                id = GameManager.Instance.GiveMeGoodIdBall(id - 1, loopBallAndPower);
+                GameManager.Instance.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType = id;
                 ChangeBalls();
             }
             if (pos.x + margeChangeBall >= initialPos[i].x + clampDistance && coolDownBalls[i].Ready())
             {
-                int id = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType;
-                id = GameManager.GetSingleton.GiveMeGoodIdBall(id + 1, loopBallAndPower);
-                GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType = id;
+                int id = GameManager.Instance.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType;
+                id = GameManager.Instance.GiveMeGoodIdBall(id + 1, loopBallAndPower);
+                GameManager.Instance.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].idBallType = id;
                 ChangeBalls();
             }
 
             //ici power 1 activé
             if (power1[i] && coolDownPowers1[i].Ready())
             {
-                int id = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[0];
-                id = GameManager.GetSingleton.GiveMeGoodIdPower(id + 1, 0);
-                GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[0] = id;
+                int id = GameManager.Instance.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[0];
+                id = GameManager.Instance.GiveMeGoodIdPower(id + 1, 0);
+                GameManager.Instance.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[0] = id;
                 setupManager.DisplayInSetupScript.ChangePowerDisplay();
             }
             //ici power 2 activé
             if (power2[i] >= 1.0f && coolDownPowers2[i].Ready())
             {
-                int id = GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[1];
-                id = GameManager.GetSingleton.GiveMeGoodIdPower(id + 1, 1);
-                GameManager.GetSingleton.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[1] = id;
+                int id = GameManager.Instance.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[1];
+                id = GameManager.Instance.GiveMeGoodIdPower(id + 1, 1);
+                GameManager.Instance.PlayerBallInit.PlayerData[idPlayer].ballInfo[i].powers[1] = id;
                 setupManager.DisplayInSetupScript.ChangePowerDisplay();
             }
         }

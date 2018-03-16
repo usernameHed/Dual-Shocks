@@ -135,7 +135,7 @@ public class Balls : MonoBehaviour, IKillable
 
     private void ChangeVisual()
     {
-        GameManager GM = GameManager.GetSingleton;
+        GameManager GM = GameManager.Instance;
         renderBall.material = GM.MaterialPlayer[playerRef.IdPlayer];
         for (int i = 0; i < trailsBall.Count; i++)
         {
@@ -195,7 +195,7 @@ public class Balls : MonoBehaviour, IKillable
             return;
         }
         //TODO: yielda un truck inversé ici...
-        GameObject weaponObject = Instantiate(GameManager.GetSingleton.GiveMePower(idWeapon, index), transform.position, playerRef.FollowersList[idBallPlayer].rotation, transform);
+        GameObject weaponObject = Instantiate(GameManager.Instance.GiveMePower(idWeapon, index), transform.position, playerRef.FollowersList[idBallPlayer].rotation, transform);
 
         weaponsList[index] = weaponObject.GetComponent<Weapon>();
         weaponsList[index].InitWeapon(playerRef, this, idBallPlayer); //ici init la ball avec les pouvoirs
@@ -207,7 +207,7 @@ public class Balls : MonoBehaviour, IKillable
     private bool isAllowedToCreateWeapon(int idWeaponToCreate, int indexWeapon)
     {
         //l'id est incorrect
-        if (idWeaponToCreate < 0 || idWeaponToCreate >= GameManager.GetSingleton.PrefabsPowerListCount(indexWeapon))
+        if (idWeaponToCreate < 0 || idWeaponToCreate >= GameManager.Instance.PrefabsPowerListCount(indexWeapon))
             return (false);
 
         /*
@@ -367,6 +367,8 @@ public class Balls : MonoBehaviour, IKillable
             Link link = other.gameObject.GetComponent<Link>();
             if (link && link.RopeScript && link.RopeScript != playerRef.RopeScript)
             {
+                EventManager.TriggerEvent(GameData.Event.PlayerAddScore, link.RopeScript.RefPlayer.IdPlayer, 1);
+                
                 link.Kill();
                 Kill();
             }

@@ -8,8 +8,8 @@ public interface ILevelManager
     /// initialise ce scripts
     /// </summary>
 	void InitScene();
-    /// <summary>
-    /// est appelé quand il y a un changement de gamePad
-    /// </summary>
-    void CallGamePad();
+
+    void Play();    //passe à la scène suivante
+    void Quit();    //passe à la scene précédente
+    void InputLevel();   //input du level
 }
