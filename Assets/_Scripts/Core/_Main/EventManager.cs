@@ -24,19 +24,32 @@ public class EventManager : SingletonMono<EventManager>
 
     #region Attributes
 
+    [System.Serializable]
     private class UnityEventInt : UnityEvent<int>  {    }
+    [System.Serializable]
     private class UnityEvent2Int : UnityEvent<int, int>  {    }
+    [System.Serializable]
     private class UnityEventGameObject2Int : UnityEvent<GameObject, int, int> { }
+    [System.Serializable]
     private class UnityEventBool : UnityEvent<bool>  {    }
+    [System.Serializable]
     private class UnityEventBoolInt : UnityEvent<bool, int> { }
+    [System.Serializable]
     private class UnityEventData : UnityEvent<DataEventManager>  {    }
 
+    [ShowInInspector]
     private Dictionary<GameData.Event, UnityEvent> eventDictionary;
+    [ShowInInspector]
     private Dictionary<GameData.Event, UnityEventInt> eventDictionaryInt;
+    [ShowInInspector]
     private Dictionary<GameData.Event, UnityEvent2Int> eventDictionary2Int;
+    [ShowInInspector]
     private Dictionary<GameData.Event, UnityEventGameObject2Int> eventDictionaryGameObject2Int;
+    [ShowInInspector]
     private Dictionary<GameData.Event, UnityEventBool> eventDictionaryBool;
+    [ShowInInspector]
     private Dictionary<GameData.Event, UnityEventBoolInt> eventDictionaryBoolInt;
+    [ShowInInspector]
     private Dictionary<GameData.Event, UnityEventData> eventDictionaryData;
 
     #endregion

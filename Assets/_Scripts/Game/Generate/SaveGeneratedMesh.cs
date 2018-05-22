@@ -11,7 +11,7 @@ using Sirenix.OdinInspector;
 public class SaveGeneratedMesh
 {
     #region Attributes
-    //[FoldoutGroup("Save"), Tooltip("type"), SerializeField]
+    [FoldoutGroup("Save"), Tooltip("type"), SerializeField]
     private Transform selectedGameObject;
     #endregion
 

@@ -46,7 +46,12 @@ public class FrequencyCoolDown
         return (false);
     }
 
-
+    public bool IsReady()
+    {
+        if (!IsWaiting() || IsStartedAndOver())
+            return (true);
+        return (false);
+    }
 
 
     private bool IsStarted()
